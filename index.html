@@ -44,16 +44,45 @@
     .tab-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.09); }
     .tab-btn.active { background: var(--accent); border-color: transparent; box-shadow: 0 8px 22px rgba(124,92,255,.35); }
 
+  /* Tier list */
+  .tier-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .tier-row { display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: center; }
+  .tier-title { display: inline-flex; align-items: center; justify-content: center; font-weight: 900; letter-spacing: .4px; padding: 8px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); }
+  .tier-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .char-chip { appearance: none; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: var(--text); padding: 6px 10px; border-radius: 999px; font-weight: 700; cursor: pointer; transition: .15s ease; }
+  .char-chip:hover { transform: translateY(-1px); background: rgba(255,255,255,.1); }
+  /* Class-colored character chips (inherit class chip gradients) */
+  .char-chip.cls-melee, .char-chip.cls-ranged, .char-chip.cls-utility, .char-chip.cls-tank {
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: inset 0 0 0 9999px rgba(0,0,0,.10);
+  }
+  .char-chip.cls-melee:hover, .char-chip.cls-ranged:hover, .char-chip.cls-utility:hover, .char-chip.cls-tank:hover {
+    filter: brightness(1.05);
+  }
+  /* Tier coloring: S→C/Untiered = green→red/black */
+  .tier-row { border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 8px; background: rgba(255,255,255,.03); }
+  .tier-row.tier-S { border-left: 6px solid #34d399; }
+  .tier-row.tier-A { border-left: 6px solid #a3e635; }
+  .tier-row.tier-B { border-left: 6px solid #f59e0b; }
+  .tier-row.tier-C { border-left: 6px solid #ef4444; }
+  .tier-row.tier-Untiered { border-left: 6px solid #0f172a; }
+  .tier-row.tier-S .tier-title { background: rgba(52,211,153,.18); border-color: rgba(52,211,153,.38); color: #d6fff0; }
+  .tier-row.tier-A .tier-title { background: rgba(163,230,53,.18); border-color: rgba(163,230,53,.38); color: #f2ffd6; }
+  .tier-row.tier-B .tier-title { background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.38); color: #fff1db; }
+  .tier-row.tier-C .tier-title { background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.38); color: #ffe3e3; }
+  .tier-row.tier-Untiered .tier-title { background: rgba(15,23,42,.5); border-color: rgba(15,23,42,.8); color: #e2e8f0; }
+
     .panel { display: none; }
     .panel.active { display: block; }
 
-  .toolbar { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 8px 0 20px; align-items: start; }
-    .toolbar .filters { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0 24px; align-items: start; }
+    .toolbar .filters { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; align-items: start; }
+    .filter-group.filter-keywords { grid-column: 1 / -1; }
   .search-col { display: flex; flex-direction: column; gap: 8px; }
 
     .input, .select {
-      width: 100%; max-width: 420px; background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.10);
-      padding: 12px 14px; border-radius: 10px; outline: none; transition: .2s ease; min-width: 220px;
+      width: 100%; max-width: 600px; background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.10);
+      padding: 12px 14px; border-radius: 10px; outline: none; transition: .2s ease; min-width: 260px;
     }
     .input::placeholder { color: #9aa0b7; }
     .input:focus, .select:focus { border-color: var(--accent-2); box-shadow: 0 0 0 4px rgba(91,214,255,.12); }
@@ -157,12 +186,12 @@
   .mini.irrem { border-color: rgba(124,92,255,.55); color:#e3d9ff; }
 
   /* Class radio chip group */
-  .class-boxes { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; max-width: 520px; }
+  .class-boxes { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; width: 100%; max-width: none; }
   .cls-radio { display: none; }
   .cls-radio:checked + .kw-label .kw { border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(91,214,255,.18); }
   /* Filter group wrappers */
-  .filter-group { display: flex; flex-direction: column; gap: 6px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 8px; }
-  .filter-group .group-row { display: flex; align-items: center; gap: 8px; }
+  .filter-group { display: flex; flex-direction: column; gap: 10px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 12px; }
+  .filter-group .group-row { display: flex; align-items: center; gap: 12px; }
   .filter-group .group-row #hide-self-btn { margin-left: auto; }
   .filter-group .group-row .toggle-btn { padding: 6px 10px; }
   .group-title { font-size: 12px; font-weight: 800; letter-spacing: .3px; color: #cfd5ff; text-transform: uppercase; }
@@ -189,6 +218,7 @@
     .close-x { background: transparent; border: 1px solid rgba(255,255,255,.18); color: var(--text); padding: 6px 10px; border-radius: 10px; cursor: pointer; }
     .modal-body { padding: 16px; }
     .two-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .two-subcol { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .section { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 14px; }
     .section h4 { margin: 0 0 10px; font-size: 15px; letter-spacing: .3px; color: #cfd5ff; }
     .ability { margin-bottom: 12px; }
@@ -209,6 +239,10 @@
   .kw.breakthrough-stones { background: rgba(255,180,80,.18); border-color: rgba(255,180,80,.38); color: #fff1dc; }
   .kw.magic-orbs { background: rgba(120,255,220,.18); border-color: rgba(120,255,220,.38); color: #e9fff8; }
   .kw.attack-speed { background: rgba(80,230,180,.18); border-color: rgba(80,230,180,.38); color: #e6fff6; }
+  /* Awakening level chips: green (A3) → orange (A5) → red (A7) */
+  .kw.awk-l3 { background: rgba(80,230,180,.18); border-color: rgba(80,230,180,.38); color: #e6fff6; }
+  .kw.awk-l5 { background: rgba(255,180,80,.18); border-color: rgba(255,180,80,.38); color: #fff1dc; }
+  .kw.awk-l7 { background: rgba(255,100,120,.18); border-color: rgba(255,100,120,.38); color: #ffe4e8; }
 
     .lexicon { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
     .lex-item { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-left: 4px solid var(--accent-2); padding: 12px; border-radius: 10px; }
@@ -229,8 +263,12 @@
     footer { margin: 28px 0 8px; text-align: center; color: var(--muted); font-size: 12px; }
 
     /* Keyword checkbox group */
-  .kw-boxes { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; max-width: 520px; max-height: 180px; overflow-y: auto; padding: 6px; }
+  .kw-boxes { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; width: 100%; max-width: none; max-height: 220px; overflow-y: auto; padding: 8px; }
     .kw-check { display: none; }
+    /* Awakening checkbox group */
+    .awk-boxes { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; width: 100%; max-width: none; padding: 0; }
+    .awk-check { display: none; }
+    .awk-check:checked + .kw-label .kw { border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(91,214,255,.18); }
   .kw-label { display: inline-flex; align-items: center; gap: 0; padding: 0; border: none; font-size: 11px; font-weight: 700; cursor: pointer; background: transparent; }
   .kw-check:checked + .kw-label .kw { border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(91,214,255,.18); }
   /* Category chips (BUFF/DEBUFF) should sit next to each other on one line at the top */
@@ -249,8 +287,11 @@
     <div class="tabs">
       <button class="tab-btn active" data-tab="tab-general">General</button>
       <button class="tab-btn" data-tab="tab-characters">Characters</button>
+      <button class="tab-btn" data-tab="tab-tiers">Tier List</button>
       <button class="tab-btn" data-tab="tab-lexicon">Lexicon</button>
     </div>
+
+    
 
   <section id="tab-characters" class="panel">
       <div class="toolbar">
@@ -259,11 +300,15 @@
           <button id="reset-all" class="toggle-btn" title="Clear all filters and state">Reset</button>
         </div>
         <div class="filters">
-          <div class="filter-group">
+          <div class="filter-group filter-class">
             <div class="group-title">Class</div>
             <div id="class-boxes" class="class-boxes"></div>
           </div>
-          <div class="filter-group">
+          <div class="filter-group filter-awakening">
+            <div class="group-title">Awakening</div>
+            <div id="awakening-boxes" class="awk-boxes"></div>
+          </div>
+          <div class="filter-group filter-keywords">
             <div class="group-row">
               <div class="group-title">Keywords</div>
               <button id="hide-self-btn" class="toggle-btn" aria-pressed="false" title="Hide self-only effects when filtering and on cards">Hide self-only</button>
@@ -275,6 +320,16 @@
       </div>
 
       <div id="cards" class="grid"></div>
+    </section>
+
+    <section id="tab-tiers" class="panel">
+        <div id="tier-disclaimer" class="notes" style="margin:8px 0 10px 0;">
+          Disclaimer: This tier list is not a pull recommendation. It is a relative comparison assuming units are at roughly the same investment and have their recommended awakenings enabled.
+        </div>
+      <div class="section">
+        <h4>Tier List</h4>
+        <div id="tier-grid" class="tier-grid"></div>
+      </div>
     </section>
 
     <section id="tab-lexicon" class="panel">
@@ -313,7 +368,9 @@
             <div><span class="lab">Keywords</span><div id="m-kws" class="keywords" style="margin-top:6px"></div></div>
           </div>
           <div class="section">
-            <h4>Notes</h4>
+            <h4>Recommendations</h4>
+            <div id="m-reco" class="notes">—</div>
+            <h4 style="margin-top: 12px;">Notes</h4>
             <div id="m-notes" class="notes">—</div>
             <div id="m-incomplete" class="incomplete" style="display:none">Kit info incomplete: missing awakening and/or notes.</div>
           </div>
@@ -698,6 +755,7 @@
         title: 'Golden Behemoth, Shazam',
         releaseDate: '2025-08-20',
         class: 'tank',
+        tier: 'S',
         stats85: {
           atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD',
           def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD'
@@ -712,17 +770,9 @@
           { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ name: 'Stacked Shield', appliesTo: 'allies', stackable: false }, { name: 'DMG RES UP', appliesTo: 'self' }] },
           { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ name: 'Incoming CRIT DMG UP', appliesTo: 'enemies', stackable: false }] }
         ],
-        keywords: [
-          'BUFF',
-          'DEBUFF',
-          { name: 'Stacked Shield', appliesTo: ['self','allies'], stackable: false },
-          { name: 'DMG RES UP', appliesTo: 'self' },
-          { name: 'Gigantify', appliesTo: 'self', stackable: false },
-          { name: 'Crit Resistance Up', appliesTo: 'allies', stackable: false },
-          { name: 'Crit Damage Down', appliesTo: 'enemies', stackable: false },
-          { name: 'Incoming CRIT DMG UP', appliesTo: 'enemies', stackable: false }
-        ],
-        notes: 'Premier tank of the game, provides stackable shields to the team at Awakening 5, as well as CRIT DMG amplification at Awakening 7.\n\nFull Awakening recommended.'
+        keywords: [ 'BUFF', 'DEBUFF' ],
+        notes: 'Premier tank of the game, provides stackable shields to the team at Awakening 5, as well as CRIT DMG amplification at Awakening 7.',
+        recommendations: 'Awakening A5 is a must have for both PVP and PVE content.\nAwakening A7 is recommended for PVE damage amplification.\nAwakening A3 can be ignored if kiting, but is important for PVE/Boss fights.'
       },
       {
         id: 'trinity',
@@ -730,6 +780,7 @@
         title: 'Debuff Intensifier, Trinity',
         releaseDate: '2025-11-19',
         class: 'melee',
+        tier: 'S',
         stats85: {
           atk: '861100', hp: '16140000', acc: '7910', crit_rate: '53.94', mov_spd: '5', crush_rate: '11.50', graze_rate: '0.38', double_hit_rate: '0.13',
           def: '615100', hp_rec: '4243000', eva: '7910', crit_dmg: '355', atk_speed: '144', crush_dmg: '150', crit_res: '20.63', triple_hit_rate: '0.00'
@@ -744,19 +795,9 @@
           { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ name: 'Stacked Shield', appliesTo: 'self' }, { name: 'CRIT DMG UP', appliesTo: 'self' }, { name: 'Incoming AoE DMG UP', appliesTo: 'enemies' }] },
           { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ name: 'CRIT DMG Taken UP', appliesTo: 'enemies' }] }
         ],
-        keywords: [
-          'BUFF',
-          'DEBUFF',
-            { name: 'Stacked Shield', appliesTo: 'self' },
-            { name: 'CRIT DMG UP', appliesTo: 'self' },
-            { name: 'ATK UP', appliesTo: 'melee', stackable: true },
-            { name: 'ADD DMG', appliesTo: 'self', stackable: false },
-            { name: 'CRIT Rate UP', appliesTo: 'allies', stackable: true },
-            { name: 'ATK SPD DOWN', appliesTo: 'enemies', stackable: true },
-            { name: 'Incoming AoE DMG UP', appliesTo: 'enemies' },
-            { name: 'CRIT DMG Taken UP', appliesTo: 'enemies' },
-        ],
-        notes: 'Top DPS melee unit with strong self-buffs and team support through crit rate increases.\n She is highly synergistic with high debuff counts.\n\nFull Awakening recommended.'
+        keywords: [ 'BUFF', 'DEBUFF' ],
+        notes: 'Top DPS melee unit with strong self-buffs and team support through crit rate increases.\n She is highly synergistic with high debuff counts.\n\nFull Awakening recommended.',
+        recommendations: ''
       },
       {
         id: 'jager',
@@ -764,6 +805,7 @@
         title: 'Spell Sovereign, Jager',
         releaseDate: '2025-10-22',
         class: 'melee',
+        tier: 'S',
         stats85: {
           atk: '844300', hp: '12660000', acc: '7756', crit_rate: '51.94', mov_spd: '5', crush_rate: '11.50', graze_rate: '0.38', double_hit_rate: '0.13',
           def: '646100', hp_rec: '4243000', eva: '7756', crit_dmg: '355', atk_speed: '139', crush_dmg: '150', crit_res: '20.63', triple_hit_rate: '0.00'
@@ -778,23 +820,14 @@
           { level: 5, text: 'Applies an Invincibility shield effect and a MOV SPD UP 200% buff to itself for 3 sec at the start of the battle.\nApplies ATK UP 10%, DEF UP 15% and DMG DOWN from Ranged Enemies 30% buffs to itself at the start of the battle', kws: [{ name: 'Invincibility', appliesTo: 'self' }, { name: 'MOV SPD UP', appliesTo: 'self' }, { name: 'ATK UP', appliesTo: 'self' }, { name: 'DEF UP', appliesTo: 'self' }, { name: 'DMG DOWN from Ranged Enemies', appliesTo: 'self' }] },
           { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ name: 'CRIT DMG Taken UP', appliesTo: 'enemies', stackable: true }] }
         ],
-        keywords: [
-          'BUFF',
-            { name: 'Crush DMG UP', appliesTo: 'melee', stackable: true },
-            { name: 'Crush Rate UP', appliesTo: 'allies', stackable: true },
-            { name: 'ADD DMG', appliesTo: 'self', stackable: false },
-            { name: 'Invincibility', appliesTo: 'self' },
-            { name: 'MOV SPD UP', appliesTo: 'self' },
-            { name: 'ATK UP', appliesTo: 'self' },
-            { name: 'DEF UP', appliesTo: 'self' },
-            { name: 'DMG DOWN from Ranged Enemies', appliesTo: 'self' },
-        ],
+        keywords: [ 'BUFF' ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crush rate increases.\n He is highly synergistic with high buff counts.\nHe is also a useful PVP unit thanks to the Invincibility shield.\nFull Awakening recommended.'
       },
       {
         id: 'sabrina',
         name: 'Sabrina',
         class: 'ranged',
+        tier: 'A',
         stats85: {
           atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD',
           def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD'
@@ -825,14 +858,15 @@
         title: 'Crescendo Arbiter, Artamiel',
         releaseDate: '2025-06-11',
         class: 'melee',
+        tier: 'C',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 390% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '390', hits: 1, kws: [] },
           crit: { text: 'Deals 620% of ATK as CRIT DMG to enemies within 2m of the target. Upon a successful hit, applies a Lv. 5 Crush Rate UP buff to Melee allies for 2 sec.', dmg: '620', hits: 1, kws: [{ name: 'Crush Rate UP', appliesTo: 'melee', stackable: false }] },
           ult: { text: 'Deals 750% of ATK as DMG to enemies within 3m of the target. Upon a successful hit, casts a Lv. 5 DMG RES DOWN debuff for 10 sec.', dmg: '750', hits: 1, kws: [{ name: 'DMG RES Down', appliesTo: 'enemies', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'Crush Rate UP', appliesTo: 'melee' }, { name: 'DMG RES Down', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Crescendo Arbiter, Artamiel). Class and stats to be verified in-game.'
       },
       {
@@ -841,14 +875,15 @@
         title: 'Critical Overdriver, Zeratu',
         releaseDate: '2025-12-31',
         class: 'melee',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
           crit: { text: 'Deals 250% of ATK as CRIT DMG 3 times to enemies within a 3m fan-shaped area in front. Upon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ name: 'CRIT DMG UP', appliesTo: 'melee', stackable: true }, { name: 'Incoming AoE DMG Down', appliesTo: 'self', stackable: true }] },
           ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target. Upon a successful hit, applies a ATK SPD UP 20% buff to allies for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ name: 'ATK SPD UP', appliesTo: 'allies', stackable: true }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'CRIT DMG UP', appliesTo: 'melee', stackable: true }, { name: 'Incoming AoE DMG Down', appliesTo: 'self', stackable: true }, { name: 'ATK SPD UP', appliesTo: 'allies', stackable: true } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF' ],
         notes: 'Auto-generated kit from Update Notes (Critical Overdriver, Zeratu). Class and stats to be verified in-game.'
       },
       {
@@ -857,14 +892,15 @@
         title: 'Immunity Remover, Seimei',
         releaseDate: '2025-12-03',
         class: 'ranged',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
           crit: { text: 'Deals 230% of ATK as CRIT DMG 3 times to enemies within 2m of the target. Upon a successful hit, applies a Crush Rate UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '230', hits: 3, kws: [{ name: 'Crush Rate UP', appliesTo: 'ranged', stackable: true }] },
           ult: { text: 'Deals 200% of ATK as DMG 7 times to enemies within 2m of the target. Upon a successful hit, applies a Crush DMG UP 20% buff to allies for 10 sec. (Stackable) On every hit, places a Yin Energy stack on the target that is active for 20 sec. At 10 stacks, consumes all Yin Energy stacks on the target, removing their Immunity effect and casting a DMG RES DOWN 30% debuff for 4 sec.', dmg: '200', hits: 7, kws: [{ name: 'Crush DMG UP', appliesTo: 'allies', stackable: true }, { name: 'Remove Immunity', appliesTo: 'enemies', stackable: false }, { name: 'DMG RES Down', appliesTo: 'enemies', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'Crush Rate UP', appliesTo: 'ranged', stackable: true }, { name: 'Crush DMG UP', appliesTo: 'allies', stackable: true }, { name: 'Remove Immunity', appliesTo: 'enemies', stackable: false }, { name: 'DMG RES Down', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Immunity Remover, Seimei). Class and stats to be verified in-game.'
       },
       {
@@ -873,14 +909,15 @@
         title: 'Hit Booster, Melissa!',
         releaseDate: '2025-06-25',
         class: 'melee',
+        tier: 'C',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 140% of ATK as DMG 2 time(s) to enemies within a 3m narrow fan-shaped area in front.', dmg: '140', hits: 2, kws: [] },
           crit: { text: 'Deals 270% of ATK as CRIT DMG 2 time(s) to enemies within a 3m fan-shaped area in front. Upon a successful hit, applies a Lv.5 CRIT DMG UP buff to Melee allies for 2 sec.', dmg: '270', hits: 2, kws: [{ name: 'CRIT DMG UP', appliesTo: 'melee', stackable: true }] },
           ult: { text: 'Deals 340% of ATK as DMG 2 time(s) to enemies within a 4m x 10m area in front. Upon a successful hit, applies a Lv.5 Amplify buff to allies for 10 sec.', dmg: '340', hits: 2, kws: [{ name: 'Amplify', appliesTo: 'allies', stackable: true }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', { name: 'CRIT DMG UP', appliesTo: 'melee', stackable: true }, { name: 'Amplify', appliesTo: 'allies', stackable: true } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF' ],
         notes: 'Auto-generated kit from Update Notes (Hit Booster, Melissa!). Class and stats to be verified in-game.'
       },
       {
@@ -889,14 +926,15 @@
         title: 'Tactical Disrupter, Laima',
         releaseDate: '2025-07-09',
         class: 'ranged',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 320% of ATK as DMG to the target.', dmg: '320', hits: 1, kws: [] },
           crit: { text: 'Deals 60% of ATK as CRIT DMG 5 times to enemies within 3m of the target. Upon a successful hit, applies an ADD ACC UP buff to Ranged allies for 2 sec. Deals ADD DMG to targets under Blind.', dmg: '60', hits: 5, kws: [{ name: 'ACC UP', appliesTo: 'ranged' }, { name: 'Blind', appliesTo: 'enemies', stackable: false }] },
           ult: { text: 'Deals 310% of ATK as DMG 2 times to enemies within 4m of the target. Upon a successful hit, casts a Root effect for 3 sec. Upon a successful hit, casts a Blind effect for 5 sec.', dmg: '310', hits: 2, kws: [{ name: 'Root', appliesTo: 'enemies', stackable: false }, { name: 'Blind', appliesTo: 'enemies', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'ACC UP', appliesTo: 'ranged' }, { name: 'Blind', appliesTo: 'enemies', stackable: false }, { name: 'Root', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Tactical Disrupter, Laima). Class and stats to be verified in-game.'
       },
       {
@@ -905,14 +943,15 @@
         title: 'Frost Idol, Anavel',
         releaseDate: '2025-07-23',
         class: 'ranged',
+        tier: 'B',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
           crit: { text: 'Deals 160% of ATK as CRIT DMG 2 times to enemies within 3m of the target. Deals Additional DMG to targets with Frostbite. Upon a successful hit, casts [Debuff] Lv. 5 MOV SPD DOWN for 2 sec.', dmg: '160', hits: 2, kws: [{ name: 'Frostbite', appliesTo: 'enemies', stackable: false }, { name: 'MOV SPD DOWN', appliesTo: 'enemies' }] },
           ult: { text: 'Deals 480% of ATK as DMG 2 times to enemies within 3m of the target. Upon a successful hit, casts a Frostbite effect for 10 sec. Upon a successful hit, applies [Buff] Lv. 5 MOV SPD UP to allies for 10 sec.', dmg: '480', hits: 2, kws: [{ name: 'Frostbite', appliesTo: 'enemies', stackable: false }, { name: 'MOV SPD UP', appliesTo: 'allies' }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'Frostbite', appliesTo: 'enemies', stackable: false }, { name: 'MOV SPD DOWN', appliesTo: 'enemies' }, { name: 'MOV SPD UP', appliesTo: 'allies' } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Frost Idol, Anavel). Class and stats to be verified in-game.'
       },
       {
@@ -921,14 +960,15 @@
         title: 'Bloody Siren, Craka',
         releaseDate: '2025-08-06',
         class: 'melee',
+        tier: 'S',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 270% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '270', hits: 1, kws: [] },
           crit: { text: 'Deals 250% of ATK as CRIT DMG 2 times to enemies within 4m of itself. Upon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Melee allies for 2 sec. Deals Additional DMG to targets under Bleed.', dmg: '250', hits: 2, kws: [{ name: 'DMG Dealt UP', appliesTo: 'melee' }, { name: 'Bleed', appliesTo: 'enemies', stackable: false }] },
           ult: { text: 'Deals 430% of ATK as DMG 2 times to enemies within 3m of the target. Upon a successful hit, casts a [DoT] Bleed effect for 10 sec.', dmg: '430', hits: 2, kws: [{ name: 'Bleed', appliesTo: 'enemies', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'DMG Dealt UP', appliesTo: 'melee' }, { name: 'Bleed', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Bloody Siren, Craka). Class and stats to be verified in-game.'
       },
       {
@@ -937,14 +977,15 @@
         title: 'Darkflame Shade, Dusky',
         releaseDate: '2025-11-05',
         class: 'ranged',
+        tier: 'S',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
           crit: { text: 'Deals 230% of ATK as CRIT DMG 2 time(s) to enemies within 3m of the target. Upon a successful hit, applies a Crush DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals Additional DMG to targets with Burn.', dmg: '230', hits: 2, kws: [{ name: 'Crush DMG UP', appliesTo: 'ranged', stackable: true }, { name: 'Burn', appliesTo: 'enemies', stackable: false }] },
           ult: { text: 'Deals 910% of ATK as DMG 1 time to enemies within 3m of the target. Upon a successful hit, casts [CC] Fear for 2.5 sec. Upon a successful hit, casts a Dark Flame DoT effect for 10 sec. (Counts as Burn)', dmg: '910', hits: 1, kws: [{ name: 'Fear', appliesTo: 'enemies', stackable: false }, { name: 'Burn', appliesTo: 'enemies', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'Crush DMG UP', appliesTo: 'ranged', stackable: true }, { name: 'Fear', appliesTo: 'enemies', stackable: false }, { name: 'Burn', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Darkflame Shade, Dusky). Class and stats to be verified in-game.'
       },
       {
@@ -953,14 +994,15 @@
         title: 'Rose Poisoner, Elenoa',
         releaseDate: '2025-12-17',
         class: 'ranged',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 340% of ATK as DMG to the target.', dmg: '340', hits: 1, kws: [] },
           crit: { text: "Deals 430% of ATK as CRIT DMG to enemies within 3m of the target. Upon a successful hit, applies a CRIT DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals ADD DMG to targets under Venom.", dmg: '430', hits: 1, kws: [{ name: 'CRIT DMG UP', appliesTo: 'ranged', stackable: true }] },
           ult: { text: 'Deals 310% of ATK as DMG 3 time(s) to enemies within 3m of the target. Upon a successful hit, casts a Lovesick DoT effect for 10 sec. Upon a successful hit, applies a Lv. 5 CDR UP buff to Ranged allies for 10 sec.', dmg: '310', hits: 3, kws: [{ name: 'Lovesick', appliesTo: 'enemies', stackable: false }, { name: 'CDR UP', appliesTo: 'ranged', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'CRIT DMG UP', appliesTo: 'ranged', stackable: true }, { name: 'Lovesick', appliesTo: 'enemies', stackable: false }, { name: 'CDR UP', appliesTo: 'ranged', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Rose Poisoner, Elenoa). Class and stats to be verified in-game.'
       },
       {
@@ -969,14 +1011,15 @@
         title: 'Crimson Veil, Sekhmet',
         releaseDate: '2025-10-15',
         class: 'ranged',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 390% of ATK as DMG to the target.', dmg: '390', hits: 1, kws: [] },
           crit: { text: 'Deals 140% of ATK as CRIT DMG 3 times to enemies within 3m of the target. Upon a successful hit, applies a Lv. 5 CRIT Rate UP buff to Ranged Allies for 2 sec. (Stackable) Deals 15% ADD DMG per enemy hit. (Stacks up to 10 enemies)', dmg: '140', hits: 3, kws: [{ name: 'CRIT Rate UP', appliesTo: 'ranged', stackable: true }] },
           ult: { text: 'Deals 630% of ATK as DMG 2 times to enemies within 2m of the target. Upon a successful hit, applies a Lv. 5 AoE DMG UP buff to allies for 10 sec.', dmg: '630', hits: 2, kws: [{ name: 'AoE DMG UP', appliesTo: 'allies', stackable: true }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', { name: 'CRIT Rate UP', appliesTo: 'ranged', stackable: true }, { name: 'AoE DMG UP', appliesTo: 'allies', stackable: true } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF' ],
         notes: 'Auto-generated kit from Update Notes (Crimson Veil, Sekhmet). Class and stats to be verified in-game.'
       },
       {
@@ -985,14 +1028,15 @@
         title: 'Tempest Vixen, Soha',
         releaseDate: '2025-09-17',
         class: 'ranged',
+        tier: 'A',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
           crit: { text: 'Deals 200% of ATK as CRIT DMG 3 times to enemies within 2m of the target. Upon a successful hit, casts [Debuff] Lv. 5 CRIT Rate DOWN. Whenever successfully landing a hit, charges a Phantom Light that is active for 10 sec. At 20 charges, consumes all Phantom Lights to use CRIT Skills 2 times.', dmg: '200', hits: 3, kws: [{ name: 'CRIT Rate DOWN', appliesTo: 'enemies', stackable: true }] },
           ult: { text: 'Deals 630% of ATK as DMG 2 times to enemies within 2m of the target. Upon a successful hit, applies a Lv. 5 ATK SPD UP buff to Ranged allies for 10 sec. (Stackable)', dmg: '630', hits: 2, kws: [{ name: 'ATK SPD UP', appliesTo: 'ranged', stackable: true }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'CRIT Rate DOWN', appliesTo: 'enemies', stackable: true }, { name: 'ATK SPD UP', appliesTo: 'ranged', stackable: true } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Tempest Vixen, Soha). Class and stats to be verified in-game.'
       },
       {
@@ -1001,14 +1045,15 @@
         title: 'Spell Unraveler, Harmonia',
         releaseDate: '2025-10-07',
         class: 'utility',
+        tier: 'B',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 480% of ATK as DMG to the target.', dmg: '480', hits: 1, kws: [] },
           crit: { text: 'Deals 580% of ATK as CRIT DMG to enemies within 3m of the target. Upon a successful hit, removes Buff effects.', dmg: '580', hits: 1, kws: [{ name: 'Remove Buffs', appliesTo: 'enemies', stackable: false }] },
           ult: { text: 'Deals 390% of ATK as DMG 2 times to enemies within 5m of itself. Upon a successful hit, applies a Lv. 5 ATK UP buff to allies for 10 sec. (Stackable)', dmg: '390', hits: 2, kws: [{ name: 'ATK UP', appliesTo: 'allies', stackable: true }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', { name: 'ATK UP', appliesTo: 'allies', stackable: true }, { name: 'Remove Buffs', appliesTo: 'enemies', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF' ],
         notes: 'Auto-generated kit from Update Notes (Spell Unraveler, Harmonia). Class and stats to be verified in-game.'
       },
       {
@@ -1017,14 +1062,15 @@
         title: 'Shadow Striker, Mago',
         releaseDate: '2025-10-01',
         class: 'melee',
+        tier: 'S',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
           crit: { text: 'Deals 140% of ATK as CRIT DMG 5 times to enemies within a 3m fan-shaped area in front. Upon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ name: 'Dampen', appliesTo: 'enemies', stackable: true }] },
           ult: { text: 'Deals 350% of ATK as DMG 2 times to enemies within a 4m x 15m area in front. Upon a successful hit, applies a Lv. 5 CDR UP buff to Melee allies for 10 sec. Upon a successful hit, applies a Stealth effect to itself for 3 sec.', dmg: '350', hits: 2, kws: [{ name: 'CDR UP', appliesTo: 'melee', stackable: false }, { name: 'Stealth', appliesTo: 'self', stackable: false }] }
         },
-        awakening: [],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'Dampen', appliesTo: 'enemies', stackable: true }, { name: 'CDR UP', appliesTo: 'melee', stackable: false }, { name: 'Stealth', appliesTo: 'self', stackable: false } ],
+        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Shadow Striker, Mago). Class and stats to be verified in-game.'
       },
       {
@@ -1033,6 +1079,7 @@
         title: 'Moonlit Demoness, Tsuyuha',
         releaseDate: '2025-09-03',
         class: 'melee',
+        tier: 'B',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 290% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '290', hits: 1, kws: [] },
@@ -1040,7 +1087,7 @@
           ult: { text: 'Deals 300% of ATK as DMG 3 times to enemies within a 3m x 7m area in front. Upon a successful hit, applies [Buff] Lv. 5 Crush DMG UP to allies for 10 sec. (Stackable) Applies a DEF DOWN 20% effect to the target in under CC for 10 sec. (Stackable)', dmg: '300', hits: 3, kws: [{ name: 'Crush DMG UP', appliesTo: 'allies', stackable: true }, { name: 'DEF DOWN', appliesTo: 'enemies', stackable: true }] }
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
-        keywords: [ 'BUFF', 'DEBUFF', { name: 'ATK SPD UP', appliesTo: 'melee', stackable: true }, { name: 'Crush DMG UP', appliesTo: 'allies', stackable: true }, { name: 'DEF DOWN', appliesTo: 'enemies', stackable: true } ],
+        keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Moonlit Demoness, Tsuyuha). Class and stats to be verified in-game.'
       },
     ];
@@ -1069,6 +1116,7 @@
         c.awakening.sort((a,b)=> (a.level||0) - (b.level||0));
       });
     })();
+    
     // Build preferred keyword display casing from character chips and lexicon
     window.PREFERRED_KW_CASING = (() => {
       const map = {};
@@ -1140,6 +1188,29 @@
       wrap.appendChild(sep);
       // Render remaining keywords afterward
       others.forEach(k => renderKwItem(k, false));
+    })();
+
+    // Build awakening checkbox group (A3, A5, A7)
+    (function initAwakeningFilter(){
+      const wrap = document.getElementById('awakening-boxes');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      [3,5,7].forEach(level => {
+        const id = 'awk-' + level;
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.className = 'awk-check';
+        input.id = id;
+        input.value = String(level);
+        // Default ON: awakening filters are checked by default
+        input.checked = true;
+        const label = document.createElement('label');
+        label.className = 'kw-label';
+        label.setAttribute('for', id);
+        label.innerHTML = `<span class="kw awakening awk-l${level}" data-kw="awakening">A${level}</span>`;
+        wrap.appendChild(input);
+        wrap.appendChild(label);
+      });
     })();
     
     // Build class radio chip group
@@ -1221,14 +1292,18 @@
       const selectedKws = Array.from(document.querySelectorAll('#keyword-boxes input.kw-check:checked')).map(o => o.value.toLowerCase());
       const hideSelf = !!document.getElementById('hide-self-btn')?.classList.contains('active');
       const stackOnly = !!document.getElementById('stack-only-btn')?.classList.contains('active');
+      const awkSel = Array.from(document.querySelectorAll('#awakening-boxes input.awk-check:checked')).map(o => parseInt(o.value, 10)).filter(n => [3,5,7].includes(n));
       let list = CHARACTERS.filter(c => {
         // Include keyword names from character-level, kit, and awakenings in free-text search
+        const awkKws = (c.awakening||[])
+          .filter(a => !awkSel.length || awkSel.includes(a.level))
+          .flatMap(a => (a?.kws||[]));
         const kwNames = [
           ...(c.keywords||[]),
           ...((c.kit?.basic?.kws)||[]),
           ...((c.kit?.crit?.kws)||[]),
           ...((c.kit?.ult?.kws)||[]),
-          ...((c.awakening||[]).flatMap(a => (a?.kws||[])))
+          ...awkKws
         ].map(k => (typeof k === 'object' && k ? String(k.name||'') : String(k||''))).join(' ');
         const matchText = `${c.title||c.name} ${c.class} ${c.notes} ${c.kit?.basic?.text||''} ${c.kit?.crit?.text||''} ${c.kit?.ult?.text||''} ${kwNames}`.toLowerCase();
         const passQ = !q || matchText.includes(q);
@@ -1245,11 +1320,17 @@
           return { name: String(k||'').toLowerCase(), appliesTo: undefined, stackable: false };
         };
         const normalizedAll = [
-          ...(c.keywords||[]),
+          ...((c.keywords||[]).filter(k => {
+            const nm = (typeof k === 'object' ? k.name : k);
+            const key = String(nm||'').trim().toLowerCase();
+            return key === 'buff' || key === 'debuff';
+          })),
           ...((c.kit?.basic?.kws)||[]),
           ...((c.kit?.crit?.kws)||[]),
           ...((c.kit?.ult?.kws)||[]),
-          ...((c.awakening||[]).flatMap(a => (a?.kws||[])))
+          ...((c.awakening||[])
+            .filter(a => !awkSel.length || awkSel.includes(a.level))
+            .flatMap(a => (a?.kws||[])))
         ].map(normalize);
         const filteredForMatching = normalizedAll
           .filter(e => !hideSelf || !isSelfOnly(e.appliesTo))
@@ -1289,11 +1370,18 @@
           const key = String(nm||'').trim().toLowerCase();
           return key === 'buff' || key === 'debuff';
         });
-        let effItems = rawKws.filter(k => {
-          const nm = (typeof k === 'object' ? k.name : k);
-          const key = String(nm||'').trim().toLowerCase();
-          return key !== 'buff' && key !== 'debuff';
-        });
+        // Build effect chips from kit + awakening (selected levels only), not character-level duplicates
+        let effItems = [
+          ...((c.kit?.basic?.kws)||[]),
+          ...((c.kit?.crit?.kws)||[]),
+          ...((c.kit?.ult?.kws)||[]),
+          ...((c.awakening||[])
+            .filter(a => {
+              const lv = (typeof a === 'object' && a) ? a.level : undefined;
+              return !awkSel.length || awkSel.includes(lv);
+            })
+            .flatMap(a => (a?.kws||[])))
+        ];
         if (hideSelf || stackOnly) {
           const selfOnly = (appliesTo) => {
             if (!appliesTo) return false;
@@ -1349,7 +1437,7 @@
     function readStateFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const t = params.get('tab');
-      const tab = (t === 'lexicon' || t === 'characters' || t === 'general') ? t : 'general';
+      const tab = (t === 'lexicon' || t === 'characters' || t === 'general' || t === 'tiers') ? t : 'general';
       const q = params.get('q') || '';
       const cls = params.get('cls') || '';
       const kws = (params.get('kws') || '').split(',').filter(Boolean).map(s => s.trim());
@@ -1357,7 +1445,9 @@
       const char = params.get('char') || '';
       const noself = params.get('noself') === '1' || params.get('noself') === 'true';
       const stack = params.get('stack') === '1' || params.get('stack') === 'true';
-      return { tab, q, cls, kws, lq, char, noself, stack };
+      const awkParam = (params.get('awk') || '').split(',').filter(Boolean);
+      const awk = awkParam.map(v => parseInt(v, 10)).filter(n => [3,5,7].includes(n));
+      return { tab, q, cls, kws, lq, char, noself, stack, awk };
     }
 
     function setActiveTab(tab){
@@ -1368,6 +1458,60 @@
         x.classList.toggle('active', isTarget);
       });
       document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === targetEl));
+      const disc = document.getElementById('tier-disclaimer');
+      if (disc) disc.style.display = (targetEl === 'tab-tiers') ? '' : 'none';
+    }
+
+    function renderTierList(){
+      const wrap = document.getElementById('tier-grid');
+      if (!wrap) return;
+      wrap.innerHTML = '';
+      const order = ['S','A','B','C','Untiered'];
+      const buckets = Object.fromEntries(order.map(t => [t, []]));
+      (typeof CHARACTERS !== 'undefined' ? CHARACTERS : []).forEach(c => {
+        const raw = (c.tier || '').toString().trim().toUpperCase();
+        const key = order.includes(raw) ? raw : 'Untiered';
+        buckets[key].push(c);
+      });
+      // Sort each bucket by most recent release first; unknown dates last
+      order.forEach(t => {
+        buckets[t].sort((a,b) => {
+          const byDate = (parseReleaseTs(b.releaseDate) - parseReleaseTs(a.releaseDate)) || 0;
+          if (byDate !== 0) return byDate;
+          const an = (a.title || a.name || '').toString();
+          const bn = (b.title || b.name || '').toString();
+          return an.localeCompare(bn);
+        });
+      });
+      order.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'tier-row tier-' + t;
+        const title = document.createElement('div');
+        title.className = 'tier-title';
+        title.textContent = t;
+        const items = document.createElement('div');
+        items.className = 'tier-items';
+        buckets[t].forEach(c => {
+          const btn = document.createElement('button');
+          const cls = (c.class || '').toLowerCase();
+          const clsClass = cls === 'melee' ? 'cls-melee' : cls === 'ranged' ? 'cls-ranged' : cls === 'utility' ? 'cls-utility' : cls === 'tank' ? 'cls-tank' : '';
+          btn.className = 'char-chip' + (clsClass ? (' ' + clsClass) : '');
+          btn.dataset.id = c.id;
+          btn.textContent = c.name || c.title || 'Unit';
+          items.appendChild(btn);
+        });
+        row.appendChild(title);
+        row.appendChild(items);
+        wrap.appendChild(row);
+      });
+      // Bind chip clicks
+      wrap.querySelectorAll('.char-chip').forEach(b => b.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        if (id) {
+          openModal(id);
+          updateUrlFromUI();
+        }
+      }));
     }
 
     function applyStateToUI(state){
@@ -1397,6 +1541,15 @@
         stToggle.classList.toggle('active', !!state.stack);
         stToggle.setAttribute('aria-pressed', !!state.stack);
       }
+      // Awakening checkboxes
+      const awkSel = new Set((state.awk||[]).map(Number));
+      const awkInputs = document.querySelectorAll('#awakening-boxes input.awk-check');
+      if (awkSel.size === 0) {
+        // No URL param: default to all awakening levels ON
+        awkInputs.forEach(c => { c.checked = true; });
+      } else {
+        awkInputs.forEach(c => { c.checked = awkSel.has(parseInt(c.value, 10)); });
+      }
     }
 
     function getUIState(){
@@ -1411,7 +1564,8 @@
       const char = (modalEl && modalEl.open && modalEl.dataset && modalEl.dataset.char) ? modalEl.dataset.char : '';
       const noself = !!document.getElementById('hide-self-btn')?.classList.contains('active');
       const stack = !!document.getElementById('stack-only-btn')?.classList.contains('active');
-      return { tab, q, cls, kws, lq, char, noself, stack };
+      const awk = Array.from(document.querySelectorAll('#awakening-boxes input.awk-check:checked')).map(o => parseInt(o.value, 10)).filter(n => [3,5,7].includes(n));
+      return { tab, q, cls, kws, lq, char, noself, stack, awk };
     }
 
     function updateUrlFromUI(){
@@ -1425,6 +1579,7 @@
       if (s.char) params.set('char', s.char);
       if (s.noself) params.set('noself', '1');
       if (s.stack) params.set('stack', '1');
+      if (s.awk && s.awk.length) params.set('awk', s.awk.join(','));
       const url = `${location.pathname}?${params.toString()}`;
       history.replaceState(null, '', url);
     }
@@ -1643,6 +1798,11 @@
       });
 
       document.getElementById('m-notes').textContent = c.notes || '—';
+      const recoEl = document.getElementById('m-reco');
+      if (recoEl) {
+        const rec = (typeof c.recommendations === 'string') ? c.recommendations.trim() : '';
+        recoEl.textContent = rec || '—';
+      }
 
       modal.showModal();
       // Reflect modal state in URL
@@ -1656,6 +1816,8 @@
       setActiveTab(tabKey);
       // Update URL to reflect tab change
       updateUrlFromUI();
+      // Re-render tier list if visible
+      renderTierList();
     }));
 
     document.getElementById('modal-close').addEventListener('click', () => {
@@ -1687,6 +1849,8 @@
   ['search'].forEach(id => document.getElementById(id).addEventListener('input', () => { renderCards(); updateUrlFromUI(); }));
   const kwBoxes = document.getElementById('keyword-boxes');
   if (kwBoxes) kwBoxes.addEventListener('change', () => { renderCards(); updateUrlFromUI(); });
+  const awkBoxes = document.getElementById('awakening-boxes');
+  if (awkBoxes) awkBoxes.addEventListener('change', () => { renderCards(); updateUrlFromUI(); });
   const clsBoxes = document.getElementById('class-boxes');
   if (clsBoxes) {
     clsBoxes.addEventListener('change', () => { renderCards(); updateUrlFromUI(); });
@@ -1746,6 +1910,7 @@
       if (selfBtn) { selfBtn.classList.remove('active'); selfBtn.setAttribute('aria-pressed', 'false'); }
       const stackBtn = document.getElementById('stack-only-btn');
       if (stackBtn) { stackBtn.classList.remove('active'); stackBtn.setAttribute('aria-pressed', 'false'); }
+      document.querySelectorAll('#awakening-boxes input.awk-check').forEach(c => { c.checked = false; });
       const lq = document.getElementById('lex-search');
       if (lq) lq.value = '';
       const modal = document.getElementById('modal');
@@ -1763,6 +1928,7 @@
   applyStateToUI(initialState);
   renderLexicon();
   renderCards();
+  renderTierList();
   if (initialState.char) {
     // Ensure correct tab and open the requested character
     setActiveTab('characters');
@@ -1773,6 +1939,7 @@
     applyStateToUI(st);
     renderLexicon();
     renderCards();
+    renderTierList();
     const modalEl = document.getElementById('modal');
     if (st.char) {
       setActiveTab('characters');

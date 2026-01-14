@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Summoner War: Rush TD — ehault's Guide</title>
+  <title>Summoner War: Rush TD — Character Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <!-- Inline SVG favicon: round split EHA/ULT for readability -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 128 128'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23ded8ff'/><stop offset='1' stop-color='%23b8a6ff'/></linearGradient></defs><circle cx='64' cy='64' r='62' fill='url(%23g)' stroke='%23d7caff' stroke-width='4'/><line x1='20' y1='64' x2='108' y2='64' stroke='rgba(31,36,67,0.18)' stroke-width='1'/><text x='64' y='50' text-anchor='middle' font-family='Inter, Arial, sans-serif' font-size='40' font-weight='900' fill='%231f2443' stroke='%23f0f3ff' stroke-width='2' stroke-opacity='0.55' paint-order='stroke fill' letter-spacing='2'>EHA</text><text x='64' y='94' text-anchor='middle' font-family='Inter, Arial, sans-serif' font-size='40' font-weight='900' fill='%231f2443' stroke='%23f0f3ff' stroke-width='2' stroke-opacity='0.55' paint-order='stroke fill' letter-spacing='2'>ULT</text></svg>">
@@ -1091,6 +1091,24 @@
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
         keywords: [ 'BUFF', 'DEBUFF' ],
         notes: 'Auto-generated kit from Update Notes (Moonlit Demoness, Tsuyuha). Class and stats to be verified in-game.'
+      },
+      {
+        id: 'zeta',
+        name: 'Zeta',
+        title: 'Crush Damage Stacker, Zeta',
+        releaseDate: '2026-01-14',
+        class: 'ranged',
+        tier: 'S',
+        stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: 'TBD', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
+        kit: {
+          basic: { text: 'Deals 330% of ATK as DMG to the target.', dmg: '330', hits: 1, kws: [] },
+          crit: { text: 'Deals 540% of ATK as CRIT DMG to enemies within a 2m x 10m area in front. Upon a successful hit, applies a DMG UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '540', hits: 1, kws: [{ name: 'DMG Dealt UP', appliesTo: 'ranged', stackable: true }] },
+          ult: { text: 'Deals 960% of ATK as DMG to enemies within 3m of the target. Upon a successful hit, applies 1 stack of the Crush DMG UP 10% effect to allies for 10 sec. (Stackable)', dmg: '960', hits: 1, kws: [{ name: 'Crush DMG UP', appliesTo: 'allies', stackable: true }] }
+        },
+        awakening: [],
+        keywords: [ 'BUFF' ],
+        notes: 'Zeta is mostly geared toward long battles where she can build up Crush DMG UP stacks over time. Her kit allows her to apply buffs to allies and deal significant damage to enemies.\nHer crush damage stacking mechanic gives 10% per ult (+20% with 7A) for 10 seconds, stacking up to 5 times for a total of 50% (+100% with 7A) crush damage increase. Note that the ult version has a 10 second expiry, meaning by the time you ult again, the previous stack will either be gone or nearly so. She realistically maxes at 110% crush damage increase in long fights with perfect timing.',
+        recommendations: 'Zeta is only needed for long battles, in stages/rifts and PVP she will not have time to stack significantly. If you do need her, 7A is mandatory to maximize her Crush DMG UP stacking potential.'
       },
     ];
     // Normalize kits: extract any embedded "+N Awakening ..." snippets into proper awakening entries

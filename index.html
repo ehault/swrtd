@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Summoner War: Rush TD — Character Guide</title>
+  <title>SW:RTD Companion</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <!-- Inline SVG favicon: round split EHA/ULT for readability -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 128 128'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%23ded8ff'/><stop offset='1' stop-color='%23b8a6ff'/></linearGradient></defs><circle cx='64' cy='64' r='62' fill='url(%23g)' stroke='%23d7caff' stroke-width='4'/><line x1='20' y1='64' x2='108' y2='64' stroke='rgba(31,36,67,0.18)' stroke-width='1'/><text x='64' y='50' text-anchor='middle' font-family='Inter, Arial, sans-serif' font-size='40' font-weight='900' fill='%231f2443' stroke='%23f0f3ff' stroke-width='2' stroke-opacity='0.55' paint-order='stroke fill' letter-spacing='2'>EHA</text><text x='64' y='94' text-anchor='middle' font-family='Inter, Arial, sans-serif' font-size='40' font-weight='900' fill='%231f2443' stroke='%23f0f3ff' stroke-width='2' stroke-opacity='0.55' paint-order='stroke fill' letter-spacing='2'>ULT</text></svg>">
@@ -553,8 +553,7 @@
 <body>
   <div class="container">
     <header>
-      <h1>Summoner War: Rush TD — Character Guide</h1>
-      <p>Compact reference for units, level 85 stats, kits, awakenings, and keyword lexicon.</p>
+      <h1>SW:RTD Companion — Units, Tier Lists, Deployments & Guides</h1>
     </header>
 
     <div class="tabs">
@@ -637,7 +636,9 @@
             <li><strong>Nyu</strong> — For sourcing assets</li>
             <li><strong>Bless</strong> — For many advices and helping onboard more contributors (<a href="https://www.youtube.com/@RushBless" target="_blank" style="color: var(--accent-2); text-decoration: none;">YouTube</a>)</li>
             <li><strong>Bison84</strong> — For helping me make the decision to start this project</li>
-            <li><strong>The far2poor guild</strong> — For keeping me far too poor</li>
+            <li><strong>MystrMthrx</strong> — For supporting me doing this and providing some much needed data</li>
+            <li><strong>Topic</strong> — For helping provide some really obscure knowledge</li>
+            <li><strong>The far2poor guild</strong> — For keeping me</li>
           </ul>
           <p style="margin: 6px 0 0 0; font-style: italic; color: var(--muted);">Want to contribute? Just yell at ehault in game chat!</p>
           <p style="margin: 6px 0 0 0; font-style: italic; color: var(--muted);">I do this project for fun but do this kind of things professionally, if you have a project in mind, feel free to reach out! (This is a paying service.)</p>
@@ -2634,7 +2635,7 @@
       const header = document.createElement('div');
       header.className = 'tier-section-header';
       header.innerHTML = `
-        <input type="text" class="tier-list-name-input" value="${customTierListName}" placeholder="Tier list name..." />
+        <input type="text" class="tier-list-name-input" value="${customTierListName}" placeholder="Tier list name..." maxlength="64" />
         <div class="tier-buttons">
           <button class="toggle-btn" data-action="reset" title="Move all to Untiered">Reset</button>
           <button class="toggle-btn" data-action="share" title="Copy URL to clipboard">📋 Share</button>
@@ -2764,7 +2765,7 @@
         // Custom tier list from URL
         setActiveTab('tiers');
         fullscreenTierListId = 'custom';
-        customTierListName = params.get('name') || 'My Tier List';
+        customTierListName = (params.get('name') || 'My Tier List').slice(0, 64);
         
         const tiersParam = params.get('tiers');
         if (tiersParam) {
@@ -3518,8 +3519,8 @@
     let customDeployData = {};  // { gridIndex: { "row-col": charId } } or { "row-col": charId } for single
     let deployDragState = null;
     
-    function encodeDeployData(gridData, cols, rows, deploymentCount) {
-      const obj = { c: cols, r: rows, n: deploymentCount || 1, g: gridData };
+    function encodeDeployData(gridData, cols, rows, deploymentCount, limit) {
+      const obj = { c: cols, r: rows, n: deploymentCount || 1, l: limit || 25, g: gridData };
       return btoa(JSON.stringify(obj));
     }
     
@@ -3599,19 +3600,16 @@
       
       if (fullscreenDeployId === 'custom' || deployEditMode) {
         url.searchParams.set('name', customDeployName);
-        url.searchParams.set('size', `${customDeployCols}x${customDeployRows}`);
-        url.searchParams.set('limit', customDeployLimit);
-        url.searchParams.set('count', customDeployCount);
-        const hasData = customDeployCount > 1 
-          ? Object.keys(customDeployData).some(k => Object.keys(customDeployData[k] || {}).length > 0)
-          : Object.keys(customDeployData).length > 0;
-        if (hasData) {
-          url.searchParams.set('deploy', encodeDeployData(customDeployData, customDeployCols, customDeployRows, customDeployCount));
-        } else {
-          url.searchParams.delete('deploy');
-        }
+        // Encode all config (size, limit, count, grid data) into single 'd' param
+        url.searchParams.set('d', encodeDeployData(customDeployData, customDeployCols, customDeployRows, customDeployCount, customDeployLimit));
+        // Clean up old params
+        url.searchParams.delete('size');
+        url.searchParams.delete('limit');
+        url.searchParams.delete('count');
+        url.searchParams.delete('deploy');
       } else {
         url.searchParams.delete('name');
+        url.searchParams.delete('d');
         url.searchParams.delete('size');
         url.searchParams.delete('limit');
         url.searchParams.delete('count');
@@ -3632,6 +3630,7 @@
       url.searchParams.delete('size');
       url.searchParams.delete('limit');
       url.searchParams.delete('count');
+      url.searchParams.delete('d');
       url.searchParams.delete('deploy');
       url.searchParams.delete('edit');
       window.history.replaceState({}, '', url);
@@ -3833,9 +3832,9 @@
         }).join('');
         
         header.innerHTML = `
-          <input type="text" class="deploy-name-input" value="${customDeployName}" placeholder="Deployment name..." />
+          <input type="text" class="deploy-name-input" value="${customDeployName}" placeholder="Deployment name..." maxlength="64" />
           <div class="deploy-size-selector">
-            <label>Mode:</label>
+            <label>Preset:</label>
             <select class="deploy-mode-select">${modeOptions}</select>
           </div>
           <div class="deploy-buttons">
@@ -4358,32 +4357,47 @@
         }
         
         if (deployEditMode || fsParam === 'custom') {
-          customDeployName = params.get('name') || customDeployName;
-          const sizeParam = params.get('size');
-          if (sizeParam) {
-            const [c, r] = sizeParam.split('x').map(Number);
-            if (c && r) {
-              customDeployCols = c;
-              customDeployRows = r;
-            }
-          }
-          const limitParam = params.get('limit');
-          if (limitParam) {
-            customDeployLimit = parseInt(limitParam, 10) || customDeployLimit;
-          }
-          const countParam = params.get('count');
-          if (countParam) {
-            customDeployCount = parseInt(countParam, 10) || 1;
-          }
+          customDeployName = (params.get('name') || customDeployName).slice(0, 64);
           
-          const deployParam = params.get('deploy');
-          if (deployParam) {
-            const decoded = decodeDeployData(deployParam);
-            if (decoded && decoded.g) {
-              customDeployData = decoded.g;
+          // New format: single 'd' param contains all config
+          const dParam = params.get('d');
+          if (dParam) {
+            const decoded = decodeDeployData(dParam);
+            if (decoded) {
               if (decoded.c) customDeployCols = decoded.c;
               if (decoded.r) customDeployRows = decoded.r;
               if (decoded.n) customDeployCount = decoded.n;
+              if (decoded.l) customDeployLimit = decoded.l;
+              if (decoded.g) customDeployData = decoded.g;
+            }
+          } else {
+            // Backwards compatibility: read old params
+            const sizeParam = params.get('size');
+            if (sizeParam) {
+              const [c, r] = sizeParam.split('x').map(Number);
+              if (c && r) {
+                customDeployCols = c;
+                customDeployRows = r;
+              }
+            }
+            const limitParam = params.get('limit');
+            if (limitParam) {
+              customDeployLimit = parseInt(limitParam, 10) || customDeployLimit;
+            }
+            const countParam = params.get('count');
+            if (countParam) {
+              customDeployCount = parseInt(countParam, 10) || 1;
+            }
+            
+            const deployParam = params.get('deploy');
+            if (deployParam) {
+              const decoded = decodeDeployData(deployParam);
+              if (decoded && decoded.g) {
+                customDeployData = decoded.g;
+                if (decoded.c) customDeployCols = decoded.c;
+                if (decoded.r) customDeployRows = decoded.r;
+                if (decoded.n) customDeployCount = decoded.n;
+              }
             }
           }
         }

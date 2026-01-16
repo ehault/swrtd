@@ -484,7 +484,7 @@
     </header>
 
     <div class="tabs">
-      <button class="tab-btn active" data-tab="tab-general">Guides</button>
+      <button class="tab-btn active" data-tab="tab-guides">Guides</button>
       <button class="tab-btn" data-tab="tab-characters">Characters</button>
       <button class="tab-btn" data-tab="tab-tiers">Tier List</button>
       <button class="tab-btn" data-tab="tab-lexicon">Lexicon</button>
@@ -566,7 +566,7 @@
       </div>
     </section>
 
-        <section id="tab-general" class="panel active">
+        <section id="tab-guides" class="panel active">
       <div class="section">
         <h4>User Guide</h4>
         <div class="guide-controls">
@@ -2047,7 +2047,7 @@
     function readStateFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const t = params.get('tab');
-      const tab = (t === 'lexicon' || t === 'characters' || t === 'general' || t === 'tiers' || t === 'about') ? t : 'general';
+      const tab = (t === 'lexicon' || t === 'characters' || t === 'guides' || t === 'tiers' || t === 'about') ? t : 'guides';
       const q = params.get('q') || '';
       const cls = params.get('cls') || '';
       const kws = (params.get('kws') || '').split(',').filter(Boolean).map(s => s.trim());
@@ -2816,7 +2816,7 @@
 
     function applyStateToUI(state){
       // Tab
-      setActiveTab(state.tab || 'general');
+      setActiveTab(state.tab || 'guides');
       // Character search
       const search = document.getElementById('search');
       if (search) search.value = state.q || '';
@@ -2905,7 +2905,7 @@
     }
 
     // Store state for each tab separately (persists during session but not in URL)
-    const tabState = { characters: {}, lexicon: {}, tiers: {}, general: {}, about: {} };
+    const tabState = { characters: {}, lexicon: {}, tiers: {}, guides: {}, about: {} };
     
     function updateUrlFromUI(){
       // If in custom tier list mode, update that URL instead
@@ -2937,7 +2937,7 @@
         if (s.interactive) params.set('interactive', '1');
         if (s.tiers) params.set('tiers', s.tiers);
         if (s.tierName) params.set('tierName', s.tierName);
-      } else if (s.tab === 'general') {
+      } else if (s.tab === 'guides') {
         if (s.gq) params.set('gq', s.gq);
         if (s.gtags && s.gtags.length) params.set('gtags', s.gtags.join(','));
       }
@@ -3904,7 +3904,7 @@
         const article = GUIDE_ARTICLES.find(a => a.id === guideId);
         if (article) {
           // Ensure we're on the guide tab
-          setActiveTab('general');
+          setActiveTab('guides');
           openGuideModal(article);
         }
       }

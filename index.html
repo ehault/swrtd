@@ -54,7 +54,7 @@
   .tier-items { display: flex; flex-wrap: wrap; gap: 8px; min-height: 48px; }
   .char-chip { appearance: none; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: var(--text); padding: 0; border-radius: 8px; font-weight: 700; cursor: pointer; transition: .15s ease; overflow: hidden; width: 48px; height: 48px; }
   .char-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.4); }
-  .char-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .char-chip img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; -webkit-user-drag: none; }
   /* Card portrait */
   .card-portrait { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255,255,255,.14); flex-shrink: 0; }
   .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
@@ -86,6 +86,53 @@
   .tier-row.tier-B .tier-title { background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.38); color: #fff1db; }
   .tier-row.tier-C .tier-title { background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.38); color: #ffe3e3; }
   .tier-row.tier-Untiered .tier-title { background: rgba(15,23,42,.5); border-color: rgba(15,23,42,.8); color: #e2e8f0; }
+  /* Deployment Simulator */
+  .deploy-wrapper { margin-bottom: 16px; }
+  .deploy-wrapper:last-child { margin-bottom: 0; }
+  .deploy-header { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; padding: 8px 12px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; margin-bottom: 8px; transition: background .2s; }
+  .deploy-header:hover { background: rgba(255,255,255,.08); }
+  .deploy-header .deploy-name { flex: 1; font-weight: 700; font-size: 15px; }
+  .deploy-header .collapse-arrow { font-size: 12px; opacity: 0.6; transition: transform .2s; }
+  .deploy-header.collapsed .collapse-arrow { transform: rotate(-90deg); }
+  .deploy-content { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.15s ease-out, opacity 0.15s ease-out; opacity: 1; }
+  .deploy-content > * { overflow: hidden; }
+  .deploy-header.collapsed + .deploy-content { grid-template-rows: 0fr; opacity: 0; }
+  .deploy-header .deploy-buttons { display: flex; gap: 8px; }
+  .deploy-header.collapsed .deploy-buttons { display: none; }
+  .deploy-name-input { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: var(--text); padding: 6px 12px; border-radius: 6px; font-size: 16px; font-weight: 700; flex: 1; max-width: 300px; }
+  .deploy-name-input:focus { border-color: var(--accent-2); outline: none; }
+  
+  .deploy-area { display: flex; gap: 16px; align-items: flex-start; }
+  .deploy-grid-container { display: flex; align-items: center; gap: 12px; }
+  .deploy-grid { display: grid; gap: 4px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 8px; }
+  .deploy-cell { width: 52px; height: 52px; background: rgba(255,255,255,.04); border: 1px dashed rgba(255,255,255,.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+  .deploy-cell:hover { background: rgba(91,214,255,.08); border-color: rgba(91,214,255,.3); }
+  .deploy-cell.drag-over { background: rgba(91,214,255,.15); border-color: var(--accent-2); border-style: solid; }
+  .deploy-cell.drag-over.limit-reached { background: rgba(255,91,91,.15); border-color: #ff5b5b; }
+  .deploy-cell .char-chip.swap-preview { opacity: 0.4; filter: grayscale(100%); pointer-events: none; }
+  .deploy-cell.drag-source { }
+  .deploy-cell.drag-source > .char-chip:not(.swap-preview) { opacity: 0.4; filter: grayscale(100%); }
+  .deploy-cell.occupied { border-style: solid; border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.06); }
+  .deploy-cell .char-chip { width: 48px; height: 48px; margin: 0; }
+  
+  .deploy-direction { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; }
+  .deploy-direction-icon { font-size: 32px; color: var(--accent); filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+  .deploy-direction-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: .5px; }
+  
+  .deploy-bench { margin-top: 16px; }
+  .deploy-bench-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,.5); margin-bottom: 8px; text-transform: uppercase; letter-spacing: .5px; }
+  .deploy-bench-items { display: flex; flex-wrap: wrap; gap: 6px; min-height: 48px; padding: 8px; background: rgba(15,23,42,.3); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; }
+  .deploy-bench-items.drag-over { background: rgba(91,214,255,.08); border-color: rgba(91,214,255,.3); }
+  .deploy-bench-items .char-chip { cursor: grab; }
+  .deploy-bench-items .char-chip:active { cursor: grabbing; }
+  
+  .deploy-size-selector { display: flex; gap: 6px; align-items: center; margin-left: auto; }
+  .deploy-size-selector label { font-size: 12px; opacity: 0.7; }
+  .deploy-size-selector select { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); color: var(--text); padding: 4px 8px; border-radius: 6px; font-size: 13px; }
+  
+  .deploy-wrapper.deploy-fullscreen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background: linear-gradient(145deg, #1f2443, #2e1348); padding: 20px; overflow-y: auto; margin: 0; border-radius: 0; }
+  .deploy-wrapper.deploy-fullscreen .deploy-header { position: sticky; top: -20px; margin: -20px -20px 12px; padding: 12px 20px; background: rgba(31,36,67,.95); border-radius: 0; border: none; border-bottom: 1px solid rgba(255,255,255,.1); z-index: 10; }
+
   /* Interactive tier list */
 
   /* Collapsible tier lists */
@@ -487,6 +534,7 @@
       <button class="tab-btn active" data-tab="tab-guides">Guides</button>
       <button class="tab-btn" data-tab="tab-characters">Characters</button>
       <button class="tab-btn" data-tab="tab-tiers">Tier List</button>
+      <button class="tab-btn" data-tab="tab-deployment">Deployment</button>
       <button class="tab-btn" data-tab="tab-lexicon">Lexicon</button>
       <button class="tab-btn" data-tab="tab-about">About</button>
     </div>
@@ -534,6 +582,10 @@
         <div id="tier-disclaimer" class="notes" style="margin: 0 0 8px 0; padding: 6px 10px;">Disclaimer: This tier list is not a pull recommendation. It is a relative comparison assuming units are at roughly the same investment and have their recommended awakenings enabled.
         </div>
       <div id="tier-lists-container"></div>
+    </section>
+
+    <section id="tab-deployment" class="panel">
+      <div id="deploy-container"></div>
     </section>
 
     <section id="tab-lexicon" class="panel">
@@ -2095,7 +2147,7 @@
     function readStateFromUrl(){
       const params = new URLSearchParams(window.location.search);
       const t = params.get('tab');
-      const tab = (t === 'lexicon' || t === 'characters' || t === 'guides' || t === 'tiers' || t === 'about') ? t : 'guides';
+      const tab = (t === 'lexicon' || t === 'characters' || t === 'guides' || t === 'tiers' || t === 'deployment' || t === 'about') ? t : 'guides';
       const q = params.get('q') || '';
       const cls = params.get('cls') || '';
       const kws = (params.get('kws') || '').split(',').filter(Boolean).map(s => s.trim());
@@ -2118,6 +2170,10 @@
     function setActiveTab(tab){
       const targetId = `tab-${tab}`;
       const targetEl = document.getElementById(targetId) ? targetId : 'tab-characters';
+      // Initialize deploy tab when switching to it
+      if (targetEl === 'tab-deployment') {
+        setTimeout(() => initDeployTab(), 0);
+      }
       document.querySelectorAll('.tab-btn').forEach(x => {
         const isTarget = x.getAttribute('data-tab') === targetEl;
         x.classList.toggle('active', isTarget);
@@ -2671,6 +2727,11 @@
     function parseFullscreenFromUrl() {
       const params = new URLSearchParams(window.location.search);
       const fsParam = params.get('fullscreen');
+      
+      // Skip if this is a deployment URL (handled by initDeployTab)
+      if (params.get('tab') === 'deployment') {
+        return;
+      }
       
       if (fsParam === 'custom') {
         // Custom tier list from URL
@@ -3375,6 +3436,9 @@
   parseExpandedFromUrl();
   parseFullscreenFromUrl();
   renderAllTierLists();
+  if (initialState.tab === 'deployment') {
+    setTimeout(() => initDeployTab(), 0);
+  }
   if (initialState.char) {
     // Ensure correct tab and open the requested character
     setActiveTab('characters');
@@ -3389,6 +3453,9 @@
     parseExpandedFromUrl();
     parseFullscreenFromUrl();
     renderAllTierLists();
+    if (st.tab === 'deployment') {
+      setTimeout(() => initDeployTab(), 0);
+    }
     const modalEl = document.getElementById('modal');
     if (st.char) {
       setActiveTab('characters');
@@ -3400,6 +3467,670 @@
   });
 
     // Initial render handled above after applying URL state
+
+    // ==================== DEPLOYMENT SIMULATOR ====================
+    // Preset deployments (read-only unless in edit mode)
+    const DEPLOY_PRESETS = [
+      { id: 'rifts', name: 'Rifts', cols: 5, rows: 5, limit: 21, data: '' },
+      { id: 'arena', name: 'Arena', cols: 5, rows: 5, limit: 10, data: '' },
+      { id: 'colosseum', name: 'Colosseum', cols: 5, rows: 5, limit: 25, data: '' },
+      { id: 'naraka', name: 'Naraka', cols: 5, rows: 5, limit: 25, data: '' },
+      { id: 'guild-boss', name: 'Guild Boss', cols: 5, rows: 5, limit: 25, data: '' },
+      { id: 'gvg', name: 'GvG', cols: 5, rows: 4, limit: 10, data: '' },
+      { id: 'critter', name: 'Critter Commotion', cols: 5, rows: 3, limit: 10, data: '' },
+    ];
+    
+    let expandedDeploymentId = 'rifts';
+    let fullscreenDeployId = null;
+    let deployEditMode = false;
+    let customDeployName = 'My Deployment';
+    let customDeployCols = 5;
+    let customDeployRows = 5;
+    let customDeployLimit = 25;
+    let customDeployData = {};
+    let deployDragState = null;
+    
+    function encodeDeployData(gridData, cols, rows) {
+      const obj = { c: cols, r: rows, g: gridData };
+      return btoa(JSON.stringify(obj));
+    }
+    
+    function decodeDeployData(encoded) {
+      try {
+        const json = atob(encoded);
+        return JSON.parse(json);
+      } catch (e) {
+        return null;
+      }
+    }
+    
+    function updateDeployUrl() {
+      if (!fullscreenDeployId) return;
+      const url = new URL(window.location);
+      url.searchParams.set('tab', 'deployment');
+      url.searchParams.set('fullscreen', fullscreenDeployId);
+      
+      if (fullscreenDeployId === 'custom' || deployEditMode) {
+        url.searchParams.set('name', customDeployName);
+        url.searchParams.set('size', `${customDeployCols}x${customDeployRows}`);
+        url.searchParams.set('limit', customDeployLimit);
+        if (Object.keys(customDeployData).length > 0) {
+          url.searchParams.set('deploy', encodeDeployData(customDeployData, customDeployCols, customDeployRows));
+        } else {
+          url.searchParams.delete('deploy');
+        }
+        if (deployEditMode) {
+          url.searchParams.set('edit', '1');
+        }
+      } else {
+        url.searchParams.delete('name');
+        url.searchParams.delete('size');
+        url.searchParams.delete('deploy');
+        url.searchParams.delete('edit');
+      }
+      window.history.replaceState({}, '', url);
+    }
+    
+    function exitDeployFullscreen() {
+      fullscreenDeployId = null;
+      deployEditMode = false;
+      customDeployData = {};
+      customDeployName = 'My Deployment';
+      customDeployCols = 5;
+      customDeployRows = 3;
+      document.body.classList.remove('deploy-fullscreen-active');
+      const url = new URL(window.location);
+      url.searchParams.delete('fullscreen');
+      url.searchParams.delete('name');
+      url.searchParams.delete('size');
+      url.searchParams.delete('deploy');
+      url.searchParams.delete('edit');
+      window.history.replaceState({}, '', url);
+      renderAllDeployments();
+    }
+    
+    function renderAllDeployments() {
+      const container = document.getElementById('deploy-container');
+      if (!container) return;
+      container.innerHTML = '';
+      
+      if (fullscreenDeployId) {
+        if (fullscreenDeployId === 'custom') {
+          renderFullscreenDeployment(null);
+        } else {
+          const preset = DEPLOY_PRESETS.find(p => p.id === fullscreenDeployId);
+          if (preset) renderFullscreenDeployment(preset);
+        }
+        return;
+      }
+      
+      const createBtn = document.createElement('button');
+      createBtn.className = 'toggle-btn';
+      createBtn.style.cssText = 'margin-bottom: 12px; width: 100%;';
+      createBtn.innerHTML = '<span style="font-size:16px;font-weight:bold;vertical-align:middle;line-height:1;">+</span> Create New Deployment';
+      createBtn.addEventListener('click', () => createNewDeployment());
+      container.appendChild(createBtn);
+      
+      DEPLOY_PRESETS.forEach(preset => {
+        renderPresetDeployment(container, preset);
+      });
+    }
+    
+    function renderPresetDeployment(container, preset) {
+      const isExpanded = expandedDeploymentId === preset.id;
+      
+      const wrapper = document.createElement('div');
+      wrapper.className = 'deploy-wrapper section';
+      wrapper.id = 'deploy-' + preset.id;
+      
+      const header = document.createElement('div');
+      header.className = 'deploy-header' + (isExpanded ? '' : ' collapsed');
+      header.innerHTML = `
+        <span class="collapse-arrow">▼</span>
+        <span class="deploy-name">${preset.name}</span>
+        <span style="opacity:0.5;font-size:12px;">(${preset.cols}×${preset.rows}, max ${preset.limit})</span>
+        <div class="deploy-buttons">
+          <button class="toggle-btn fullscreen-btn" data-deploy-id="${preset.id}" title="View in fullscreen">⛶ Fullscreen</button>
+        </div>
+      `;
+      
+      header.addEventListener('click', (e) => {
+        if (e.target.closest('.deploy-buttons')) return;
+        if (expandedDeploymentId === preset.id) {
+          expandedDeploymentId = null;
+        } else {
+          expandedDeploymentId = preset.id;
+        }
+        renderAllDeployments();
+      });
+      
+      header.querySelector('.fullscreen-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        enterDeployFullscreen(preset.id);
+      });
+      
+      wrapper.appendChild(header);
+      
+      const content = document.createElement('div');
+      content.className = 'deploy-content';
+      
+      const inner = document.createElement('div');
+      
+      let gridData = {};
+      if (preset.data) {
+        const decoded = decodeDeployData(preset.data);
+        if (decoded && decoded.g) gridData = decoded.g;
+      }
+      
+      const area = document.createElement('div');
+      area.className = 'deploy-area';
+      
+      const gridContainer = document.createElement('div');
+      gridContainer.className = 'deploy-grid-container';
+      
+      const grid = document.createElement('div');
+      grid.className = 'deploy-grid';
+      grid.style.gridTemplateColumns = `repeat(${preset.cols}, 52px)`;
+      
+      for (let row = 0; row < preset.rows; row++) {
+        for (let col = 0; col < preset.cols; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'deploy-cell';
+          
+          const key = `${row}-${col}`;
+          if (gridData[key]) {
+            const char = (typeof CHARACTERS !== 'undefined' ? CHARACTERS : []).find(c => c.id === gridData[key]);
+            if (char) {
+              cell.classList.add('occupied');
+              cell.innerHTML = `<div class="char-chip cls-${(char.class||'').toLowerCase()}" data-char="${char.id}">
+                <img src="${resolvePortrait(char.icons && char.icons.portrait || '')}" alt="${char.name}" loading="lazy" />
+              </div>`;
+            }
+          }
+          
+          grid.appendChild(cell);
+        }
+      }
+      
+      gridContainer.appendChild(grid);
+      
+      const direction = document.createElement('div');
+      direction.className = 'deploy-direction';
+      direction.innerHTML = `
+        <span class="deploy-direction-icon">⚔️</span>
+        <span class="deploy-direction-label">Enemy</span>
+      `;
+      gridContainer.appendChild(direction);
+      
+      area.appendChild(gridContainer);
+      inner.appendChild(area);
+      
+      content.appendChild(inner);
+      wrapper.appendChild(content);
+      container.appendChild(wrapper);
+    }
+    
+    function enterDeployFullscreen(presetId) {
+      const preset = DEPLOY_PRESETS.find(p => p.id === presetId);
+      if (!preset) return;
+      
+      fullscreenDeployId = presetId;
+      deployEditMode = false;
+      customDeployCols = preset.cols;
+      customDeployRows = preset.rows;
+      customDeployLimit = preset.limit || 25;
+      customDeployName = preset.name;
+      
+      customDeployData = {};
+      if (preset.data) {
+        const decoded = decodeDeployData(preset.data);
+        if (decoded && decoded.g) {
+          customDeployData = { ...decoded.g };
+        }
+      }
+      
+      document.body.classList.add('deploy-fullscreen-active');
+      updateDeployUrl();
+      renderAllDeployments();
+    }
+    
+    function renderFullscreenDeployment(preset) {
+      const container = document.getElementById('deploy-container');
+      if (!container) return;
+      
+      document.body.classList.add('deploy-fullscreen-active');
+      
+      const wrapper = document.createElement('div');
+      wrapper.className = 'deploy-wrapper section deploy-fullscreen';
+      wrapper.id = 'deploy-fullscreen';
+      
+      const isCustom = fullscreenDeployId === 'custom';
+      const isEditing = deployEditMode || isCustom;
+      const displayName = isEditing ? customDeployName : (preset ? preset.name : customDeployName);
+      
+      const header = document.createElement('div');
+      header.className = 'deploy-header';
+      
+      if (isEditing) {
+        // Build size selector options
+        const deployedCount = Object.keys(customDeployData).length;
+        
+        // Build game mode selector options
+        const modeOptions = DEPLOY_PRESETS.map(p => {
+          const selected = (p.cols === customDeployCols && p.rows === customDeployRows && p.limit === customDeployLimit) ? 'selected' : '';
+          return `<option value="${p.id}" ${selected}>${p.name} (${p.cols}×${p.rows}, max ${p.limit})</option>`;
+        }).join('');
+        
+        header.innerHTML = `
+          <input type="text" class="deploy-name-input" value="${customDeployName}" placeholder="Deployment name..." />
+          <div class="deploy-size-selector">
+            <label>Mode:</label>
+            <select class="deploy-mode-select">${modeOptions}</select>
+          </div>
+          <span class="deploy-count-display" style="opacity:0.6;font-size:13px;"><span class="deploy-count">${deployedCount}</span>/${customDeployLimit}</span>
+          <div class="deploy-buttons">
+            <button class="toggle-btn" data-action="reset" title="Clear all units">Reset</button>
+            <button class="toggle-btn" data-action="share" title="Copy URL to clipboard">📋 Share</button>
+            <button class="toggle-btn" data-action="exit" title="Exit">✕ Close</button>
+          </div>
+        `;
+        
+        const nameInput = header.querySelector('.deploy-name-input');
+        nameInput.addEventListener('input', (e) => {
+          customDeployName = e.target.value || 'My Deployment';
+          updateDeployUrl();
+        });
+        nameInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') e.target.blur();
+        });
+        
+        // Mode selector
+        const modeSelect = header.querySelector('.deploy-mode-select');
+        modeSelect.addEventListener('change', (e) => {
+          const preset = DEPLOY_PRESETS.find(p => p.id === e.target.value);
+          if (preset) {
+            changeDeployMode(preset.cols, preset.rows, preset.limit);
+          }
+        });
+        
+        header.querySelector('[data-action="reset"]')?.addEventListener('click', () => {
+          customDeployData = {};
+          updateDeployUrl();
+          renderAllDeployments();
+        });
+      } else {
+        header.innerHTML = `
+          <span class="deploy-name">${displayName}</span>
+          <span style="opacity:0.5;font-size:12px;">(${customDeployCols}×${customDeployRows}, max ${customDeployLimit})</span>
+          <div class="deploy-buttons">
+            <button class="toggle-btn" data-action="edit" title="Copy & Edit this deployment">✏️ Copy & Edit</button>
+            <button class="toggle-btn" data-action="share" title="Copy URL to clipboard">📋 Share</button>
+            <button class="toggle-btn" data-action="exit" title="Exit">✕ Close</button>
+          </div>
+        `;
+        
+        header.querySelector('[data-action="edit"]')?.addEventListener('click', () => {
+          deployEditMode = true;
+          customDeployName = displayName + ' (Copy)';
+          updateDeployUrl();
+          renderAllDeployments();
+        });
+      }
+      
+      header.querySelector('[data-action="share"]')?.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href);
+        const btn = header.querySelector('[data-action="share"]');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Copied!';
+        setTimeout(() => btn.innerHTML = orig, 2000);
+      });
+      
+      header.querySelector('[data-action="exit"]')?.addEventListener('click', () => {
+        exitDeployFullscreen();
+      });
+      
+      wrapper.appendChild(header);
+      
+      const content = document.createElement('div');
+      content.className = 'deploy-content';
+      
+      const inner = document.createElement('div');
+      
+      const area = document.createElement('div');
+      area.className = 'deploy-area';
+      
+      const gridContainer = document.createElement('div');
+      gridContainer.className = 'deploy-grid-container';
+      
+      const grid = document.createElement('div');
+      grid.className = 'deploy-grid' + (isEditing ? ' interactive-mode' : '');
+      grid.style.gridTemplateColumns = `repeat(${customDeployCols}, 52px)`;
+      
+      for (let row = 0; row < customDeployRows; row++) {
+        for (let col = 0; col < customDeployCols; col++) {
+          const cell = document.createElement('div');
+          cell.className = 'deploy-cell';
+          cell.dataset.row = row;
+          cell.dataset.col = col;
+          
+          const key = `${row}-${col}`;
+          if (customDeployData[key]) {
+            const char = (typeof CHARACTERS !== 'undefined' ? CHARACTERS : []).find(c => c.id === customDeployData[key]);
+            if (char) {
+              cell.classList.add('occupied');
+              
+              if (isEditing) {
+                const chip = document.createElement('button');
+                chip.className = `char-chip cls-${(char.class||'').toLowerCase()}`;
+                chip.dataset.char = char.id;
+                chip.draggable = true;
+                chip.innerHTML = `<img src="${resolvePortrait(char.icons && char.icons.portrait || '')}" alt="${char.name}" loading="lazy" />`;
+                
+                chip.addEventListener('dragstart', (e) => {
+                  e.dataTransfer.setData('text/plain', char.id);
+                  e.dataTransfer.effectAllowed = 'move';
+                  deployDragState = { charId: char.id, source: 'grid', row, col };
+                  requestAnimationFrame(() => chip.classList.add('dragging'));
+                });
+                chip.addEventListener('dragend', () => {
+                  chip.classList.remove('dragging');
+                  deployDragState = null;
+                });
+                
+                cell.appendChild(chip);
+              } else {
+                cell.innerHTML = `<div class="char-chip cls-${(char.class||'').toLowerCase()}" data-char="${char.id}">
+                  <img src="${resolvePortrait(char.icons && char.icons.portrait || '')}" alt="${char.name}" loading="lazy" />
+                </div>`;
+              }
+            }
+          }
+          
+          if (isEditing) {
+            cell.addEventListener('dragover', (e) => {
+              e.preventDefault();
+              e.dataTransfer.dropEffect = 'move';
+              cell.classList.add('drag-over');
+              
+              // Check if at limit when dragging from bench to empty cell
+              const currentCount = Object.keys(customDeployData).length;
+              const targetKey = `${row}-${col}`;
+              const isAtLimit = deployDragState && 
+                                deployDragState.source === 'bench' && 
+                                !customDeployData[targetKey] && 
+                                currentCount >= customDeployLimit;
+              
+              if (isAtLimit) {
+                cell.classList.add('limit-reached');
+              } else {
+                cell.classList.remove('limit-reached');
+              }
+              
+              // Show swap preview if dragging from grid to occupied cell
+              if (deployDragState && deployDragState.source === 'grid') {
+                const sourceKey = `${deployDragState.row}-${deployDragState.col}`;
+                const targetKey = `${row}-${col}`;
+                
+                // Mark source cell
+                const sourceCell = grid.querySelector(`[data-row="${deployDragState.row}"][data-col="${deployDragState.col}"]`);
+                if (sourceCell) sourceCell.classList.add('drag-source');
+                
+                // If target has a character, show it as swap preview in source
+                if (customDeployData[targetKey] && sourceKey !== targetKey) {
+                  const targetChar = (typeof CHARACTERS !== 'undefined' ? CHARACTERS : []).find(c => c.id === customDeployData[targetKey]);
+                  if (targetChar && sourceCell) {
+                    // Remove existing swap preview
+                    const oldPreview = grid.querySelector('.swap-preview');
+                    if (oldPreview) oldPreview.remove();
+                    
+                    // Create swap preview in source cell
+                    const preview = document.createElement('div');
+                    preview.className = `char-chip swap-preview cls-${(targetChar.class||'').toLowerCase()}`;
+                    preview.innerHTML = `<img src="${resolvePortrait(targetChar.icons && targetChar.icons.portrait || '')}" alt="${targetChar.name}" />`;
+                    sourceCell.appendChild(preview);
+                    
+                    // Dim the target cell's character
+                    const targetChip = cell.querySelector('.char-chip:not(.swap-preview)');
+                    if (targetChip) targetChip.style.opacity = '0.3';
+                  }
+                }
+              }
+            });
+            cell.addEventListener('dragleave', (e) => {
+              if (!cell.contains(e.relatedTarget)) {
+                cell.classList.remove('drag-over');
+                cell.classList.remove('limit-reached');
+                // Remove swap preview
+                const preview = grid.querySelector('.swap-preview');
+                if (preview) preview.remove();
+                // Restore target opacity
+                const targetChip = cell.querySelector('.char-chip:not(.swap-preview)');
+                if (targetChip) targetChip.style.opacity = '';
+                // Remove source highlight
+                grid.querySelectorAll('.drag-source').forEach(c => c.classList.remove('drag-source'));
+              }
+            });
+            cell.addEventListener('drop', (e) => {
+              e.preventDefault();
+              cell.classList.remove('drag-over');
+              cell.classList.remove('limit-reached');
+              // Clean up previews
+              const preview = grid.querySelector('.swap-preview');
+              if (preview) preview.remove();
+              grid.querySelectorAll('.drag-source').forEach(c => c.classList.remove('drag-source'));
+              grid.querySelectorAll('.char-chip').forEach(c => c.style.opacity = '');
+              handleDeployDrop(row, col);
+            });
+          }
+          
+          grid.appendChild(cell);
+        }
+      }
+      
+      gridContainer.appendChild(grid);
+      
+      const direction = document.createElement('div');
+      direction.className = 'deploy-direction';
+      direction.innerHTML = `
+        <span class="deploy-direction-icon">⚔️</span>
+        <span class="deploy-direction-label">Enemy</span>
+      `;
+      gridContainer.appendChild(direction);
+      
+      area.appendChild(gridContainer);
+      inner.appendChild(area);
+      
+      if (isEditing) {
+        const bench = document.createElement('div');
+        bench.className = 'deploy-bench';
+        bench.innerHTML = `<div class="deploy-bench-title">Available Units (drag to deploy)</div>`;
+        
+        const benchItems = document.createElement('div');
+        benchItems.className = 'deploy-bench-items';
+        
+        const deployedIds = new Set(Object.values(customDeployData));
+        
+        (typeof CHARACTERS !== 'undefined' ? CHARACTERS : []).forEach(char => {
+          if (!deployedIds.has(char.id)) {
+            const chip = document.createElement('button');
+            chip.className = `char-chip cls-${(char.class||'').toLowerCase()}`;
+            chip.dataset.char = char.id;
+            chip.draggable = true;
+            chip.innerHTML = `<img src="${resolvePortrait(char.icons && char.icons.portrait || '')}" alt="${char.name}" loading="lazy" />`;
+            
+            chip.addEventListener('dragstart', (e) => {
+              e.dataTransfer.setData('text/plain', char.id);
+              e.dataTransfer.effectAllowed = 'move';
+              deployDragState = { charId: char.id, source: 'bench' };
+              requestAnimationFrame(() => chip.classList.add('dragging'));
+            });
+            chip.addEventListener('dragend', () => {
+              chip.classList.remove('dragging');
+              deployDragState = null;
+            });
+            
+            benchItems.appendChild(chip);
+          }
+        });
+        
+        benchItems.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          benchItems.classList.add('drag-over');
+        });
+        benchItems.addEventListener('dragleave', () => {
+          benchItems.classList.remove('drag-over');
+        });
+        benchItems.addEventListener('drop', (e) => {
+          e.preventDefault();
+          benchItems.classList.remove('drag-over');
+          handleDeployDropToBench();
+        });
+        
+        bench.appendChild(benchItems);
+        inner.appendChild(bench);
+      }
+      
+      content.appendChild(inner);
+      wrapper.appendChild(content);
+      container.appendChild(wrapper);
+    }
+    
+    function changeDeployMode(newCols, newRows, newLimit) {
+      // Keep characters that still fit in the new grid, up to the new limit
+      const newData = {};
+      let count = 0;
+      Object.entries(customDeployData).forEach(([key, charId]) => {
+        const [row, col] = key.split('-').map(Number);
+        if (row < newRows && col < newCols && count < newLimit) {
+          newData[key] = charId;
+          count++;
+        }
+      });
+      
+      customDeployCols = newCols;
+      customDeployRows = newRows;
+      customDeployLimit = newLimit;
+      customDeployData = newData;
+      
+      updateDeployUrl();
+      renderAllDeployments();
+    }
+    
+    function handleDeployDrop(row, col) {
+      if (!deployDragState) return;
+      
+      const targetKey = `${row}-${col}`;
+      const currentCount = Object.keys(customDeployData).length;
+      
+      // Check limit when adding from bench (not when moving within grid)
+      if (deployDragState.source === 'bench' && !customDeployData[targetKey]) {
+        if (currentCount >= customDeployLimit) {
+          // At limit, can't add more
+          return;
+        }
+      }
+      
+      if (deployDragState.source === 'grid') {
+        const oldKey = `${deployDragState.row}-${deployDragState.col}`;
+        const existingCharId = customDeployData[targetKey];
+        if (existingCharId) {
+          customDeployData[oldKey] = existingCharId;
+        } else {
+          delete customDeployData[oldKey];
+        }
+      }
+      
+      customDeployData[targetKey] = deployDragState.charId;
+      
+      updateDeployUrl();
+      renderAllDeployments();
+    }
+    
+    function handleDeployDropToBench() {
+      if (!deployDragState || deployDragState.source !== 'grid') return;
+      
+      const oldKey = `${deployDragState.row}-${deployDragState.col}`;
+      delete customDeployData[oldKey];
+      
+      updateDeployUrl();
+      renderAllDeployments();
+    }
+    
+    function createNewDeployment() {
+      customDeployCols = 5;
+      customDeployRows = 5;
+      customDeployLimit = 25;
+      customDeployName = 'My Deployment';
+      customDeployData = {};
+      fullscreenDeployId = 'custom';
+      deployEditMode = true;
+      
+      document.body.classList.add('deploy-fullscreen-active');
+      updateDeployUrl();
+      renderAllDeployments();
+    }
+    
+    function loadDeployFromUrl() {
+      const params = new URLSearchParams(location.search);
+      
+      const fsParam = params.get('fullscreen');
+      if (fsParam) {
+        if (fsParam === 'custom') {
+          fullscreenDeployId = 'custom';
+          deployEditMode = true;
+        } else {
+          const preset = DEPLOY_PRESETS.find(p => p.id === fsParam);
+          if (preset) {
+            fullscreenDeployId = fsParam;
+            deployEditMode = params.get('edit') === '1';
+            customDeployCols = preset.cols;
+            customDeployRows = preset.rows;
+            customDeployName = preset.name;
+            
+            customDeployData = {};
+            if (preset.data) {
+              const decoded = decodeDeployData(preset.data);
+              if (decoded && decoded.g) {
+                customDeployData = { ...decoded.g };
+              }
+            }
+          }
+        }
+        
+        if (deployEditMode || fsParam === 'custom') {
+          customDeployName = params.get('name') || customDeployName;
+          
+          const sizeParam = params.get('size');
+          if (sizeParam) {
+            const match = sizeParam.match(/(\d+)x(\d+)/);
+            if (match) {
+              customDeployCols = parseInt(match[1]);
+              customDeployRows = parseInt(match[2]);
+            }
+          }
+          const limitParam = params.get('limit');
+          if (limitParam) {
+            customDeployLimit = parseInt(limitParam);
+          }
+          
+          const deployParam = params.get('deploy');
+          if (deployParam) {
+            const decoded = decodeDeployData(deployParam);
+            if (decoded && decoded.g) {
+              customDeployData = decoded.g;
+            }
+          }
+        }
+        
+        document.body.classList.add('deploy-fullscreen-active');
+      }
+    }
+    
+    function initDeployTab() {
+      loadDeployFromUrl();
+      renderAllDeployments();
+    }
+    // ==================== END DEPLOYMENT SIMULATOR ====================
 
     // ==================== USER GUIDE ====================
     

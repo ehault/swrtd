@@ -818,7 +818,7 @@
       'remove-immunity': {
         name: 'Remove Immunity',
         desc: 'Removes the target\'s Immunity, allowing damage to be taken again.',
-        tags: ['Debuff']
+        tags: ['Dispel']
       },
       'crit-dmg-taken-up': {
         name: 'Crit DMG Taken Up',
@@ -1038,7 +1038,7 @@
       'remove-buffs': {
         name: 'Remove Buffs',
         desc: 'Remove buffs from the targets.',
-        tags: ["Dispel"]
+        tags: ['Dispel']
       },
       'petrify': {
         name: 'Petrify',
@@ -2100,7 +2100,6 @@
       const cls = params.get('cls') || '';
       const kws = (params.get('kws') || '').split(',').filter(Boolean).map(s => s.trim());
       const tags = (params.get('tags') || '').split(',').filter(Boolean).map(s => s.trim());
-      const lq = params.get('lq') || '';
       const char = params.get('char') || '';
       const noself = params.get('noself') === '1' || params.get('noself') === 'true';
       const stack = params.get('stack') === '1' || params.get('stack') === 'true';
@@ -2112,10 +2111,8 @@
       const interactive = params.get('interactive') === '1';
       const tiers = params.get('tiers') || '';
       const tierName = params.get('tierName') || '';
-      // Guide tab state
-      const gq = params.get('gq') || '';
-      const gtags = (params.get('gtags') || '').split(',').filter(Boolean).map(s => s.trim());
-      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName, gq, gtags };
+      // Note: q and tags are tab-scoped (same params used for characters, lexicon, guides)
+      return { tab, q, cls, kws, tags, char, noself, stack, awk, interactive, tiers, tierName };
     }
 
     function setActiveTab(tab){
@@ -2868,9 +2865,9 @@
       // Character search
       const search = document.getElementById('search');
       if (search) search.value = state.q || '';
-      // Lexicon search
+      // Lexicon search (uses 'q' when on lexicon tab)
       const lsearch = document.getElementById('lex-search');
-      if (lsearch) lsearch.value = state.lq || '';
+      if (lsearch && state.tab === 'lexicon') lsearch.value = state.q || '';
       // Class radio
       const cls = (state.cls||'').toLowerCase();
       document.querySelectorAll('#class-boxes input.cls-radio').forEach(r => { r.checked = !!cls && r.value === cls; });
@@ -2926,13 +2923,20 @@
       }
       const tierNameEl = document.getElementById('tier-name');
       if (tierNameEl) tierNameEl.textContent = tierListName;
+      // Guide search and tags (uses 'q' and 'tags' when on guides tab)
+      if (state.tab === 'guides') {
+        const guideSearchInput = document.getElementById('guide-search');
+        if (guideSearchInput) guideSearchInput.value = state.q || '';
+        const gtagSel = new Set((state.tags||[]).map(x => x));
+        document.querySelectorAll('.guide-tag-check').forEach(c => { c.checked = gtagSel.has(String(c.value||'')); });
+      }
     }
 
     function getUIState(){
       const activeId = document.querySelector('.panel.active')?.id || 'tab-characters';
       const tab = activeId.replace(/^tab-/, '');
       const q = document.getElementById('search')?.value?.trim() || '';
-      const lq = document.getElementById('lex-search')?.value?.trim() || '';
+      // lq removed - lexicon search uses 'q' when on lexicon tab
       const clsRadio = document.querySelector('#class-boxes input.cls-radio:checked');
       const cls = clsRadio ? clsRadio.value : '';
       const kws = Array.from(document.querySelectorAll('#keyword-boxes input.kw-check:checked')).map(o => o.value.trim());
@@ -2946,10 +2950,7 @@
       const interactive = (fullscreenTierListId === "custom");
       const tiers = (fullscreenTierListId === "custom") && isTierDataModified() && !isAllUntiered() ? encodeTierData() : '';
       const tierNameValue = tierListName !== DEFAULT_TIER_NAME ? tierListName : '';
-      // Guide tab state
-      const gq = document.getElementById('guide-search')?.value?.trim() || '';
-      const gtags = Array.from(document.querySelectorAll('.guide-tag-check:checked')).map(o => o.value.trim());
-      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName: tierNameValue, gq, gtags };
+      return { tab, q, cls, kws, tags, char, noself, stack, awk, interactive, tiers, tierName: tierNameValue };
     }
 
     // Store state for each tab separately (persists during session but not in URL)
@@ -2980,14 +2981,19 @@
           params.set('awk', s.awk && s.awk.length ? s.awk.join(',') : '');
         }
       } else if (s.tab === 'lexicon') {
-        if (s.lq) params.set('lq', s.lq);
+        // Lexicon uses 'q' for search (tab-scoped)
+        const lexQ = document.getElementById('lex-search')?.value?.trim() || '';
+        if (lexQ) params.set('q', lexQ);
       } else if (s.tab === 'tiers') {
         if (s.interactive) params.set('interactive', '1');
         if (s.tiers) params.set('tiers', s.tiers);
         if (s.tierName) params.set('tierName', s.tierName);
       } else if (s.tab === 'guides') {
-        if (s.gq) params.set('gq', s.gq);
-        if (s.gtags && s.gtags.length) params.set('gtags', s.gtags.join(','));
+        // Guides uses 'q' and 'tags' (tab-scoped)
+        const guideQ = document.getElementById('guide-search')?.value?.trim() || '';
+        const guideTags = Array.from(document.querySelectorAll('.guide-tag-check:checked')).map(o => o.value.trim());
+        if (guideQ) params.set('q', guideQ);
+        if (guideTags && guideTags.length) params.set('tags', guideTags.join(','));
       }
       // about tab has no extra params
       
@@ -3827,8 +3833,9 @@
           article.content.toLowerCase().includes(query) ||
           article.preview.toLowerCase().includes(query) ||
           getArticleTags(article).some(t => t.toLowerCase().includes(query));
+        const articleTags = getArticleTags(article);
         const matchesTags = activeTags.length === 0 || 
-          activeTags.some(tag => getArticleTags(article).includes(tag));
+          activeTags.every(tag => articleTags.includes(tag));
         return matchesSearch && matchesTags;
       });
       
@@ -3868,8 +3875,9 @@
           article.preview.toLowerCase().includes(query) ||
           getArticleTags(article).some(t => t.toLowerCase().includes(query));
         
+        const articleTags = getArticleTags(article);
         const matchesTags = activeTags.length === 0 || 
-          activeTags.some(tag => getArticleTags(article).includes(tag));
+          activeTags.every(tag => articleTags.includes(tag));
         
         return matchesSearch && matchesTags;
       });
@@ -3963,6 +3971,20 @@
     // Initialize guide on page load
     (function initUserGuide() {
       renderGuideTagFilter();
+      // Apply guide filters directly from URL (before any URL rewriting happens)
+      // Uses tab-scoped 'q' and 'tags' params when on guides tab
+      const guideUrlParams = new URLSearchParams(window.location.search);
+      const currentTab = guideUrlParams.get('tab') || 'guides';
+      if (currentTab === 'guides') {
+        const qFromUrl = guideUrlParams.get('q') || '';
+        const tagsFromUrl = (guideUrlParams.get('tags') || '').split(',').filter(Boolean).map(s => s.trim());
+        const guideSearchInput = document.getElementById('guide-search');
+        if (guideSearchInput) guideSearchInput.value = qFromUrl;
+        const tagSel = new Set(tagsFromUrl);
+        document.querySelectorAll('.guide-tag-check').forEach(c => {
+          c.checked = tagSel.has(c.value);
+        });
+      }
       renderGuideArticles();
       
       const searchInput = document.getElementById('guide-search');

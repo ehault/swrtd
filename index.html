@@ -337,11 +337,11 @@
   .guide-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(124,92,255,.2); }
   .guide-card-header { padding: 16px; border-bottom: 1px solid rgba(124,92,255,.1); }
   .guide-card-title { margin: 0 0 10px; font-size: 16px; font-weight: 600; color: #fff; }
-  .guide-card-tags { display: flex; flex-wrap: wrap; gap: 6px; position: relative; max-height: 28px; overflow: hidden; transition: max-height .3s ease; }
-  .guide-card-tags.has-more { padding-right: 45px; }
+  .guide-card-tags { display: flex; flex-wrap: wrap; gap: 6px; position: relative; }
   .guide-card-tags .lex-tag { margin: 0; }
-  .guide-card-tags .more-tags { position: absolute; right: 0; top: 0; background: rgba(124,92,255,.3); color: #fff; font-size: 10px; padding: 3px 6px; border-radius: 4px; cursor: default; font-weight: 600; }
-  .guide-card:hover .guide-card-tags { max-height: 200px; }
+  .guide-card-tags .more-tags { background: rgba(124,92,255,.3); color: #fff; font-size: 10px; padding: 3px 6px; border-radius: 4px; cursor: default; font-weight: 600; }
+  .guide-card-tags .tags-hidden { display: none; }
+  .guide-card:hover .guide-card-tags .tags-hidden { display: contents; }
   .guide-card:hover .guide-card-tags .more-tags { display: none; }
   .guide-card-preview { padding: 14px 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
   /* Guide Modal (Fullscreen) */
@@ -973,12 +973,12 @@
       'stars': {
         name: 'Stars',
         desc: 'Star rank of a unit (★). Higher stars grant significant stats and unlock additional awakenings at thresholds (notably 7★).',
-        tags: ["Mechanic"]
+        tags: ["Mechanics"]
       },
       'awakening': {
         name: 'Awakening',
         desc: 'Milestone bonuses unlocked at key star levels (e.g., level 3/5/7 awakenings). Provide powerful effects like buffs, debuffs, or passive bonuses.',
-        tags: ["Mechanic"]
+        tags: ["Mechanics"]
       },
       'breakthrough-stones': {
         name: 'Breakthrough Stones',
@@ -993,7 +993,7 @@
       'immunity': {
         name: 'Immunity',
         desc: 'Damage immunity that prevents all incoming damage while active. Not a crowd-control immunity. Can be removed by effects that Remove Immunity.',
-        tags: ["Mechanic"]
+        tags: ["Mechanics"]
       },
       'attack-speed': {
         name: 'Attack Speed',
@@ -3813,9 +3813,8 @@
         <div class="guide-card" data-id="${article.id}">
           <div class="guide-card-header">
             <h5 class="guide-card-title">${article.title}</h5>
-            <div class="guide-card-tags lex-tags${getArticleTags(article).length > 3 ? ' has-more' : ''}">
-              ${getArticleTags(article).map(tag => renderTag(tag, 'lex-tag')).join('')}
-              ${getArticleTags(article).length > 3 ? '<span class="more-tags">+' + (getArticleTags(article).length - 3) + '</span>' : ''}
+            <div class="guide-card-tags lex-tags">
+              ${getArticleTags(article).slice(0, 3).map(tag => renderTag(tag, 'lex-tag')).join('')}${getArticleTags(article).length > 3 ? '<span class="more-tags">+' + (getArticleTags(article).length - 3) + '</span><span class="tags-hidden">' + getArticleTags(article).slice(3).map(tag => renderTag(tag, 'lex-tag')).join('') + '</span>' : ''}
             </div>
           </div>
           <div class="guide-card-preview">${article.preview}</div>

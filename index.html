@@ -164,7 +164,9 @@
 
         .card { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.08);
           border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
-          display: flex; flex-direction: column; }
+          display: flex; flex-direction: column; cursor: pointer; transition: all .25s ease; }
+    .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(124,92,255,.2); }
+    .card:focus, .card:focus-visible, .guide-card:focus, .guide-card:focus-visible { outline: none !important; border-color: rgba(255,255,255,.08) !important; }
     .card .badge { position: absolute; top: 12px; right: 12px; padding: 4px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; letter-spacing: .3px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
     .modal-header .badge { padding: 4px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; letter-spacing: .3px; border: 1px solid rgba(255,255,255,.14); box-shadow: 0 4px 12px rgba(0,0,0,.25); }
     .incomplete { font-size: 11px; color: #ffd1d6; background: rgba(220,38,38,.16); border: 1px solid rgba(220,38,38,.55); padding: 6px 8px; border-radius: 8px; margin-top: 10px; }
@@ -303,8 +305,88 @@
   .awk-desc { font-size: 12px; color: var(--muted); margin: 2px 0 6px; white-space: pre-line; }
     .notes { font-size: 13px; color: #d4bfff; background: rgba(124,92,255,.12); border: 1px solid rgba(124,92,255,.25); padding: 10px; border-radius: 8px; white-space: pre-line; }
   /* General advice tweaks: allow normal wrapping and better chip alignment */
-  #general-content { white-space: normal; line-height: 1.5; }
-  #general-content .kw { display: inline-flex; align-items: center; vertical-align: baseline; margin: 0 2px; padding: 3px 6px; }
+    /* User Guide Styles */
+  .guide-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .guide-search { width: 100%; padding: 10px 14px; font-size: 14px; background: var(--card); border: 1px solid rgba(124,92,255,.3); border-radius: 8px; color: #fff; outline: none; }
+  .guide-search:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(124,92,255,.2); }
+  .guide-search::placeholder { color: var(--muted); }
+  .guide-tag-filter { display: flex; flex-wrap: wrap; gap: 6px; align-items: flex-start; width: 100%; max-width: none; padding: 8px; }
+  .guide-tag-check { display: none; }
+  .guide-tag-label { cursor: pointer; }
+  .guide-tag-check:checked + .guide-tag-label .lex-tag { box-shadow: 0 0 0 2px var(--accent); }
+  .guide-tag-label.unavailable { opacity: 0.35; pointer-events: none; }
+  .guide-tag-label.unavailable .lex-tag { filter: grayscale(0.6); }
+  .guide-tag-btn { padding: 4px 10px; font-size: 12px; background: rgba(124,92,255,.15); border: 1px solid rgba(124,92,255,.3); border-radius: 14px; color: #d4bfff; cursor: pointer; transition: all .2s; }
+  .guide-tag-btn:hover { background: rgba(124,92,255,.25); }
+  .guide-tag-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .guide-articles { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .guide-article { background: var(--card); border: 1px solid rgba(124,92,255,.2); border-radius: 10px; overflow: hidden; transition: border-color .2s; }
+  .guide-article:hover { border-color: rgba(124,92,255,.4); }
+  .guide-article-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; cursor: pointer; user-select: none; }
+  .guide-article-title { font-weight: 600; font-size: 14px; color: #fff; }
+  .guide-article-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .guide-article-tag { padding: 2px 8px; font-size: 11px; background: rgba(124,92,255,.2); border-radius: 10px; color: #c4a8ff; }
+  .guide-article-toggle { font-size: 18px; color: var(--muted); transition: transform .2s; }
+  .guide-article.expanded .guide-article-toggle { transform: rotate(180deg); }
+  .guide-article-content { display: none; padding: 0 14px 14px 14px; font-size: 13px; color: #d4bfff; line-height: 1.6; }
+  .guide-article.expanded .guide-article-content { display: block; }
+  .guide-article-content .kw { display: inline-flex; align-items: center; vertical-align: baseline; margin: 0 2px; padding: 3px 6px; }
+  .guide-no-results { text-align: center; padding: 40px 20px; color: var(--muted); font-style: italic; grid-column: 1 / -1; }
+  /* Card styles */
+  .guide-card { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border-radius: 12px; border: 1px solid rgba(255,255,255,.08); overflow: hidden; cursor: pointer; transition: all .25s ease; }
+  .guide-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(124,92,255,.2); }
+  .guide-card-header { padding: 16px; border-bottom: 1px solid rgba(124,92,255,.1); }
+  .guide-card-title { margin: 0 0 10px; font-size: 16px; font-weight: 600; color: #fff; }
+  .guide-card-tags { display: flex; flex-wrap: wrap; gap: 6px; position: relative; max-height: 28px; overflow: hidden; transition: max-height .3s ease; }
+  .guide-card-tags.has-more { padding-right: 45px; }
+  .guide-card-tags .lex-tag { margin: 0; }
+  .guide-card-tags .more-tags { position: absolute; right: 0; top: 0; background: rgba(124,92,255,.3); color: #fff; font-size: 10px; padding: 3px 6px; border-radius: 4px; cursor: default; font-weight: 600; }
+  .guide-card:hover .guide-card-tags { max-height: 200px; }
+  .guide-card:hover .guide-card-tags .more-tags { display: none; }
+  .guide-card-preview { padding: 14px 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+  /* Guide Modal (Fullscreen) */
+  .guide-modal { position: fixed; inset: 0; z-index: 9999; display: none; background: rgba(0,0,0,.85); backdrop-filter: blur(8px); overflow-y: auto; }
+  .guide-modal.open { display: flex; align-items: flex-start; justify-content: center; padding: 40px 20px; }
+  .guide-modal-content { width: 100%; max-width: 900px; background: linear-gradient(180deg, rgba(30,25,45,1) 0%, rgba(20,15,30,1) 100%); border-radius: 16px; border: 1px solid rgba(124,92,255,.3); box-shadow: 0 20px 60px rgba(0,0,0,.5); animation: guideModalIn .3s ease; }
+  @keyframes guideModalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .guide-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid rgba(124,92,255,.15); }
+  .guide-modal-title { margin: 0; font-size: 22px; font-weight: 700; color: #fff; }
+  .guide-modal-close { width: 36px; height: 36px; background: rgba(255,255,255,.1); border: none; border-radius: 50%; color: #fff; font-size: 20px; cursor: pointer; transition: background .2s; }
+  .guide-modal-close:hover { background: rgba(255,255,255,.2); }
+  .guide-modal-tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 24px; border-bottom: 1px solid rgba(124,92,255,.1); }
+  .guide-modal-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,.1); color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .guide-modal-tag.tag-buff { background: rgba(76,175,80,.25); color: #81c784; }
+  .guide-modal-tag.tag-debuff { background: rgba(244,67,54,.25); color: #e57373; }
+  .guide-modal-tag.tag-crit { background: rgba(255,193,7,.25); color: #ffd54f; }
+  .guide-modal-tag.tag-crush { background: rgba(255,152,0,.25); color: #ffb74d; }
+  .guide-modal-tag.tag-dot { background: rgba(156,39,176,.25); color: #ba68c8; }
+  .guide-modal-tag.tag-cc { background: rgba(33,150,243,.25); color: #64b5f6; }
+  .guide-modal-tag.tag-status { background: rgba(0,188,212,.25); color: #4dd0e1; }
+  .guide-modal-tag.tag-speed { background: rgba(139,195,74,.25); color: #aed581; }
+  .guide-modal-tag.tag-defense { background: rgba(96,125,139,.25); color: #90a4ae; }
+  .guide-modal-tag.tag-offense { background: rgba(255,87,34,.25); color: #ff8a65; }
+  .guide-modal-tag.tag-shield { background: rgba(103,58,183,.25); color: #9575cd; }
+  .guide-modal-tag.tag-over { background: rgba(233,30,99,.25); color: #f06292; }
+  .guide-modal-tag.tag-mechanic { background: rgba(121,85,72,.25); color: #a1887f; }
+  .guide-modal-tag.tag-resource { background: rgba(255,235,59,.25); color: #fff176; }
+  .guide-modal-tag.tag-dispel { background: rgba(63,81,181,.25); color: #7986cb; }
+  .guide-modal-tag.tag-hit { background: rgba(255,138,128,.25); color: #ff8a80; }
+  .guide-modal-tag.tag-category { background: rgba(158,158,158,.25); color: #bdbdbd; }
+  .guide-modal-tag.tag-attack { background: rgba(255,87,34,.25); color: #ff8a65; }
+  .guide-modal-tag.tag-aoe { background: rgba(171,71,188,.25); color: #ce93d8; }
+  .guide-modal-tag.tag-movement { background: rgba(0,150,136,.25); color: #80cbc4; }
+  .guide-modal-tag.tag-cooldown { background: rgba(3,169,244,.25); color: #4fc3f7; }
+  .guide-modal-tag.tag-accuracy { background: rgba(121,134,203,.25); color: #9fa8da; }
+  .guide-modal-tag.tag-petrify { background: rgba(117,117,117,.25); color: #9e9e9e; }
+  .guide-modal-tag.tag-frostbite { background: rgba(79,195,247,.25); color: #81d4fa; }
+  .guide-modal-tag.tag-bleed { background: rgba(229,57,53,.25); color: #ef5350; }
+  .guide-modal-tag.tag-burn { background: rgba(255,112,67,.25); color: #ff7043; }
+  .guide-modal-tag.tag-venom { background: rgba(139,195,74,.25); color: #9ccc65; }
+  .guide-modal-body { padding: 24px; color: #e0e0e0; font-size: 15px; line-height: 1.7; }
+  .guide-modal-body p { margin: 0 0 16px; }
+  .guide-modal-body ul { margin: 0 0 16px; padding-left: 24px; }
+  .guide-modal-body li { margin: 8px 0; }
+  .guide-modal-body strong { color: #fff; }
   /* General chips */
   .kw.crystals { background: rgba(91,214,255,.18); border-color: rgba(91,214,255,.38); color: #daf6ff; }
   .kw.stars { background: rgba(255,200,87,.18); border-color: rgba(255,200,87,.38); color: #fff0c2; }
@@ -351,6 +433,17 @@
   .lex-tag.tag-resource, .tt-tag.tag-resource { background: rgba(255,235,59,.25); color: #fff176; }
   .lex-tag.tag-dispel, .tt-tag.tag-dispel { background: rgba(63,81,181,.25); color: #7986cb; }
   .lex-tag.tag-hit, .tt-tag.tag-hit { background: rgba(255,138,128,.25); color: #ff8a80; }
+  .lex-tag.tag-category, .tt-tag.tag-category { background: rgba(158,158,158,.25); color: #bdbdbd; }
+  .lex-tag.tag-attack, .tt-tag.tag-attack { background: rgba(255,87,34,.25); color: #ff8a65; }
+  .lex-tag.tag-aoe, .tt-tag.tag-aoe { background: rgba(171,71,188,.25); color: #ce93d8; }
+  .lex-tag.tag-movement, .tt-tag.tag-movement { background: rgba(0,150,136,.25); color: #80cbc4; }
+  .lex-tag.tag-cooldown, .tt-tag.tag-cooldown { background: rgba(3,169,244,.25); color: #4fc3f7; }
+  .lex-tag.tag-accuracy, .tt-tag.tag-accuracy { background: rgba(121,134,203,.25); color: #9fa8da; }
+  .lex-tag.tag-petrify, .tt-tag.tag-petrify { background: rgba(117,117,117,.25); color: #9e9e9e; }
+  .lex-tag.tag-frostbite, .tt-tag.tag-frostbite { background: rgba(79,195,247,.25); color: #81d4fa; }
+  .lex-tag.tag-bleed, .tt-tag.tag-bleed { background: rgba(229,57,53,.25); color: #ef5350; }
+  .lex-tag.tag-burn, .tt-tag.tag-burn { background: rgba(255,112,67,.25); color: #ff7043; }
+  .lex-tag.tag-venom, .tt-tag.tag-venom { background: rgba(139,195,74,.25); color: #9ccc65; }
   .lex-tag.tag-aoe, .tt-tag.tag-aoe { background: rgba(174,213,129,.25); color: #c5e1a5; }
   .lex-tag.tag-burn, .tt-tag.tag-burn { background: rgba(255,87,34,.3); color: #ff7043; }
   .lex-tag.tag-venom, .tt-tag.tag-venom { background: rgba(76,175,80,.3); color: #66bb6a; }
@@ -473,15 +566,15 @@
       </div>
     </section>
 
-    <section id="tab-general" class="panel active">
+        <section id="tab-general" class="panel active">
       <div class="section">
-        <h4>Guides</h4>
-        <div id="general-content" class="notes">
-          <p><strong>Progression:</strong> Prioritize raising <span class="kw stars" data-kw="stars">Stars</span> to 7★ to unlock powerful <span class="kw awakening" data-kw="awakening">Awakening</span> effects and significant stat gains along the way.</p>
-          <p><strong>Resources:</strong> Use <span class="kw crystals" data-kw="crystals">Crystals</span> for summons and collect <span class="kw devilmons" data-kw="devilmons">Devilmons</span> from shops and events to trigger awakenings and complete kits.</p>
-          <p><strong>Shops:</strong> There are <strong>4 shops</strong> total: <strong>3</strong> in Arena and <strong>1</strong> in <em>Sky Island Defense</em> under <em>Sky Patrol</em>. Purchase priority: <span class="kw devilmons" data-kw="devilmons">Devilmons</span>, <span class="kw breakthrough-stones" data-kw="breakthrough-stones">Breakthrough Stones</span>, <span class="kw magic-orbs" data-kw="magic-orbs">Magic Orbs</span>.</p>
-          <p><strong>Gear:</strong> Gear uses <span class="kw magic-orbs" data-kw="magic-orbs">Magic Orbs</span> to pull new pieces. Prioritize <span class="kw crit-rate-up" data-kw="crit-rate-up">CRIT Rate UP</span>, <span class="kw crit-dmg-up" data-kw="crit-dmg-up">CRIT DMG UP</span>, and <span class="kw crush-rate-up" data-kw="crush-rate-up">Crush Rate UP</span> unless you have a specific build in mind.</p>
-          <p><strong>Pull Plan:</strong> Larger batches of pulls provide better outcomes over time (e.g., 10 pulls = 3,000 <span class="kw crystals" data-kw="crystals">Crystals</span>). For mass summon rewards, pull <strong>19,000</strong> in a single batch (~2M <span class="kw crystals" data-kw="crystals">Crystals</span>) — these rewards do <em>not</em> roll over to later banners. Aim to secure enough <span class="kw devilmons" data-kw="devilmons">Devilmons</span> and stars for your target unit’s full awakening path.</p>
+        <h4>User Guide</h4>
+        <div class="guide-controls">
+          <input type="text" id="guide-search" class="guide-search" placeholder="Search articles..." />
+          <div id="guide-tags" class="guide-tag-filter"></div>
+        </div>
+        <div id="guide-articles" class="guide-articles">
+          <!-- Articles will be rendered by JavaScript -->
         </div>
       </div>
     </section>
@@ -589,362 +682,361 @@
     const LEXICON = {
       'melee': {
         name: 'Melee',
-        tags: ["Category"],
-        desc: 'Close-range fighters that excel at dealing damage in the frontline. They typically have higher HP and defense, making them durable in sustained fights.'
+        desc: 'Close-range fighters that excel at dealing damage in the frontline. They typically have higher HP and defense, making them durable in sustained fights.',
+        tags: ['Unit Type', 'Offense']
       },
       'ranged': {
         name: 'Ranged',
-        tags: ["Category"],
-        desc: 'Long-range attackers that deal damage from a distance. They often have high attack power but lower survivability, best positioned behind tanks.'
+        desc: 'Long-range attackers that deal damage from a distance. They often have high attack power but lower survivability, best positioned behind tanks.',
+        tags: ['Unit Type', 'Offense']
       },
       'utility': {
         name: 'Utility',
-        tags: ["Category"],
-        desc: 'Support-focused units that provide buffs, debuffs, crowd control, or healing. They enhance team performance rather than dealing direct damage.'
+        desc: 'Support-focused units that provide buffs, debuffs, crowd control, dispel or healing. They enhance team performance rather than dealing direct damage.',
+        tags: ['Unit Type']
       },
       'tank': {
         name: 'Tank',
-        tags: ["Category"],
-        desc: 'High durability units designed to absorb damage and protect allies. They often have taunt abilities or defensive buffs to draw enemy attention.'
+        desc: 'High durability units designed to absorb damage and protect allies. They often have taunt abilities or defensive buffs to draw enemy attention.',
+        tags: ['Unit Type', 'Defense']
       },
       'buff': {
         name: 'Buff',
-        tags: ["Category"],
-        desc: 'A positive effect that enhances allied stats or behavior for a duration (e.g., defense up, attack up).'
+        desc: 'A positive effect that enhances allied stats or behavior for a duration (e.g., defense up, attack up).',
+        tags: ['Mechanics']
       },
       'debuff': {
         name: 'Debuff',
-        tags: ["Category"],
-        desc: 'A negative effect applied to enemies that weakens them or disrupts their actions (e.g., slow, defense down).'
+        desc: 'A negative effect applied to enemies that weakens them or disrupts their actions (e.g., slow, defense down).',
+        tags: ['Mechanics']
       },
       'crit-rate-up': {
         name: 'Crit Rate Up',
-        tags: ["Buff","Crit"],
-        desc: 'Increases a unit\'s chance to land a critical strike.\nCrits stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crush Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.'
+        desc: 'Increases a unit\'s chance to land a critical strike.\nCrits stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crush Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.',
+        tags: ['Buff', 'Crit']
       },
       'crush-rate-up': {
         name: 'Crush Rate Up',
-        tags: ["Buff","Crush"],
-        desc: 'Increases a unit\'s chance to land a crushing strike.\nCrushs stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crit Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.'
+        desc: 'Increases a unit\'s chance to land a crushing strike.\nCrushs stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crit Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.',
+        tags: ['Buff', 'Crush']
       },
       'crit-damage-up': {
         name: 'Crit Damage Up',
-        tags: ["Buff","Crit"],
-        desc: 'Increases the damage multiplier when landing critical hits.'
+        desc: 'Increases the damage multiplier when landing critical hits.',
+        tags: ['Buff', 'Crit']
       },
       'crush-damage-up': {
         name: 'Crush Damage Up',
-        tags: ["Buff","Crush"],
-        desc: 'Increases the damage multiplier when landing crushing hits.'
+        desc: 'Increases the damage multiplier when landing crushing hits.',
+        tags: ['Buff', 'Crush']
       },
       'crit-dmg-up': {
         name: 'CRIT DMG UP',
-        tags: ["Buff","Crit"],
-        desc: 'Increases the critical damage multiplier, amplifying the damage dealt by critical hits.'
+        desc: 'Increases the critical damage multiplier, amplifying the damage dealt by critical hits.',
+        tags: ['Buff', 'Crit']
       },
       'crush-dmg-up': {
         name: 'Crush DMG UP',
-        tags: ["Buff","Crush"],
-        desc: 'Increases the crush damage multiplier, amplifying the damage dealt by crushing hits.'
+        desc: 'Increases the crush damage multiplier, amplifying the damage dealt by crushing hits.',
+        tags: ['Buff', 'Crush']
       },
       'over-crit': {
         name: 'Over Crit',
-        tags: ["Mechanic","Crit","Over"],
-        desc: 'When reaching over 100% crit rate, each additional percent create a change to roll crit dmg up an additional time at 1.2x multiplier.\nE.g., 150 crit rate rolls crit dmg 1 time, and has 50% chance to roll it a second time for 1.2x time crit damages, for a total of a 2.2x crit damage multiplier.'
+        desc: 'When reaching over 100% crit rate, each additional percent create a change to roll crit dmg up an additional time at 1.2x multiplier.\nE.g., 150 crit rate rolls crit dmg 1 time, and has 50% chance to roll it a second time for 1.2x time crit damages, for a total of a 2.2x crit damage multiplier.',
+        tags: ['Mechanic', 'Crit']
       },
       'over-crush': {
         name: 'Over Crush',
-        tags: ["Mechanic","Crush","Over"],
-        desc: 'When reaching over 100% crush rate, each additional percent create a change to roll crush dmg up an additional time at 1.2x multiplier.\nE.g., 150 crush rate rolls crush dmg 1 time, and has 50% chance to roll it a second time for 1.2x time crush damages, for a total of a 2.2x crush damage multiplier.'
+        desc: 'When reaching over 100% crush rate, each additional percent create a change to roll crush dmg up an additional time at 1.2x multiplier.\nE.g., 150 crush rate rolls crush dmg 1 time, and has 50% chance to roll it a second time for 1.2x time crush damages, for a total of a 2.2x crush damage multiplier.',
+        tags: ['Mechanic', 'Crush']
       },
       'stackable': {
         name: 'Stackable',
-        tags: ["Mechanic"],
-        desc: 'Effects that can be stacked multiple times for increased potency.\nNote that effect cannot stack with themselves, e.g. Crit Rate Up applied twice from the same source won\'t stack but will stack with other stackables or non-stackable sources.'
+        desc: 'Effects that can be stacked multiple times for increased potency.\nNote that effect cannot stack with themselves, e.g. Crit Rate Up applied twice from the same source won\'t stack but will stack with other stackables or non-stackable sources.',
+        tags: ['Mechanics']
       },
       'stacked-shield': {
         name: 'Stacked Shield',
-        tags: ["Buff","Shield","Defense"],
-        desc: 'Grants one or more shield stacks that absorb one instance of incoming damage for a short duration. Multiple stacks can exist concurrently and are consumed as damage is taken.'
+        desc: 'Grants one or more shield stacks that absorb one instance of incoming damage for a short duration. Multiple stacks can exist concurrently and are consumed as damage is taken.',
+        tags: ['Buff', 'Defense', 'Shield']
       },
       'dmg-res-up': {
         name: 'DMG RES Up',
-        tags: ["Buff","Defense"],
-        desc: 'Increases damage resistance and reduces damage taken by a percentage. Some sources may be Irremovable and/or stackable depending on the effect.'
+        desc: 'Increases damage resistance and reduces damage taken by a percentage. Some sources may be Irremovable and/or stackable depending on the effect.',
+        tags: ['Buff', 'Defense']
       },
       'gigantify': {
         name: 'Gigantify',
-        tags: ["Buff", "Defense", "Attack"],
-        desc: 'Temporarily enlarges the unit. Typically improves reach/area, attack and survivability for the duration of the effect.'
+        desc: 'Temporarily enlarges the unit. Typically improves reach/area, attack and survivability for the duration of the effect.',
+        tags: ['Buff', 'Defense']
       },
       'crit-resistance-up': {
         name: 'Crit Resistance Up',
-        tags: ["Buff","Crit","Defense"],
-        desc: 'Reduces the chance of being critically hit by increasing Crit Resistance. Effectively lowers attackers\' crit rate against the target.'
+        desc: 'Reduces the chance of being critically hit by increasing Crit Resistance. Effectively lowers attackers\' crit rate against the target.',
+        tags: ['Buff', 'Defense', 'Crit']
       },
       'crit-damage-down': {
         name: 'Crit Damage Down',
-        tags: ["Debuff","Crit"],
-        desc: 'Reduces the critical damage multiplier of affected enemies, lowering the damage dealt by their critical hits.'
+        desc: 'Reduces the critical damage multiplier of affected enemies, lowering the damage dealt by their critical hits.',
+        tags: ['Debuff', 'Crit', 'Offense']
       },
       'incoming-crit-dmg-up': {
         name: 'Incoming Crit DMG Up',
-        tags: ["Debuff","Crit"],
-        desc: 'The target takes increased damage from critical hits. Often applied as a debuff on enemies to amplify your team\'s critical strikes.'
+        desc: 'The target takes increased damage from critical hits. Often applied as a debuff on enemies to amplify your team\'s critical strikes.',
+        tags: ['Debuff', 'Crit', 'Defense']
       },
       'atk-up': {
         name: 'ATK Up',
-        tags: ["Buff","Offense","Attack"],
-        desc: 'Increases the Attack stat, boosting damage for basic, crit, and ultimate attacks.'
+        desc: 'Increases the Attack stat, boosting damage for basic, crit, and ultimate attacks.',
+        tags: ['Buff', 'Offense', 'Attack']
       },
       'add-dmg': {
         name: 'ADD DMG',
-        tags: ["Mechanic","Offense"],
-        desc: 'Deals additional damage based on a condition (e.g., number of debuffs on the target) up to a specified cap.'
+        desc: 'Deals additional damage based on a condition (e.g., number of debuffs on the target) up to a specified cap.',
+        tags: ['Offense', 'Mechanics']
       },
       'atk-spd-down': {
         name: 'ATK SPD Down',
-        tags: ["Debuff","Attack Speed", "Basic Attack"],
-        desc: 'Reduces attack speed, slowing the rate of basic attacks.'
+        desc: 'Reduces attack speed, slowing the rate of basic attacks.',
+        tags: ['Debuff', 'Offense', 'Basic Attack', 'Attack Speed']
       },
       'incoming-aoe-dmg-up': {
         name: 'Incoming AoE DMG Up',
-        tags: ["Debuff","AoE"],
-        desc: 'The target takes increased damage from area-of-effect sources.'
+        desc: 'The target takes increased damage from area-of-effect sources.',
+        tags: ['Debuff', 'AOE', 'Defense']
       },
       'incoming-aoe-dmg-down': {
         name: 'Incoming AoE DMG Down',
-        tags: ["Buff","AoE","Defense"],
-        desc: 'The target takes reduced damage from area-of-effect sources.'
+        desc: 'The target takes reduced damage from area-of-effect sources.',
+        tags: ['Buff', 'Defense']
       },
       'dmg-res-down': {
         name: 'DMG RES Down',
-        tags: ["Debuff","Defense"],
-        desc: 'Reduces the target\'s damage resistance, causing them to take more damage from all sources.'
+        desc: 'Reduces the target\'s damage resistance, causing them to take more damage from all sources.',
+        tags: ['Debuff', 'Defense']
       },
       'remove-immunity': {
         name: 'Remove Immunity',
-        tags: ["Dispel"],
-        desc: 'Removes the target\'s Immunity, allowing damage to be taken again.'
+        desc: 'Removes the target\'s Immunity, allowing damage to be taken again.',
+        tags: ['Debuff']
       },
       'crit-dmg-taken-up': {
         name: 'Crit DMG Taken Up',
-        tags: ["Debuff","Crit"],
-        desc: 'The target takes more critical damage; functionally similar to Incoming Crit DMG Up.'
+        desc: 'The target takes more critical damage; functionally similar to Incoming Crit DMG Up.',
+        tags: ['Debuff', 'Crit']
       },
       'dmg-dealt-up': {
         name: 'DMG Dealt UP',
-        tags: ["Buff","Offense"],
-        desc: 'Increases damage dealt by the affected unit by a flat percentage. Often scoped to a class (e.g., Ranged allies).'
+        desc: 'Increases damage dealt by the affected unit by a flat percentage. Often scoped to a class (e.g., Ranged allies).',
+        tags: ['Buff', 'Offense']
       },
       'double-hit-rate-up': {
         name: 'Double Hit Rate UP',
-        tags: ["Buff","Hit","Basic Attack"],
-        desc: 'Increases the chance for basic attacks to strike twice. Applies only to basic attacks, not crit attacks or ultimates.'
+        desc: 'Increases the chance for basic attacks to strike twice. Applies only to basic attacks, not crit attacks or ultimates.',
+        tags: ['Buff', 'Offense']
       },
       'range-up': {
         name: 'Range UP',
-        tags: ["Buff"],
-        desc: 'Increases the attack range, allowing the unit to hit targets from farther away.'
+        desc: 'Increases the attack range, allowing the unit to hit targets from farther away.',
+        tags: ['Buff', 'Offense']
       },
       'atk-spd-up': {
         name: 'ATK SPD UP',
-        tags: ["Buff","Attack Speed","Basic Attack"],
-        desc: 'Increases attack speed, reducing the time between basic attacks.'
+        desc: 'Increases attack speed, reducing the time between basic attacks.',
+        tags: ['Buff', 'Offense', 'Attack Speed', 'Basic Attack']
       },
       'triple-hit-rate-up': {
         name: 'Triple Hit Rate UP',
-        tags: ["Buff","Hit","Basic Attack"],
-        desc: 'Increases the chance for basic attacks to strike three times. Applies only to basic attacks, not crit attacks or ultimates.'
+        desc: 'Increases the chance for basic attacks to strike three times. Applies only to basic attacks, not crit attacks or ultimates.',
+        tags: ['Buff', 'Offense']
       },
       'devilmons': {
         name: 'Devilmons',
-        tags: ["Resource"],
-        desc: 'A resource required to trigger awakenings and unlock the full kit of a unit. Obtained from Guild Shop, events, and special missions.'
+        desc: 'A resource required to trigger awakenings and unlock the full kit of a unit. Obtained from Guild Shop, events, and special missions.',
+        tags: ['Resources']
       },
       'mov-spd-down': {
         name: 'MOV SPD DOWN',
-        tags: ["Debuff","Movement"],
-        desc: 'Reduces the target\'s movement speed for a short duration.'
+        desc: 'Reduces the target\'s movement speed for a short duration.',
+        tags: ['Debuff', 'CC']
       },
       'frostbite': {
         name: 'Frostbite',
-        tags: ["Debuff","DoT","Frostbite"],
-        desc: 'Damage over time effect themed around cold; may interact with other skills. Treated as a DoT.'
+        desc: 'Damage over time effect themed around cold; may interact with other skills. Treated as a DoT.',
+        tags: ['Debuff', 'DoT', 'Frostbite']
       },
       'bleed': {
         name: 'Bleed',
-        tags: ["Debuff","DoT","Bleed"],
-        desc: 'Damage over time effect applied to enemies, often stacking or refreshing. Treated as a DoT.'
+        desc: 'Damage over time effect applied to enemies, often stacking or refreshing. Treated as a DoT.',
+        tags: ['Debuff', 'DoT', 'Bleed']
       },
       'burn': {
         name: 'Burn',
-        tags: ["Debuff","DoT","Burn"],
-        desc: 'Damage over time effect themed around fire; some effects count other flames as Burn. Treated as a DoT.'
+        desc: 'Damage over time effect themed around fire; some effects count other flames as Burn. Treated as a DoT.',
+        tags: ['Debuff', 'DoT', 'Burn']
       },
       'dark-flame': {
         name: 'Dark Flame',
-        tags: ["Debuff","DoT","Burn"],
-        desc: 'A damage over time effect counted as Burn for interactions.'
+        desc: 'A damage over time effect counted as Burn for interactions.',
+        tags: ['Debuff', 'DoT', 'Burn']
       },
       'venom': {
         name: 'Venom',
-        tags: ["Debuff","DoT","Venom"],
-        desc: 'Damage over time effect themed around poison. Treated as a DoT.'
+        desc: 'Damage over time effect themed around poison. Treated as a DoT.',
+        tags: ['Debuff', 'DoT', 'Venom']
       },
       'fear': {
         name: 'Fear',
-        tags: ["Debuff","CC","Defense"],
-        desc: 'Crowd control that prevents the affected target from taking actions and decreases DEF by 20% while active.'
+        desc: 'Crowd control that prevents the affected target from taking actions and decreases DEF by 20% while active.',
+        tags: ['Debuff', 'CC', 'Defense']
       },
       'lovesick': {
         name: 'Lovesick',
-        tags: ["Debuff","DoT","Venom"],
-        desc: 'A unique damage over time effect applied by certain units. Treated as a DoT and counts as Venom for interactions/synergies (e.g., ADD DMG vs Venom).'
+        desc: 'A unique damage over time effect applied by certain units. Treated as a DoT and counts as Venom for interactions/synergies (e.g., ADD DMG vs Venom).',
+        tags: ['Debuff', 'DoT', 'Venom']
       },
       'cdr-up': {
         name: 'CDR UP',
-        tags: ["Buff","Cooldown"],
-        desc: 'Reduces skill cooldowns, allowing abilities to be used more frequently.'
+        desc: 'Reduces skill cooldowns, allowing abilities to be used more frequently.',
+        tags: ['Buff', 'CDR']
       },
       'root': {
         name: 'Root',
-        tags: ["Debuff","Status"],
-        desc: 'Crowd control that prevents movement for the duration.'
+        desc: 'Crowd control that prevents movement for the duration.',
+        tags: ['Debuff', 'Status']
       },
       'blind': {
         name: 'Blind',
-        tags: ["Debuff","Status","Accuracy"],
-        desc: 'Reduces hit chance or causes misses; a debuff affecting accuracy.'
+        desc: 'Reduces hit chance or causes misses; a debuff affecting accuracy.',
+        tags: ['Debuff', 'Status', 'Accuracy']
       },
       'stealth': {
         name: 'Stealth',
-        tags: ["Buff","Status","Defense"],
-        desc: 'Temporarily hides the unit or reduces likelihood of being targeted.'
+        desc: 'Temporarily hides the unit or reduces likelihood of being targeted.',
+        tags: ['Buff', 'Status']
       },
       'dampen': {
         name: 'Dampen',
-        tags: ["Debuff","Offense"],
-        desc: 'A debuff that reduces the target\'s offensive effectiveness or damage. Applies only to basic attacks, not crit attacks or ultimates. Exact value depends on in-game description.'
+        desc: 'A debuff that reduces the target\'s offensive effectiveness or damage. Applies only to basic attacks, not crit attacks or ultimates. Exact value depends on in-game description.',
+        tags: ['Debuff', 'Offense', 'Basic Attack']
       },
       'amplify': {
         name: 'Amplify',
-        tags: ["Buff","Offense"],
-        desc: 'Buff that increases attack modifier points per hit; does not affect DoT ticks. Applies only to basic attacks, not crit attacks or ultimates.'
+        desc: 'Buff that increases attack modifier points per hit; does not affect DoT ticks. Applies only to basic attacks, not crit attacks or ultimates.',
+        tags: ['Buff', 'Offense', 'Basic Attack']
       },
       'aoe-dmg-up': {
         name: 'AoE DMG UP',
-        tags: ["Buff","AoE","Offense"],
-        desc: 'Increases damage dealt by area-of-effect attacks for the affected allies.'
+        desc: 'Increases damage dealt by area-of-effect attacks for the affected allies.',
+        tags: ['Buff', 'Offense', "AOE"]
       },
       'crit-rate-down': {
         name: 'CRIT Rate DOWN',
-        tags: ["Debuff","Crit"],
-        desc: 'Reduces the target\'s critical hit chance.'
+        desc: 'Reduces the target\'s critical hit chance.',
+        tags: ['Debuff', 'Crit']
       },
       'acc-up': {
         name: 'ACC UP',
-        tags: ["Buff","Accuracy"],
-        desc: 'Increases accuracy, improving chance to apply debuffs or land hits.'
+        desc: 'Increases accuracy, improving chance to apply debuffs or land hits.',
+        tags: ['Buff', 'Accuracy']
       },
       'def-down': {
         name: 'DEF DOWN',
-        tags: ["Debuff","Defense"],
-        desc: 'Reduces the target\'s defense, increasing damage taken from all sources.\nDEF DOWN: 20%.'
+        desc: 'Reduces the target\'s defense, increasing damage taken from all sources.\nDEF DOWN: 20%.',
+        tags: ['Debuff', 'Defense']
       },
       'mov-spd-up': {
         name: 'MOV SPD UP',
-        tags: ["Buff","Movement"],
-        desc: 'Increases movement speed, causing the unit to reposition faster between targets or areas.'
+        desc: 'Increases movement speed, causing the unit to reposition faster between targets or areas.',
+        tags: ['Buff', 'Utility']
       },
       'def-up': {
         name: 'DEF UP',
-        tags: ["Buff","Defense"],
-        desc: 'Increases Defense, reducing incoming damage from attacks.'
+        desc: 'Increases Defense, reducing incoming damage from attacks.',
+        tags: ['Buff', 'Defense']
       },
       'invincibility': {
         name: 'Invincibility',
-        tags: ["Buff","Shield","Defense"],
-        desc: 'Prevents the unit from taking damage for the duration of the effect. Often short and used at the start of battle or during key moments.\nNote that this effect is a Shield, and can thus be dispelled by Shield Removal effects.'
+        desc: 'Prevents the unit from taking damage for the duration of the effect. Often short and used at the start of battle or during key moments.\nNote that this effect is a Shield, and can thus be dispelled by Shield Removal effects.',
+        tags: ['Buff', 'Defense']
       },
       'dmg-down-from-ranged-enemies': {
         name: 'DMG DOWN from Ranged Enemies',
-        tags: ["Buff","Defense"],
-        desc: 'Reduces damage taken from Ranged enemies specifically by a percentage.'
+        desc: 'Reduces damage taken from Ranged enemies specifically by a percentage.',
+        tags: ["Buff", "Defense"]
       },
       'crystals': {
         name: 'Crystals',
-        tags: ["Resource"],
-        desc: 'Primary currency used for summoning new/returning units. Spent in bulk for higher-value pulls (e.g., 10 pulls = 3,000; 100 pulls = 30,000). Earned via daily missions, events, quests, and achievements.'
+        desc: 'Primary currency used for summoning new/returning units. Spent in bulk for higher-value pulls (e.g., 10 pulls = 3,000; 100 pulls = 30,000). Earned via daily missions, events, quests, and achievements.',
+        tags: ["Resources"]
       },
       'stars': {
         name: 'Stars',
-        tags: ["Resource"],
-        desc: 'Star rank of a unit (★). Higher stars grant significant stats and unlock additional awakenings at thresholds (notably 7★).'
+        desc: 'Star rank of a unit (★). Higher stars grant significant stats and unlock additional awakenings at thresholds (notably 7★).',
+        tags: ["Mechanic"]
       },
       'awakening': {
         name: 'Awakening',
-        tags: ["Mechanic"],
-        desc: 'Milestone bonuses unlocked at key star levels (e.g., level 3/5/7 awakenings). Provide powerful effects like buffs, debuffs, or passive bonuses.'
+        desc: 'Milestone bonuses unlocked at key star levels (e.g., level 3/5/7 awakenings). Provide powerful effects like buffs, debuffs, or passive bonuses.',
+        tags: ["Mechanic"]
       },
       'breakthrough-stones': {
         name: 'Breakthrough Stones',
-        tags: ["Resource"],
-        desc: 'Used to raise a unit\'s level cap. High-priority purchase when available in shops or events.'
+        desc: 'Used to raise a unit\'s level cap. High-priority purchase when available in shops or events.',
+        tags: ["Resources"]
       },
       'magic-orbs': {
         name: 'Magic Orbs',
-        tags: ["Resource"],
-        desc: 'Used to pull new pieces of gear. Prioritize if you\'re expanding or upgrading equipment.'
+        desc: 'Used to pull new pieces of gear. Prioritize if you\'re expanding or upgrading equipment.',
+        tags: ["Resources"]
       },
       'immunity': {
         name: 'Immunity',
-        tags: ["Buff","Shield"],
-        desc: 'Damage immunity that prevents all incoming damage while active. Not a crowd-control immunity. Can be removed by effects that Remove Immunity.'
+        desc: 'Damage immunity that prevents all incoming damage while active. Not a crowd-control immunity. Can be removed by effects that Remove Immunity.',
+        tags: ["Mechanic"]
       },
       'attack-speed': {
         name: 'Attack Speed',
-        tags: ["Mechanic","Attack Speed","Basic Attack"],
-        desc: 'Determines how quickly a unit performs its basic attacks. Higher Attack Speed increases basic attack frequency. Affects only basic attacks; crit attacks and ultimates are gated by their own cooldowns (reduced by CDR UP). Double/Triple Hit modify hit count, not Attack Speed.'
+        desc: 'Determines how quickly a unit performs its basic attacks. Higher Attack Speed increases basic attack frequency. Affects only basic attacks; crit attacks and ultimates are gated by their own cooldowns (reduced by CDR UP). Double/Triple Hit modify hit count, not Attack Speed.',
+        tags: [" Mechanic", "Basic Attack", 'Attack Speed', 'Basic Attack']
       },
       'basic-attack': {
         name: 'Basic Attack',
-        tags: ["Mechanic"],
-        desc: 'A unit\'s standard attack with no inherent cooldown and whose rate is governed by Attack Speed. Many effects like Double/Triple Hit Rate, Amplify, and Dampen apply only to basic attacks and do not affect crit attacks or ultimates.'
+        desc: 'A unit\'s standard attack with no inherent cooldown and whose rate is governed by Attack Speed. Many effects like Double/Triple Hit Rate, Amplify, and Dampen apply only to basic attacks and do not affect crit attacks or ultimates.',
+        tags: ['Mechanics']
       },
       'crit-attack': {
         name: 'Crit Attack',
-        tags: ["Mechanic"],
-        desc: 'Secondary skill with a base 2 sec cooldown. Cooldown is reduced by CDR UP. Not affected by basic-only effects such as Double/Triple Hit Rate, Amplify, or Dampen.'
+        desc: 'Secondary skill with a base 2 sec cooldown. Cooldown is reduced by CDR UP. Not affected by basic-only effects such as Double/Triple Hit Rate, Amplify, or Dampen.',
+        tags: ['Mechanics', 'Crit']
       },
       'ultimate': {
         name: 'Ultimate',
-        tags: ["Mechanic"],
-        desc: 'Powerful skill with a base 10 sec cooldown. Cooldown is reduced by CDR UP. Also called “Exclusive Skill.” Not affected by basic-only effects.'
+        desc: 'Powerful skill with a base 10 sec cooldown. Cooldown is reduced by CDR UP. Also called “Exclusive Skill.” Not affected by basic-only effects.',
+        tags: ['Mechanics']
       },
       'exclusive-skill': {
         name: 'Exclusive Skill',
-        tags: ["Mechanic"],
-        desc: 'Synonym for “Ultimate.” Base 10 sec cooldown, reduced by CDR UP. Not affected by basic-only effects.'
+        desc: 'Synonym for “Ultimate.” Base 10 sec cooldown, reduced by CDR UP. Not affected by basic-only effects.',
+        tags: ['Mechanics']
       },
       'remove-buffs': {
         name: 'Remove Buffs',
-        tags: ["Dispel"],
-        desc: 'Remove buffs from the targets.'
+        desc: 'Remove buffs from the targets.',
+        tags: ["Dispel"]
       },
       'petrify': {
         name: 'Petrify',
-        tags: ["Debuff","CC","Petrify"],
-        desc: 'Unable to perform action. Decreases EVA by 20%'
+        desc: 'Unable to perform action. Decreases EVA by 20%',
+        tags: ['Debuff', 'CC', 'Accuracy']
       },
       'cc-efficiency-up': {
         name: 'CC Efficiency UP',
-        tags: ["Buff","CC"],
-        desc: 'Increase duration of CC.'
+        desc: 'Increase duration of CC.',
+        tags: ['Buff', 'CC']
       },
       'dmg up vs. enemies under petrify': {
         name: 'DMG UP vs. Enemies under Petrify',
-        tags: ["Buff","Offense","Petrify"],
         desc: 'Increase damage against enemies affected by Petrify.'
       },
     };
@@ -1506,9 +1598,12 @@
         [c.kit?.basic?.kws, c.kit?.crit?.kws, c.kit?.ult?.kws].filter(Boolean).forEach(arr => arr.forEach(k => allKws.add((typeof k === 'object' ? k.id : k).toLowerCase())));
         (c.awakening||[]).forEach(a => (a?.kws||[]).forEach(k => allKws.add((typeof k === 'object' ? k.id : k).toLowerCase())));
       });
-      // Collect all tags from the entire LEXICON
-      Object.values(LEXICON).forEach(entry => {
-        (entry.tags || []).forEach(t => allTags.add(t));
+      // Collect tags only from keywords that appear in characters
+      allKws.forEach(kw => {
+        const entry = LEXICON[kw];
+        if (entry && entry.tags) {
+          entry.tags.forEach(t => allTags.add(t));
+        }
       });
       // Initialize tag filter
       const tagWrap = document.getElementById('tag-boxes');
@@ -1637,7 +1732,7 @@
           div.className = 'lex-item';
           const cls = KW_CLASS(key);
           const descHtml = chipify(item.desc);
-          const tagsHtml = tags.map(t => `<span class="lex-tag tag-${t.toLowerCase()}">${t}</span>`).join('');
+          const tagsHtml = tags.map(t => renderTag(t, 'lex-tag')).join('');
           div.innerHTML = `<div class="lex-term"><span class="kw ${cls}" data-kw="${key}" data-no-tt="1">${item.name}</span></div><div class="lex-desc">${descHtml}</div><div class="lex-tags">${tagsHtml}</div>`;
           wrap.appendChild(div);
         }
@@ -1856,6 +1951,7 @@
       list.forEach(c => {
         const card = document.createElement('div');
         card.className = 'card';
+        card.setAttribute('data-id', c.id);
         const badgeClass = c.class === 'melee' ? 'cls-melee' : c.class === 'ranged' ? 'cls-ranged' : c.class === 'utility' ? 'cls-utility' : 'cls-tank';
         // Build effect chips from kit + awakening (selected levels only)
         let effItems = [
@@ -1935,16 +2031,13 @@
           </div>
           ${catRow}
           ${effRow}
-          <div class="card-actions">
-            <button class="btn" data-id="${c.id}">View Details</button>
-            ${incomplete ? '<span class="incomplete">Incomplete Kit</span>' : ''}
-          </div>
+          ${incomplete ? '<div class="card-actions"><span class="incomplete">Incomplete Kit</span></div>' : ''}
         `;
         wrap.appendChild(card);
       });
 
-      wrap.querySelectorAll('button[data-id]').forEach(btn => btn.addEventListener('click', e => {
-        const id = e.target.getAttribute('data-id');
+      wrap.querySelectorAll('.card[data-id]').forEach(card => card.addEventListener('click', e => {
+        const id = card.getAttribute('data-id');
         openModal(id);
         updateUrlFromUI();
       }));
@@ -1971,7 +2064,10 @@
       const interactive = params.get('interactive') === '1';
       const tiers = params.get('tiers') || '';
       const tierName = params.get('tierName') || '';
-      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName };
+      // Guide tab state
+      const gq = params.get('gq') || '';
+      const gtags = (params.get('gtags') || '').split(',').filter(Boolean).map(s => s.trim());
+      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName, gq, gtags };
     }
 
     function setActiveTab(tab){
@@ -2034,6 +2130,7 @@
       createBtn.className = 'toggle-btn';
       createBtn.style.cssText = 'margin-bottom: 12px; width: 100%;';
       createBtn.innerHTML = '➕ Create New Tier List';
+      createBtn.style.color = '#fff';
       createBtn.addEventListener('click', () => createNewTierList());
       container.appendChild(createBtn);
       
@@ -2801,9 +2898,15 @@
       const interactive = (fullscreenTierListId === "custom");
       const tiers = (fullscreenTierListId === "custom") && isTierDataModified() && !isAllUntiered() ? encodeTierData() : '';
       const tierNameValue = tierListName !== DEFAULT_TIER_NAME ? tierListName : '';
-      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName: tierNameValue };
+      // Guide tab state
+      const gq = document.getElementById('guide-search')?.value?.trim() || '';
+      const gtags = Array.from(document.querySelectorAll('.guide-tag-check:checked')).map(o => o.value.trim());
+      return { tab, q, cls, kws, tags, lq, char, noself, stack, awk, interactive, tiers, tierName: tierNameValue, gq, gtags };
     }
 
+    // Store state for each tab separately (persists during session but not in URL)
+    const tabState = { characters: {}, lexicon: {}, tiers: {}, general: {}, about: {} };
+    
     function updateUrlFromUI(){
       // If in custom tier list mode, update that URL instead
       if (fullscreenTierListId === 'custom') {
@@ -2813,25 +2916,33 @@
       const s = getUIState();
       const params = new URLSearchParams();
       params.set('tab', s.tab);
-      if (s.q) params.set('q', s.q);
-      if (s.cls) params.set('cls', s.cls);
-      if (s.kws && s.kws.length) params.set('kws', s.kws.join(','));
-      if (s.tags && s.tags.length) params.set('tags', s.tags.join(','));
-      if (s.lq) params.set('lq', s.lq);
-      if (s.char) params.set('char', s.char);
-      if (s.noself) params.set('noself', '1');
-      if (s.stack) params.set('stack', '1');
-      // Only include awk param if it differs from default (3,5,7 all selected)
-      const awkSorted = (s.awk || []).slice().sort((a, b) => a - b);
-      const isDefaultAwk = awkSorted.length === 3 && awkSorted[0] === 3 && awkSorted[1] === 5 && awkSorted[2] === 7;
-      if (!isDefaultAwk) {
-        // Set awk param: empty string if none selected, or comma-separated values
-        params.set('awk', s.awk && s.awk.length ? s.awk.join(',') : '');
+      
+      // Only add params relevant to current tab
+      if (s.tab === 'characters') {
+        if (s.q) params.set('q', s.q);
+        if (s.cls) params.set('cls', s.cls);
+        if (s.kws && s.kws.length) params.set('kws', s.kws.join(','));
+        if (s.tags && s.tags.length) params.set('tags', s.tags.join(','));
+        if (s.char) params.set('char', s.char);
+        if (s.noself) params.set('noself', '1');
+        if (s.stack) params.set('stack', '1');
+        const awkSorted = (s.awk || []).slice().sort((a, b) => a - b);
+        const isDefaultAwk = awkSorted.length === 3 && awkSorted[0] === 3 && awkSorted[1] === 5 && awkSorted[2] === 7;
+        if (!isDefaultAwk) {
+          params.set('awk', s.awk && s.awk.length ? s.awk.join(',') : '');
+        }
+      } else if (s.tab === 'lexicon') {
+        if (s.lq) params.set('lq', s.lq);
+      } else if (s.tab === 'tiers') {
+        if (s.interactive) params.set('interactive', '1');
+        if (s.tiers) params.set('tiers', s.tiers);
+        if (s.tierName) params.set('tierName', s.tierName);
+      } else if (s.tab === 'general') {
+        if (s.gq) params.set('gq', s.gq);
+        if (s.gtags && s.gtags.length) params.set('gtags', s.gtags.join(','));
       }
-      // Interactive tier list state
-      if (s.interactive) params.set('interactive', '1');
-      if (s.tiers) params.set('tiers', s.tiers);
-      if (s.tierName) params.set('tierName', s.tierName);
+      // about tab has no extra params
+      
       const url = `${location.pathname}?${params.toString()}`;
       history.replaceState(null, '', url);
     }
@@ -3025,7 +3136,7 @@
         });
         // Sort tags alphabetically and render
         const sortedTags = [...charTags].sort();
-        tagWrap.innerHTML = sortedTags.map(t => `<span class="lex-tag tag-${t.toLowerCase()}">${t}</span>`).join('');
+        tagWrap.innerHTML = sortedTags.map(t => renderTag(t, 'lex-tag')).join('');
       }
 
       // Incomplete warning in modal kit section
@@ -3234,6 +3345,573 @@
   });
 
     // Initial render handled above after applying URL state
+
+    // ==================== USER GUIDE ====================
+    
+    // Shared function to render a tag with consistent styling
+    function renderTag(tag, className = 'lex-tag') {
+      const tagLower = tag.toLowerCase().replace(/\s+/g, '-');
+      return `<span class="${className} tag-${tagLower}">${tag}</span>`;
+    }
+
+    const GUIDE_ARTICLES = [
+      {
+        id: 'progression',
+        title: 'Progression Guide',
+        preview: 'Learn how to progress efficiently by focusing on star upgrades and awakening.',
+        content: `
+          <p>Focus on upgrading your monsters to higher <span class="kw gold" data-kw="stars">★ Stars</span>.</p>
+          <p>The ultimate goal is reaching <strong>7★</strong> to unlock powerful <span class="kw gold" data-kw="awakening">Awakening</span> effects.</p>
+          <p>Awakening levels (+3, +5, +7) provide significant stat boosts and unique passive abilities that can dramatically change a unit's effectiveness.</p>
+          <p>Priority order: Focus on your main DPS first, then supports with strong awakening effects.</p>
+        `
+      },
+      {
+        id: 'resources',
+        title: 'Resource Management',
+        preview: 'How to efficiently manage your crystals, devilmons, and other valuable resources.',
+        content: `
+          <p>Save your <span class="kw gold" data-kw="crystals">Crystals</span> primarily for summoning.</p>
+          <p><span class="kw gold" data-kw="devilmons">Devilmons</span> are the most valuable resource — obtain them from shops whenever available.</p>
+          <p><span class="kw epic" data-kw="magic-orbs">Magic Orbs</span> should be saved for gear pulls during events.</p>
+          <p>Don't waste Crystals on energy refreshes early game; natural energy regeneration is sufficient.</p>
+        `
+      },
+      {
+        id: 'shops',
+        title: 'Shop Priorities',
+        preview: 'What to prioritize buying from the various in-game shops.',
+        content: `
+          <p>There are <strong>4 shops</strong> total: 3 in Arena and 1 in Sky Island Defense.</p>
+          <p><strong>Priority items to buy:</strong></p>
+          <ul>
+            <li><span class="kw gold" data-kw="devilmons">Devilmons</span> — Always buy these first! Essential for skill-ups.</li>
+            <li><span class="kw rare" data-kw="breakthrough-stones">Breakthrough Stones</span> — Essential for evolution past certain star levels.</li>
+            <li><span class="kw epic" data-kw="magic-orbs">Magic Orbs</span> — For gear pulls, save for events when possible.</li>
+          </ul>
+          <p>Skip: Most other items are farmable or less impactful.</p>
+        `
+      },
+      {
+        id: 'gear-stats',
+        title: 'Gear & Stats Guide',
+        preview: 'Understanding gear stats and which ones to prioritize for your units.',
+        content: `
+          <p>Use <span class="kw epic" data-kw="magic-orbs">Magic Orbs</span> for gear pulls. Save them for events when possible.</p>
+          <p><strong>Priority stats for DPS:</strong></p>
+          <ul>
+            <li><span class="kw buff" data-kw="crit-rate-up">Crit Rate Up</span> — Aim for 70%+ on damage dealers</li>
+            <li><span class="kw buff" data-kw="crit-dmg-up">CRIT DMG Up</span> — Stack as high as possible after capping crit rate</li>
+            <li><span class="kw buff" data-kw="crush-rate-up">Crush Rate Up</span> — Valuable for breaking shields and bonus damage</li>
+            <li><span class="kw buff" data-kw="atk-up">ATK Up</span> — Base damage increase</li>
+          </ul>
+          <p><strong>For Tanks:</strong> Focus on <span class="kw buff" data-kw="def-up">DEF Up</span> and HP substats.</p>
+        `
+      },
+      {
+        id: 'summoning',
+        title: 'Summoning Strategy',
+        preview: 'When and how to summon for maximum efficiency.',
+        content: `
+          <p><strong>10 pulls</strong> = <span class="kw gold" data-kw="crystals">3,000 Crystals</span></p>
+          <p>For optimal results, save until you have enough for <strong>mass summoning</strong>:</p>
+          <ul>
+            <li>Target: ~19,000 Crystals for pity guarantee</li>
+            <li>Wait for rate-up banners featuring desired units</li>
+            <li>Events often provide bonus <span class="kw gold" data-kw="devilmons">Devilmons</span> for bulk summoning</li>
+          </ul>
+          <p>Avoid single pulls — always do 10x for guaranteed 4<span class="kw gold" data-kw="stars">★</span> or higher.</p>
+        `
+      },
+      {
+        id: 'team-building',
+        title: 'Team Composition',
+        preview: 'How to build a balanced team with the right unit roles.',
+        content: `
+          <p>A balanced team typically includes:</p>
+          <ul>
+            <li><span class="kw" data-kw="tank">Tank</span> — Front line to absorb damage</li>
+            <li><span class="kw" data-kw="melee">Melee</span> DPS — High sustained damage</li>
+            <li><span class="kw" data-kw="ranged">Ranged</span> DPS — Safe backline damage</li>
+            <li><span class="kw" data-kw="utility">Utility</span> — Provides <span class="kw" data-kw="buff">Buffs</span> or <span class="kw" data-kw="debuff">Debuffs</span></li>
+          </ul>
+          <p>Synergy matters! Look for units whose abilities complement each other.</p>
+        `
+      },
+      {
+        id: 'offensive-actions',
+        title: 'The 3 Offensive Actions',
+        preview: 'Understanding the Exclusive Skill, Crit Attack, and Basic Attack mechanics.',
+        content: `
+          <p>Every unit has <strong>3 types of offensive actions</strong>:</p>
+          <h4>1. <span class="kw" data-kw="exclusive-skill">Exclusive Skill</span></h4>
+          <ul>
+            <li>Has a <strong>10s cooldown</strong></li>
+            <li>Will use your <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> multiplier if it crits</li>
+            <li>Units <strong>prioritize</strong> using their exclusive skill over other actions when not on CD</li>
+          </ul>
+          <h4>2. <span class="kw" data-kw="crit-attack">Crit Attack</span></h4>
+          <ul>
+            <li>Has a <strong>2s cooldown</strong></li>
+            <li>Always uses your <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> multiplier</li>
+            <li>Triggers when: exclusive skill is on CD, crit attack is off CD, AND you successfully roll a crit</li>
+          </ul>
+          <h4>3. <span class="kw" data-kw="basic-attack">Basic Attack</span></h4>
+          <ul>
+            <li>Used when exclusive skill is on CD AND either crit attack is on CD OR you fail your crit roll</li>
+            <li>Main hit does NOT benefit from <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span></li>
+            <li><span class="kw buff" data-kw="double-hit-rate-up">Double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">Triple hits</span> from stats CAN still crit independently</li>
+          </ul>
+        `
+      },
+      {
+        id: 'crit-mechanics',
+        title: 'Crit Rate & Attack Speed',
+        preview: 'Why 100% crit rate isn\'t actually 100%, and how ATK SPD affects your crits.',
+        content: `
+          <h4>100% Crit Rate Isn't Really 100%</h4>
+          <p>Even with 100% <span class="kw buff" data-kw="crit-rate-up">Crit Rate</span>, you can only trigger a <span class="kw" data-kw="crit-attack">Crit Attack</span> once every <strong>2 seconds</strong> due to the crit attack cooldown.</p>
+          <p>Your <span class="kw" data-kw="exclusive-skill">Exclusive Skill</span> and <span class="kw buff" data-kw="double-hit-rate-up">double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">triple hits</span> can crit independently of this cooldown.</p>
+          
+          <h4>ATK SPD Can Steal Your Crits</h4>
+          <p><span class="kw buff" data-kw="atk-spd-up">ATK SPD</span> thresholds are critical! Being slightly above a threshold causes DPS loss:</p>
+          <ul>
+            <li><strong>100 ATK SPD</strong> (1 atk/s): Perfect 1/2 crit ratio — 1 crit attack per 2 basic attacks</li>
+            <li><strong>101 ATK SPD</strong>: Only 1 crit per 3 attacks! You attack slightly too fast, squeezing extra basic attacks before crit CD resets</li>
+          </ul>
+          <p>Example: With 100% crit rate at 100 ATK SPD in a 30s stage: 17/30 attacks benefit from <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> (56%). At 101 ATK SPD: only 12/30 (33%)!</p>
+          
+          <h4>Why This Matters</h4>
+          <p>A crit attack can deal <strong>8x+ more damage</strong> than a basic attack. Losing crits to bad ATK SPD thresholds is a massive DPS loss.</p>
+          <p><strong>Tip:</strong> <span class="kw" data-kw="exclusive-skill">Exclusive Skills</span> have longer cast times, which can help your crit CD reset — allowing a crit attack right after!</p>
+        `
+      },
+      {
+        id: 'cdr-importance',
+        title: 'CDR Buff Explained',
+        preview: 'Why Cooldown Reduction is one of the most valuable buffs in the game.',
+        content: `
+          <h4>Why <span class="kw buff" data-kw="cdr-up">CDR</span> is OP</h4>
+          <p>Cooldown Reduction reduces BOTH:</p>
+          <ul>
+            <li><span class="kw" data-kw="exclusive-skill">Exclusive Skill</span> cooldown (10s → 8s at 20% CDR)</li>
+            <li><span class="kw" data-kw="crit-attack">Crit Attack</span> cooldown (2s → 1.6s at 20% CDR)</li>
+          </ul>
+          
+          <h4>Benefits</h4>
+          <ul>
+            <li><strong>More crit attacks:</strong> With 1.6s crit CD, you're more likely to crit 1/2 attacks even at higher <span class="kw buff" data-kw="atk-spd-up">ATK SPD</span></li>
+            <li><strong>Higher DPS:</strong> More attacks benefit from <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span></li>
+            <li><strong>Better effect uptime:</strong> Effects applied by crit attacks activate more often</li>
+            <li><strong>More ultimates:</strong> Exclusive skills come off CD faster</li>
+          </ul>
+          <p><strong>Charlotte</strong> is a prime example of a unit with valuable team-wide <span class="kw buff" data-kw="cdr-up">CDR</span> buff.</p>
+        `
+      },
+      {
+        id: 'crit-crush-mechanics',
+        title: 'Crit & Crush Mechanics',
+        preview: 'How crit and crush interact, and which actions can trigger them.',
+        content: `
+          <h4>Crit & Crush Stack Multiplicatively</h4>
+          <p><span class="kw buff" data-kw="crit-rate-up">Crit</span> and <span class="kw buff" data-kw="crush-rate-up">Crush</span> are rolled <strong>independently</strong>. The same hit can both crit AND crush!</p>
+          <p><strong>Example:</strong> 500% bonus <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> + 200% bonus <span class="kw buff" data-kw="crush-dmg-up">Crush DMG</span> = <strong>1000% damage increase</strong> on a crit+crush hit.</p>
+          
+          <h4>What Can Crit/Crush?</h4>
+          <table style="width:100%; border-collapse:collapse; margin:12px 0;">
+            <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+              <th style="text-align:left; padding:8px;">Action</th>
+              <th style="text-align:center; padding:8px;">Crit?</th>
+              <th style="text-align:center; padding:8px;">Crush?</th>
+              <th style="text-align:center; padding:8px;">Double/Triple?</th>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:8px;"><span class="kw" data-kw="exclusive-skill">Exclusive Skill</span></td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✗</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:8px;"><span class="kw" data-kw="crit-attack">Crit Attack</span></td>
+              <td style="text-align:center;">✓ (always)</td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✗</td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
+              <td style="padding:8px;"><span class="kw" data-kw="basic-attack">Basic Attack</span> (main)</td>
+              <td style="text-align:center;">✗</td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✓</td>
+            </tr>
+            <tr>
+              <td style="padding:8px;"><span class="kw buff" data-kw="double-hit-rate-up">Double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">Triple</span> Hits</td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✓</td>
+              <td style="text-align:center;">✗ (can't chain)</td>
+            </tr>
+          </table>
+          
+          <h4>Independent Rolls</h4>
+          <p>For <strong>multihit</strong> skills and <strong>AoE</strong> attacks, each hit rolls for crit/crush <strong>independently</strong>.</p>
+        `
+      },
+      {
+        id: 'double-triple-hits',
+        title: 'Double & Triple Hit Mechanics',
+        preview: 'How double and triple hit stats work and interact with other mechanics.',
+        content: `
+          <h4>Key Facts</h4>
+          <ul>
+            <li>Only <span class="kw" data-kw="basic-attack">Basic Attacks</span> can trigger <span class="kw buff" data-kw="double-hit-rate-up">Double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">Triple</span> hits</li>
+            <li>Extra hits CAN <span class="kw buff" data-kw="crit-rate-up">crit</span> (independently of crit attack CD)</li>
+            <li>Extra hits CAN <span class="kw buff" data-kw="crush-rate-up">crush</span></li>
+            <li>Extra hits <strong>cannot</strong> proc more extra hits (no chaining)</li>
+            <li>Double and Triple are <strong>mutually exclusive</strong></li>
+          </ul>
+          
+          <h4>Roll Priority</h4>
+          <p>When crit attack is off CD:</p>
+          <ol>
+            <li><span class="kw buff" data-kw="crit-rate-up">Crit</span> is rolled first</li>
+            <li>If crit succeeds → <span class="kw" data-kw="crit-attack">Crit Attack</span> (no double/triple)</li>
+            <li>If crit fails → <span class="kw" data-kw="basic-attack">Basic Attack</span>, then roll for <span class="kw buff" data-kw="triple-hit-rate-up">Triple</span></li>
+            <li>If triple fails → roll for <span class="kw buff" data-kw="double-hit-rate-up">Double</span></li>
+          </ol>
+          <p><strong>Note:</strong> Higher <span class="kw buff" data-kw="crit-rate-up">Crit Rate</span> somewhat lowers effective double/triple hit rate!</p>
+          
+          <h4>Multihit Interaction</h4>
+          <p>A triple hit on a 2-hit basic attack = 2 extra attacks × 2 hits = <strong>6 total hits</strong>!</p>
+          <p>Double/triple hits increase uptime of (de)buffs applied by <span class="kw buff" data-kw="crush-rate-up">crushing</span> hits.</p>
+        `
+      },
+      {
+        id: 'dot-mechanics',
+        title: 'DoT Mechanics',
+        preview: 'How Damage over Time effects work and their limitations.',
+        content: `
+          <h4>DoT Limitations</h4>
+          <p>DoTs (<span class="kw debuff" data-kw="burn">Burn</span>, <span class="kw debuff" data-kw="bleed">Bleed</span>, <span class="kw debuff" data-kw="frostbite">Frostbite</span>, <span class="kw debuff" data-kw="venom">Venom</span>) have significant restrictions:</p>
+          <ul>
+            <li><strong>Cannot crit</strong> — no benefit from <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span></li>
+            <li><strong>Cannot crush</strong> — no benefit from <span class="kw buff" data-kw="crush-dmg-up">Crush DMG</span></li>
+            <li><strong>Cannot double/triple hit</strong></li>
+            <li><strong>Do NOT benefit from:</strong>
+              <ul>
+                <li><span class="kw buff" data-kw="amplify">Amplify</span> buff</li>
+                <li><span class="kw buff" data-kw="dmg-dealt-up">DMG Dealt Up</span> buff</li>
+                <li><span class="kw debuff" data-kw="dmg-res-down">DMG RES Down</span> debuff</li>
+              </ul>
+            </li>
+            <li><strong>Do NOT ignore DEF</strong></li>
+          </ul>
+          
+          <h4>Snapshotting</h4>
+          <p>DoTs <strong>snapshot ATK</strong> at the time of cast. If an <span class="kw buff" data-kw="atk-up">ATK Up</span> buff expires while the DoT is active, the damage ticks will NOT decrease.</p>
+          <p>This means buffing ATK before applying DoTs locks in higher damage for the full duration!</p>
+        `
+      },
+      {
+        id: 'buff-stacking',
+        title: 'Buff & Debuff Rules',
+        preview: 'How buffs stack, overwrite, and interact with each other.',
+        content: `
+          <h4>General Rules</h4>
+          <ul>
+            <li>Unless stated otherwise, <strong>buffs don't stack</strong></li>
+            <li>When buffs DO stack, they stack <strong>additively</strong></li>
+            <li>Lower level buffs will <strong>not overwrite</strong> higher level ones</li>
+            <li>Higher level buffs <strong>completely replace</strong> lower level ones</li>
+            <li>When higher level buff expires, lower level buff does NOT return</li>
+          </ul>
+          
+          <h4>Same Level Buffs</h4>
+          <p>A new buff with the <strong>same level</strong> as an existing buff will only overwrite if its duration is <strong>greater</strong> than the remaining duration. This includes DoTs, HoTs, and shields.</p>
+          
+          <h4>Special Cases</h4>
+          <ul>
+            <li><span class="kw buff" data-kw="amplify">Amplify</span> adds +60 to ATK multiplier on each hit of normal, crit, and exclusive skill attacks</li>
+            <li><span class="kw buff" data-kw="acc-up">ACC Up</span> buffs stack additively with each other</li>
+            <li>Redundant buffs (e.g., Verde's <span class="kw buff" data-kw="atk-spd-up">ATK SPD Up</span> when Jeanne's team buff is active) are wasted</li>
+          </ul>
+        `
+      },
+      {
+        id: 'defense-mechanics',
+        title: 'Defense & Damage Reduction',
+        preview: 'How DEF works and why DEF Break matters.',
+        content: `
+          <h4>DEF Formula</h4>
+          <p>Damage Reduction ≈ 0.0000114 × DEF</p>
+          <p>DEF has <strong>diminishing returns</strong> — each point of DEF provides slightly less damage reduction than the last.</p>
+          
+          <h4>Example: Stage Boss</h4>
+          <ul>
+            <li>Boss with 3.759M DEF = ~28.2% Damage Reduction</li>
+            <li>After 20% <span class="kw debuff" data-kw="def-down">DEF Break</span> → 3M DEF = ~24.9% DR</li>
+            <li>Result: Only ~3.2% DPS increase</li>
+          </ul>
+          
+          <h4>Why Flat Stats Are Weak</h4>
+          <p>Total ATK = ((Base + Equipment) × ATK%) + Training ATK</p>
+          <p>Training provides a <strong>huge flat amount</strong> that isn't affected by ATK%. This makes % stats much more valuable than flat stats on gear.</p>
+          <p><em>Same applies to DEF, ACC, and other stats.</em></p>
+        `
+      },
+      {
+        id: 'accuracy-evasion',
+        title: 'Accuracy & Evasion',
+        preview: 'How hit chance is calculated between attacker and defender.',
+        content: `
+          <h4>Hit Chance Formula</h4>
+          <p><strong>Miss Chance</strong> = (Attacker's <span class="kw buff" data-kw="acc-up">ACC</span> ÷ Target's EVA) × 100</p>
+          <p>For multihits and AoE, each hit rolls <strong>independently</strong>.</p>
+          
+          <h4>Key Stats Glossary</h4>
+          <ul>
+            <li><strong>ATK:</strong> Base damage for offensive actions</li>
+            <li><strong>DEF:</strong> Reduces incoming damage (diminishing returns)</li>
+            <li><strong>HP REC:</strong> HP regen/s — generally useless</li>
+            <li><strong>ATK SPD:</strong> Attacks per second (100 = 1 atk/s)</li>
+            <li><strong>MOV SPD:</strong> Movement speed</li>
+            <li><strong><span class="kw buff" data-kw="crit-rate-up">CRIT Rate</span>:</strong> Chance to crit (triggers crit attack or boosts skill/extra hits)</li>
+            <li><strong><span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span>:</strong> Damage multiplier on crits</li>
+            <li><strong><span class="kw buff" data-kw="crush-rate-up">Crush Rate</span>:</strong> Chance to crush (any non-DoT hit)</li>
+            <li><strong><span class="kw buff" data-kw="crush-dmg-up">Crush DMG</span>:</strong> Damage multiplier on crush</li>
+            <li><strong>Graze Rate:</strong> Chance to reduce damage taken by 30%</li>
+            <li><strong><span class="kw buff" data-kw="crit-resistance-up">CRIT RES</span>:</strong> Subtracted from attacker's crit rate</li>
+          </ul>
+        `
+      }
+    ];
+
+    // Extract tags from article content by finding data-kw attributes and looking up their LEXICON tags
+    function getArticleTags(article) {
+      const kwPattern = /data-kw="([^"]+)"/g;
+      const keywords = new Set();
+      let match;
+      while ((match = kwPattern.exec(article.content)) !== null) {
+        keywords.add(match[1]);
+      }
+      
+      const tags = new Set();
+      keywords.forEach(kw => {
+        const entry = LEXICON[kw];
+        if (entry && entry.tags) {
+          entry.tags.forEach(tag => tags.add(tag));
+        }
+      });
+      
+      return Array.from(tags).sort();
+    }
+
+    // Get all unique tags from all articles
+    function getGuideTags() {
+      const tags = new Set();
+      GUIDE_ARTICLES.forEach(article => {
+        getArticleTags(article).forEach(tag => tags.add(tag));
+      });
+      return Array.from(tags).sort();
+    }
+
+    // Render tag filter buttons
+    function renderGuideTagFilter() {
+      const container = document.getElementById('guide-tags');
+      if (!container) return;
+      
+      const tags = getGuideTags();
+      container.innerHTML = '';
+      tags.forEach(tag => {
+        const id = 'guide-tag-' + tag.toLowerCase().replace(/\s+/g, '-');
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.className = 'guide-tag-check';
+        input.id = id;
+        input.value = tag;
+        input.addEventListener('change', () => { renderGuideArticles(); updateUrlFromUI(); });
+        
+        const label = document.createElement('label');
+        label.className = 'guide-tag-label';
+        label.setAttribute('for', id);
+        label.innerHTML = renderTag(tag, 'lex-tag');
+        
+        container.appendChild(input);
+        container.appendChild(label);
+      });
+    }
+
+    // Update guide tag filter availability based on visible articles
+    function updateGuideTagAvailability() {
+      const searchInput = document.getElementById('guide-search');
+      const query = (searchInput?.value || '').toLowerCase().trim();
+      
+      const activeTags = Array.from(document.querySelectorAll('.guide-tag-check:checked'))
+        .map(input => input.value);
+      
+      // Get articles matching current filters (search + selected tags)
+      const currentFiltered = GUIDE_ARTICLES.filter(article => {
+        const matchesSearch = !query || 
+          article.title.toLowerCase().includes(query) ||
+          article.content.toLowerCase().includes(query) ||
+          article.preview.toLowerCase().includes(query) ||
+          getArticleTags(article).some(t => t.toLowerCase().includes(query));
+        const matchesTags = activeTags.length === 0 || 
+          activeTags.some(tag => getArticleTags(article).includes(tag));
+        return matchesSearch && matchesTags;
+      });
+      
+      // Collect available tags from currently filtered articles
+      const availableTags = new Set();
+      currentFiltered.forEach(article => {
+        getArticleTags(article).forEach(tag => availableTags.add(tag));
+      });
+      // Keep selected tags available so user can uncheck them
+      activeTags.forEach(tag => availableTags.add(tag));
+      
+      // Update tag labels
+      document.querySelectorAll('#guide-tags .guide-tag-label').forEach(label => {
+        const input = document.getElementById(label.getAttribute('for'));
+        const tagValue = input?.value || '';
+        const unavailable = !availableTags.has(tagValue);
+        label.classList.toggle('unavailable', unavailable);
+        if (input) input.disabled = unavailable;
+      });
+    }
+
+    // Render articles as cards
+    function renderGuideArticles() {
+      const container = document.getElementById('guide-articles');
+      if (!container) return;
+      
+      const searchInput = document.getElementById('guide-search');
+      const query = (searchInput?.value || '').toLowerCase().trim();
+      
+      const activeTags = Array.from(document.querySelectorAll('.guide-tag-check:checked'))
+        .map(input => input.value);
+      
+      const filtered = GUIDE_ARTICLES.filter(article => {
+        const matchesSearch = !query || 
+          article.title.toLowerCase().includes(query) ||
+          article.content.toLowerCase().includes(query) ||
+          article.preview.toLowerCase().includes(query) ||
+          getArticleTags(article).some(t => t.toLowerCase().includes(query));
+        
+        const matchesTags = activeTags.length === 0 || 
+          activeTags.some(tag => getArticleTags(article).includes(tag));
+        
+        return matchesSearch && matchesTags;
+      });
+      
+      // Update tag availability based on search results
+      updateGuideTagAvailability();
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="guide-no-results">No articles match your search.</div>';
+        return;
+      }
+      
+      container.innerHTML = filtered.map(article => `
+        <div class="guide-card" data-id="${article.id}">
+          <div class="guide-card-header">
+            <h5 class="guide-card-title">${article.title}</h5>
+            <div class="guide-card-tags lex-tags${getArticleTags(article).length > 3 ? ' has-more' : ''}">
+              ${getArticleTags(article).map(tag => renderTag(tag, 'lex-tag')).join('')}
+              ${getArticleTags(article).length > 3 ? '<span class="more-tags">+' + (getArticleTags(article).length - 3) + '</span>' : ''}
+            </div>
+          </div>
+          <div class="guide-card-preview">${article.preview}</div>
+        </div>
+      `).join('');
+      
+      container.querySelectorAll('.guide-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const id = card.dataset.id;
+          const article = GUIDE_ARTICLES.find(a => a.id === id);
+          if (article) openGuideModal(article);
+        });
+      });
+    }
+
+    // Open fullscreen modal for article
+    function openGuideModal(article) {
+      let modal = document.getElementById('guide-modal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'guide-modal';
+        modal.className = 'guide-modal';
+        document.body.appendChild(modal);
+        
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeGuideModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('open')) {
+            closeGuideModal();
+          }
+        });
+      }
+      
+      const tagsHtml = getArticleTags(article).map(tag => renderTag(tag, 'lex-tag')).join('');
+      
+      modal.innerHTML = `
+        <div class="guide-modal-content">
+          <div class="guide-modal-header">
+            <h2 class="guide-modal-title">${article.title}</h2>
+            <button class="guide-modal-close" onclick="closeGuideModal()">×</button>
+          </div>
+          <div class="lex-tags" style="padding: 12px 24px; border-bottom: 1px solid rgba(124,92,255,.1);">${tagsHtml}</div>
+          <div class="guide-modal-body">${article.content}</div>
+        </div>
+      `;
+      
+      modal.classList.add('open');
+      modal.dataset.articleId = article.id;
+      document.body.style.overflow = 'hidden';
+      
+      // Update URL with guide article
+      const url = new URL(window.location);
+      url.searchParams.set('guide', article.id);
+      window.history.replaceState({}, '', url);
+    }
+
+    function closeGuideModal() {
+      const modal = document.getElementById('guide-modal');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.dataset.articleId = '';
+        document.body.style.overflow = '';
+        
+        // Remove guide param from URL
+        const url = new URL(window.location);
+        url.searchParams.delete('guide');
+        window.history.replaceState({}, '', url);
+      }
+    }
+
+    // Initialize guide on page load
+    (function initUserGuide() {
+      renderGuideTagFilter();
+      renderGuideArticles();
+      
+      const searchInput = document.getElementById('guide-search');
+      if (searchInput) {
+        searchInput.addEventListener('input', () => { renderGuideArticles(); updateUrlFromUI(); });
+      }
+      
+      // Check URL for guide article to open
+      const urlParams = new URLSearchParams(window.location.search);
+      const guideId = urlParams.get('guide');
+      if (guideId) {
+        const article = GUIDE_ARTICLES.find(a => a.id === guideId);
+        if (article) {
+          // Ensure we're on the guide tab
+          setActiveTab('general');
+          openGuideModal(article);
+        }
+      }
+    })();
+    // ==================== END USER GUIDE ====================
+
   </script>
 </body>
 </html>

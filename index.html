@@ -945,6 +945,21 @@
         desc: 'Reduces the target\'s defense, increasing damage taken from all sources.\nDEF DOWN: 20%.',
         tags: ['Debuff', 'Defense']
       },
+      'eva-down': {
+        name: 'EVA DOWN',
+        desc: 'Reduces evasion, making the unit easier to hit with attacks.',
+        tags: ['Debuff', 'Evasion']
+      },
+      'crush-rate-down': {
+        name: 'Crush Rate DOWN',
+        desc: 'Reduces the chance to deal crush damage on hits.',
+        tags: ['Debuff', 'Crush']
+      },
+      'pvp': {
+        name: 'PvP',
+        desc: 'Player versus Player modes: Arena, Colosseum, Glory Battlefield and Guild vs. Guild',
+        tags: ['Game Mode','pvp']
+      },
       'mov-spd-up': {
         name: 'MOV SPD UP',
         desc: 'Increases movement speed, causing the unit to reposition faster between targets or areas.',
@@ -3714,6 +3729,30 @@
             <li><strong>Graze Rate:</strong> Chance to reduce damage taken by 30%</li>
             <li><strong><span class="kw buff" data-kw="crit-resistance-up">CRIT RES</span>:</strong> Subtracted from attacker's crit rate</li>
           </ul>
+        `
+      },
+      {
+        id: 'pvp-scaling',
+        title: 'PvP Scaling',
+        preview: 'How power differences affect stats in Arena, Colosseum, and Glory Battlefield.',
+        content: `
+            <p>In <span class="kw" data-kw="pvp">PvP</span> modes (Arena, Colosseum, Glory Battlefield), power differences between teams apply automatic stat adjustments:</p>
+            
+            <h4>Higher Power Team</h4>
+            <p>The team with higher power receives:</p>
+            <ul>
+                <li><span class="kw buff" data-kw="dmg-res-up">DMG RES UP</span> 20%</li>
+                <li><span class="kw buff" data-kw="crit-resistance-up">CRIT RES UP</span> 20%</li>
+            </ul>
+            
+            <h4>Lower Power Team</h4>
+            <p>The team with lower power receives:</p>
+            <ul>
+                <li><span class="kw debuff" data-kw="eva-down">EVA DOWN</span> 20%</li>
+                <li><span class="kw debuff" data-kw="crush-rate-down">Crush Rate DOWN</span> 20%</li>
+            </ul>
+            
+            <p>This creates a meaningful advantage for higher power teams while still allowing skillful team composition to overcome power gaps.</p>
         `
       }
     ];

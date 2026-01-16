@@ -274,6 +274,7 @@
   /* Additional keyword chip styles for consistent distinct colors */
   .kw.crush-dmg-up { background: rgba(255,145,0,.18); border-color: rgba(255,145,0,.38); color: #ffe2c4; }
   .kw.stacked-shield { background: rgba(72,201,176,.18); border-color: rgba(72,201,176,.38); color: #d7fff4; }
+  .kw.endure { background: rgba(255,220,140,.18); border-color: rgba(255,220,140,.38); color: #fff8e6; }
   .kw.dmg-res-up { background: rgba(76,111,255,.18); border-color: rgba(76,111,255,.38); color: #dbe2ff; }
   .kw.dmg-res-down { background: rgba(255,120,120,.18); border-color: rgba(255,120,120,.38); color: #ffe0e0; }
   .kw.gigantify { background: rgba(255,159,67,.18); border-color: rgba(255,159,67,.38); color: #fff0dc; }
@@ -321,6 +322,7 @@
   .kw.crit-rate-down { background: rgba(160,120,255,.18); border-color: rgba(160,120,255,.38); color: #eee6ff; }
   .kw.basic-attack { background: rgba(120,255,200,.18); border-color: rgba(120,255,200,.38); color: #eafff7; }
   .kw.crit-attack { background: rgba(255,200,140,.18); border-color: rgba(255,200,140,.38); color: #fff3e1; }
+  .kw.remove-crit-attack-cooldown { background: rgba(255,180,100,.18); border-color: rgba(255,180,100,.38); color: #fff4e0; }
   .kw.ultimate { background: rgba(255,160,220,.18); border-color: rgba(255,160,220,.38); color: #ffe6f5; }
 
   /* Keyword micro-badges for applicability and stackability */
@@ -791,7 +793,7 @@
         tags: ['Mechanics']
       },
       'crit-rate-up': {
-        name: 'Crit Rate Up',
+        name: 'CRIT Rate Up',
         desc: 'Increases a unit\'s chance to land a critical strike.\nCrits stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crush Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.',
         tags: ['Buff', 'Crit']
       },
@@ -801,7 +803,7 @@
         tags: ['Buff', 'Crush']
       },
       'crit-damage-up': {
-        name: 'Crit Damage Up',
+        name: 'CRIT Damage Up',
         desc: 'Increases the damage multiplier when landing critical hits.',
         tags: ['Buff', 'Crit']
       },
@@ -821,7 +823,7 @@
         tags: ['Buff', 'Crush']
       },
       'over-crit': {
-        name: 'Over Crit',
+        name: 'Over CRIT',
         desc: 'When reaching over 100% crit rate, each additional percent create a change to roll crit dmg up an additional time at 1.2x multiplier.\nE.g., 150 crit rate rolls crit dmg 1 time, and has 50% chance to roll it a second time for 1.2x time crit damages, for a total of a 2.2x crit damage multiplier.',
         tags: ['Mechanic', 'Crit']
       },
@@ -840,6 +842,11 @@
         desc: 'Grants one or more shield stacks that absorb one instance of incoming damage for a short duration. Multiple stacks can exist concurrently and are consumed as damage is taken.',
         tags: ['Buff', 'Defense', 'Shield']
       },
+      'endure': {
+        name: 'Endure',
+        desc: 'A shield effect that prevents the unit from dying when taking fatal damage, keeping HP at 1 for the duration.\nTypically has a cooldown before it can trigger again. Very valuable for GvG and survival scenarios.',
+        tags: ['Buff', 'Defense', 'Shield']
+      },
       'dmg-res-up': {
         name: 'DMG RES Up',
         desc: 'Increases damage resistance and reduces damage taken by a percentage. Some sources may be Irremovable and/or stackable depending on the effect.',
@@ -851,17 +858,17 @@
         tags: ['Buff', 'Defense']
       },
       'crit-resistance-up': {
-        name: 'Crit Resistance Up',
+        name: 'CRIT Resistance Up',
         desc: 'Reduces the chance of being critically hit by increasing Crit Resistance. Effectively lowers attackers\' crit rate against the target.',
         tags: ['Buff', 'Defense', 'Crit']
       },
       'crit-damage-down': {
-        name: 'Crit Damage Down',
+        name: 'CRIT Damage Down',
         desc: 'Reduces the critical damage multiplier of affected enemies, lowering the damage dealt by their critical hits.',
         tags: ['Debuff', 'Crit', 'Offense']
       },
       'incoming-crit-dmg-up': {
-        name: 'Incoming Crit DMG Up',
+        name: 'Incoming CRIT DMG Up',
         desc: 'The target takes increased damage from critical hits. Often applied as a debuff on enemies to amplify your team\'s critical strikes.',
         tags: ['Debuff', 'Crit', 'Defense']
       },
@@ -901,7 +908,7 @@
         tags: ['Dispel']
       },
       'crit-dmg-taken-up': {
-        name: 'Crit DMG Taken Up',
+        name: 'CRIT DMG Taken Up',
         desc: 'The target takes more critical damage; functionally similar to Incoming Crit DMG Up.',
         tags: ['Debuff', 'Crit']
       },
@@ -979,6 +986,11 @@
         name: 'CDR UP',
         desc: 'Reduces skill cooldowns, allowing abilities to be used more frequently.',
         tags: ['Buff', 'CDR']
+      },
+      'remove-crit-attack-cooldown': {
+        name: 'Remove CRIT Attack Cooldown',
+        desc: 'Removes the 2 second cooldown on Crit Attacks, allowing them to trigger on every basic attack as long as crit rate permits.\nThis significantly increases DPS potential but reduces the effectiveness of Double/Triple Hit Rate and Amplify since more attacks become crit attacks instead of basic attacks.',
+        tags: ['Buff', 'Crit', 'Cooldown']
       },
       'root': {
         name: 'Root',
@@ -1101,7 +1113,7 @@
         tags: ['Mechanics']
       },
       'crit-attack': {
-        name: 'Crit Attack',
+        name: 'CRIT Attack',
         desc: 'Secondary skill with a base 2 sec cooldown. Cooldown is reduced by CDR UP. Not affected by basic-only effects such as Double/Triple Hit Rate, Amplify, or Dampen.',
         tags: ['Mechanics', 'Crit']
       },
@@ -1275,7 +1287,7 @@
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Applies Range UP 3 and ATK SPD UP 15% buff to itself at the start of the battle.', kws: [{ id: 'range-up', appliesTo: 'self' }, { id: 'atk-spd-up', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, applies a Triple Hit Rate UP 10% to itself for 10 sec.\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'triple-hit-rate-up', appliesTo: 'self', stackable: true }] }
+          { level: 7, text: 'Upon a successful hit, applies a Triple Hit Rate UP 10% to itself for 10 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'triple-hit-rate-up', appliesTo: 'self', stackable: true }] }
         ],
         notes: 'An older and reliable ranged DPS unit with ok team buffs.\n\nNote that the Double Hit and Triple hit only apply to Basic Attacks and not Crit Attacks or Ultimates.',
         recommendations: 'A solid choice for a ranged DPS unit with some team utility.\nShe is on the way out compared to newer units but can still perform adequately in various content or if running a basic attack centric build.',
@@ -1314,7 +1326,11 @@
           crit: { text: 'Deals 250% of ATK as CRIT DMG 3 times to enemies within a 3m fan-shaped area in front. Upon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ id: 'crit-dmg-up', appliesTo: 'melee', stackable: true }, { id: 'incoming-aoe-dmg-down', appliesTo: 'self', stackable: true }] },
           ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target. Upon a successful hit, applies a ATK SPD UP 20% buff to allies for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'atk-spd-up', appliesTo: 'allies', stackable: true }] }
         },
-        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'Applies a CRIT Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable).\nApplies an ATK SPD UP 30% buff to itself for 15 sec at the start of the battle. (Stackable)\nWhen taking fatal damage, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec)', kws: [{ id: 'atk-spd-up', appliesTo: 'self', stackable: true }, { id: 'crit-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'endure', appliesTo: 'self' }] },
+          { level: 7, text: 'Upon a successful hit, applies a Remove CRIT Attack Cooldown buff to itself for 4 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'remove-crit-attack-cooldown', appliesTo: 'self' }] },
+        ],
         notes: 'An interesting melee DPS unit with crit damage buffs and stackable attack speed support for the team.\nAlso provides self-survivability through AoE damage taken down buffs and has an endure on a5 which is excellent for GvG gameplay.',
         recommendations: 'Zeratu is unfortunately a little odd to scale due to his a7 removing the crit cooldown, meaning Double/Triple hits and amplify are less effective.\nHe is still a top tier DPS, but future scaling is unknown at this time. At 0* he still replaces Jeanne, making him a slot in in many comps.',
         icons: {
@@ -1664,7 +1680,30 @@
         icons: {
           portrait: '/images/portraits/icon_mon_fairyqueen00_water_v.png',
         }
-      }
+      },
+      {
+        id: 'cassandra',
+        name: 'Cassandra',
+        title: 'Cassandra',
+        releaseDate: '',
+        class: 'ranged',
+        stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '130', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
+        kit: {
+          basic: { text: 'Deals 250% of ATK as DMG to the target.', dmg: '250', hits: 1, kws: [] },
+          crit: { text: 'Deals 130% of ATK as CRIT DMG 3 times to the target.\nDeals ADD DMG to targets under Stun', dmg: '130', hits: 3, kws: [{ id: 'add-dmg', appliesTo: 'self' }] },
+          ult: { text: 'Deals 1140% of ATK as DMG to the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to allies for 10 sec.', dmg: '1140', hits: 1, kws: [{ id: 'crit-rate-up', appliesTo: 'allies' }] }
+        },
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'Applies Range UP 5 buff to itself at the start of the battle.', kws: [{ id: 'range-up', appliesTo: 'self' }] },
+          { level: 7, text: 'Upon a successful hit, applies an ATK SPD UP 15% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'atk-spd-up', appliesTo: 'self', stackable: true }] },
+        ],
+        notes: 'Good easy team wide CRIT Rate UP buff to the entire team, but as a single target character she is not topping any DPS chart.\nNote that the CRIT Rate UP buff is NOT stackable.',
+        recommendations: 'Cassandra is a good early game character that is easy to 5 stars thanks to the various early game events, however she her awakening have very little value and she is easily replaced by better units.\nAwakening not recommended.',
+        icons: {
+          portrait: '/images/portraits/icon_mon_magicalarcher00_fire_v.png',
+        }
+      },
     ];
     // Normalize kits: extract any embedded "+N Awakening ..." snippets into proper awakening entries
     (function normalizeEmbeddedAwakenings(){
@@ -3512,6 +3551,7 @@
     let fullscreenDeployId = null;
     let deployEditMode = false;
     let customDeployName = 'My Deployment';
+    let customDeployMode = 'rifts';  // Mode ID from DEPLOY_PRESETS
     let customDeployCols = 5;
     let customDeployRows = 5;
     let customDeployLimit = 25;
@@ -3519,15 +3559,20 @@
     let customDeployData = {};  // { gridIndex: { "row-col": charId } } or { "row-col": charId } for single
     let deployDragState = null;
     
-    function encodeDeployData(gridData, cols, rows, deploymentCount, limit) {
-      const obj = { c: cols, r: rows, n: deploymentCount || 1, l: limit || 25, g: gridData };
-      return btoa(JSON.stringify(obj));
+    function encodeDeployData(gridData) {
+      // Only encode grid placement data - config comes from mode
+      return btoa(JSON.stringify(gridData));
     }
     
     function decodeDeployData(encoded) {
       try {
         const json = atob(encoded);
-        return JSON.parse(json);
+        const parsed = JSON.parse(json);
+        // Handle old format (object with g property) vs new format (just grid data)
+        if (parsed && typeof parsed === 'object' && parsed.g !== undefined) {
+          return { isOldFormat: true, ...parsed };
+        }
+        return parsed;
       } catch (e) {
         return null;
       }
@@ -3600,8 +3645,16 @@
       
       if (fullscreenDeployId === 'custom' || deployEditMode) {
         url.searchParams.set('name', customDeployName);
-        // Encode all config (size, limit, count, grid data) into single 'd' param
-        url.searchParams.set('d', encodeDeployData(customDeployData, customDeployCols, customDeployRows, customDeployCount, customDeployLimit));
+        url.searchParams.set('mode', customDeployMode);
+        // Only encode grid data - config is derived from mode
+        const hasData = customDeployCount > 1 
+          ? Object.keys(customDeployData).some(k => Object.keys(customDeployData[k] || {}).length > 0)
+          : Object.keys(customDeployData).length > 0;
+        if (hasData) {
+          url.searchParams.set('d', encodeDeployData(customDeployData));
+        } else {
+          url.searchParams.delete('d');
+        }
         // Clean up old params
         url.searchParams.delete('size');
         url.searchParams.delete('limit');
@@ -3609,6 +3662,7 @@
         url.searchParams.delete('deploy');
       } else {
         url.searchParams.delete('name');
+        url.searchParams.delete('mode');
         url.searchParams.delete('d');
         url.searchParams.delete('size');
         url.searchParams.delete('limit');
@@ -3630,6 +3684,7 @@
       url.searchParams.delete('size');
       url.searchParams.delete('limit');
       url.searchParams.delete('count');
+      url.searchParams.delete('mode');
       url.searchParams.delete('d');
       url.searchParams.delete('deploy');
       url.searchParams.delete('edit');
@@ -3771,6 +3826,7 @@
       
       fullscreenDeployId = presetId;
       deployEditMode = false;
+      customDeployMode = preset.id;
       customDeployCols = preset.cols;
       customDeployRows = preset.rows;
       customDeployLimit = preset.limit || 25;
@@ -3826,7 +3882,7 @@
       if (isEditing) {
         // Build game mode selector options
         const modeOptions = DEPLOY_PRESETS.map(p => {
-          const selected = (p.cols === customDeployCols && p.rows === customDeployRows && p.limit === customDeployLimit && (p.deployments || 1) === customDeployCount) ? 'selected' : '';
+          const selected = p.id === customDeployMode ? 'selected' : '';
           const deployLabel = (p.deployments || 1) > 1 ? ` × ${p.deployments}` : '';
           return `<option value="${p.id}" ${selected}>${p.name} (${p.cols}×${p.rows}${deployLabel}, max ${p.limit}/grid)</option>`;
         }).join('');
@@ -3858,6 +3914,7 @@
         modeSelect.addEventListener('change', (e) => {
           const selectedPreset = DEPLOY_PRESETS.find(p => p.id === e.target.value);
           if (selectedPreset) {
+            customDeployMode = selectedPreset.id;
             changeDeployMode(selectedPreset.cols, selectedPreset.rows, selectedPreset.limit, selectedPreset.deployments || 1);
           }
         });
@@ -4299,9 +4356,10 @@
     }
     
     function createNewDeployment() {
+      customDeployMode = 'rifts';
       customDeployCols = 5;
       customDeployRows = 5;
-      customDeployLimit = 25;
+      customDeployLimit = 21;
       customDeployCount = 1;
       customDeployName = 'My Deployment';
       customDeployData = {};
@@ -4359,16 +4417,43 @@
         if (deployEditMode || fsParam === 'custom') {
           customDeployName = (params.get('name') || customDeployName).slice(0, 64);
           
-          // New format: single 'd' param contains all config
+          // Read mode param first to derive config from preset
+          const modeParam = params.get('mode');
+          if (modeParam) {
+            const modePreset = DEPLOY_PRESETS.find(p => p.id === modeParam);
+            if (modePreset) {
+              customDeployMode = modeParam;
+              customDeployCols = modePreset.cols;
+              customDeployRows = modePreset.rows;
+              customDeployLimit = modePreset.limit;
+              customDeployCount = modePreset.deployments || 1;
+            }
+          }
+          
+          // Read grid data from 'd' param
           const dParam = params.get('d');
           if (dParam) {
             const decoded = decodeDeployData(dParam);
             if (decoded) {
-              if (decoded.c) customDeployCols = decoded.c;
-              if (decoded.r) customDeployRows = decoded.r;
-              if (decoded.n) customDeployCount = decoded.n;
-              if (decoded.l) customDeployLimit = decoded.l;
-              if (decoded.g) customDeployData = decoded.g;
+              if (decoded.isOldFormat) {
+                // Old format: d contains config - use it
+                if (decoded.c) customDeployCols = decoded.c;
+                if (decoded.r) customDeployRows = decoded.r;
+                if (decoded.n) customDeployCount = decoded.n;
+                if (decoded.l) customDeployLimit = decoded.l;
+                if (decoded.g) customDeployData = decoded.g;
+                // Try to match to a mode for clean URLs going forward
+                const matched = DEPLOY_PRESETS.find(p => 
+                  p.cols === customDeployCols && 
+                  p.rows === customDeployRows && 
+                  p.limit === customDeployLimit &&
+                  (p.deployments || 1) === customDeployCount
+                );
+                if (matched) customDeployMode = matched.id;
+              } else {
+                // New format: d is just grid data (config already set from mode)
+                customDeployData = decoded;
+              }
             }
           } else {
             // Backwards compatibility: read old params
@@ -4388,6 +4473,15 @@
             if (countParam) {
               customDeployCount = parseInt(countParam, 10) || 1;
             }
+            
+            // Try to match legacy params to a mode
+            const matched = DEPLOY_PRESETS.find(p => 
+              p.cols === customDeployCols && 
+              p.rows === customDeployRows && 
+              p.limit === customDeployLimit &&
+              (p.deployments || 1) === customDeployCount
+            );
+            if (matched) customDeployMode = matched.id;
             
             const deployParam = params.get('deploy');
             if (deployParam) {

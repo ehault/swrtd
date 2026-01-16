@@ -607,13 +607,13 @@
         </div>
         <div class="section" style="margin-top:14px">
           <h4>Kit</h4>
-          <div class="ability"><div class="name">Basic</div><div id="m-basic" class="ability-description">—</div><div id="m-basic-meta" class="ability-meta"></div><div id="m-basic-kws" class="ability-keywords keywords"></div></div>
-          <div class="ability"><div class="name">Crit Attack</div><div id="m-crit" class="ability-description">—</div><div id="m-crit-meta" class="ability-meta"></div><div id="m-crit-kws" class="ability-keywords keywords"></div></div>
-          <div class="ability"><div class="name">Ultimate</div><div id="m-ult" class="ability-description">—</div><div id="m-ult-meta" class="ability-meta"></div><div id="m-ult-kws" class="ability-keywords keywords"></div></div>
+          <div class="ability"><div class="name">Basic Attack</div><div id="m-basic" class="ability-description">—</div><div id="m-basic-meta" class="ability-meta"></div><div id="m-basic-kws" class="ability-keywords keywords"></div></div>
+          <div class="ability"><div class="name">CRIT Attack</div><div id="m-crit" class="ability-description">—</div><div id="m-crit-meta" class="ability-meta"></div><div id="m-crit-kws" class="ability-keywords keywords"></div></div>
+          <div class="ability"><div class="name">Exclusive Skill</div><div id="m-ult" class="ability-description">—</div><div id="m-ult-meta" class="ability-meta"></div><div id="m-ult-kws" class="ability-keywords keywords"></div></div>
         </div>
         <div class="section" style="margin-top:14px">
           <h4>Awakening Effects</h4>
-          <ol id="m-awks" style="padding-left:18px; margin:0"></ol>
+          <div id="m-awks"></div>
         </div>
       </div>
     </dialog>
@@ -1038,6 +1038,16 @@
       'dmg up vs. enemies under petrify': {
         name: 'DMG UP vs. Enemies under Petrify',
         desc: 'Increase damage against enemies affected by Petrify.'
+      },
+      'status-immunity': {
+        name: 'Status Immunity',
+        desc: 'Prevents debuffs and crowd control effects from being applied.',
+        tags: ['Buff']
+      },
+      'aoe-damage-area-up': {
+        name: 'AoE Damage Area UP',
+        desc: 'Increases the area of effect for AoE attacks.',
+        tags: ['Buff']
       },
     };
 
@@ -1535,6 +1545,29 @@
         recommendations: 'There are better units to invest in at the apex of DPS, but Brandia is still perfectly servicable.\nIf looking for an extra Ranged DPS, her a7 help her get very high on boss battle DPS charts.',
         icons: {
           portrait: '/images/portraits/icon_mon_icediva00_fire_v.png',
+        }
+      },
+      {
+        id: 'celestia',
+        name: 'Celestia',
+        title: 'Celestia',
+        releaseDate: '',
+        class: 'utility',
+        stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '77', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
+        kit: {
+          basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
+          crit: { text: 'Deals 180% of ATK as CRIT DMG to enemies within a 3m of the target.\nUpon a successful hit, applies a Status Immunity effect to itself for 2 sec.', dmg: '180', hits: 1, kws: [{ id: 'status-immunity', appliesTo: 'self'}] },
+          ult: { text: 'Deals 160% of ATK as DMG to enemies within 7m of itself.\nUpon a successful hit, applies a Lv.5 ACC UP buff to allies for 10 sec.', dmg: '160', hits: 1, kws: [{ id: 'acc-up', appliesTo: 'allies' }] }
+        },
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'Upon landing a Crush hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [ { id: 'cdr-up', appliesTo: 'self', stackable: true } ] },
+          { level: 7, text: 'Upon a successful hit, applies a AoE Damage Area UP 30% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'aoe-damage-area-up', appliesTo: 'self' } ] }
+        ],
+        notes: 'Celestia has seen a resurgence with the various added Rift level and Stages as ACC is becoming more and more important. She is however completely useless if not for her Exclusive Skill accuracy buff.',
+        recommendations: 'Celestia is only in high stages/rift team for her accuracy buff and no other reason. Not worth awakening, but worth leveling up.',
+        icons: {
+          portrait: '/images/portraits/icon_mon_fairyqueen00_water_v.png',
         }
       }
     ];
@@ -2129,7 +2162,7 @@
       const createBtn = document.createElement('button');
       createBtn.className = 'toggle-btn';
       createBtn.style.cssText = 'margin-bottom: 12px; width: 100%;';
-      createBtn.innerHTML = '➕ Create New Tier List';
+      createBtn.innerHTML = '<span style="font-size:16px;font-weight:bold;vertical-align:middle;line-height:1;">+</span> Create New Tier List';
       createBtn.style.color = '#fff';
       createBtn.addEventListener('click', () => createNewTierList());
       container.appendChild(createBtn);
@@ -3166,15 +3199,16 @@
       const awks = document.getElementById('m-awks');
       awks.innerHTML = '';
       (c.awakening||[]).forEach(a => {
-        const li = document.createElement('li');
+        const div = document.createElement('div');
+        div.className = 'ability';
         if (typeof a === 'string') {
-          li.textContent = a;
+          div.innerHTML = `<div class="name">Awakening</div><div class="ability-description">${a}</div>`;
         } else {
           const name = a.level ? `Awakening ${a.level}` : 'Awakening';
           const chips = (a.kws||[]).map(k=>renderKeywordChip(k)).join('');
-          li.innerHTML = `<div class="awk-name">${name}</div><div class="awk-desc">${a.text||''}</div><div class="keywords">${chips}</div>`;
+          div.innerHTML = `<div class="name">${name}</div><div class="ability-description">${a.text||''}</div><div class="ability-keywords keywords">${chips}</div>`;
         }
-        awks.appendChild(li);
+        awks.appendChild(div);
       });
 
       document.getElementById('m-notes').textContent = c.notes || '—';

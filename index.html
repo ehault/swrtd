@@ -270,6 +270,7 @@
     .kw.debuff { background: rgba(255,123,123,.18); border-color: rgba(255,123,123,.35); color: #ffd6d6; }
     .kw.crit-rate-up { background: rgba(124,92,255,.18); border-color: rgba(124,92,255,.38); color: #e3d9ff; }
     .kw.crush-rate-up { background: rgba(91,214,255,.18); border-color: rgba(91,214,255,.38); color: #daf6ff; }
+    .kw.graze-rate-up { background: rgba(180,180,220,.18); border-color: rgba(180,180,220,.38); color: #e8e8ff; }
     .kw.crit-dmg-up { background: rgba(255,200,87,.18); border-color: rgba(255,200,87,.38); color: #fff0c2; }
   /* Additional keyword chip styles for consistent distinct colors */
   .kw.crush-dmg-up { background: rgba(255,145,0,.18); border-color: rgba(255,145,0,.38); color: #ffe2c4; }
@@ -316,6 +317,7 @@
   .kw.def-down { background: rgba(255,120,120,.18); border-color: rgba(255,120,120,.38); color: #ffe0e0; }
   .kw.mov-spd-down { background: rgba(255,180,120,.18); border-color: rgba(255,180,120,.38); color: #fff0e4; }
   .kw.cdr-up { background: rgba(140,220,255,.18); border-color: rgba(140,220,255,.38); color: #e8fbff; }
+  .kw.reduce-exclusive-skill-cooldown { background: rgba(100,200,230,.18); border-color: rgba(100,200,230,.38); color: #e0f8ff; }
   .kw.root { background: rgba(170,255,150,.18); border-color: rgba(170,255,150,.38); color: #efffee; }
   .kw.blind { background: rgba(150,130,255,.18); border-color: rgba(150,130,255,.38); color: #ece6ff; }
   .kw.stealth { background: rgba(120,120,120,.24); border-color: rgba(180,180,180,.28); color: #f0f0f0; }
@@ -812,6 +814,11 @@
         desc: 'Increases a unit\'s chance to land a crushing strike.\nCrushs stack with almost all other damage modifiers, making them very powerful when combined with e.g. Crit Rate Up.\nThey apply to all types of attacks (basic, crit, ult) but not DOT effects.',
         tags: ['Buff', 'Crush']
       },
+      'graze-rate-up': {
+        name: 'Graze Rate UP',
+        desc: 'Increases a unit\'s chance to graze incoming attacks.\nGraze reduces incoming damage by a percentage when triggered, providing passive damage mitigation.',
+        tags: ['Buff', 'Defense', 'Graze']
+      },
       'crit-damage-up': {
         name: 'CRIT Damage UP',
         desc: 'Increases the damage multiplier when landing critical hits.',
@@ -1036,6 +1043,11 @@
         name: 'CDR UP',
         desc: 'Reduces skill cooldowns, allowing abilities to be used more frequently.',
         tags: ['Buff', 'CDR']
+      },
+      'reduce-exclusive-skill-cooldown': {
+        name: 'Reduce Exclusive Skill Cooldown',
+        desc: 'Reduces the cooldown of the monster\'s exclusive skill (ultimate). Unlike CDR UP which affects all skills, this specifically targets the ult cooldown, allowing it to be cast more frequently.',
+        tags: ['Buff', 'CDR', 'Exclusive Skill']
       },
       'remove-crit-attack-cooldown': {
         name: 'Remove CRIT Attack Cooldown',
@@ -1340,9 +1352,9 @@
           def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '93', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD'
         },
         kit: {
-          basic: { text: 'Deals 430 % of ATK as DMG to the target.', dmg: '430', hits: 1, kws: [] },
-          crit: { text: 'Deals 190 % of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Ranged allies for 2 sec.', dmg: '190', hits: 3, kws: [{ id: 'dmg-dealt-up', appliesTo: 'ranged' }] },
-          ult: { text: 'Deals 280 % of ATK as DMG 3 times(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 Double Hit Rate UP buff to allies for 10 sec.', dmg: '280', hits: 3, kws: [{ id: 'double-hit-rate-up', appliesTo: 'allies' }] }
+          basic: { text: 'Deals 430% of ATK as DMG to the target.', dmg: '430', hits: 1, kws: [] },
+          crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Ranged allies for 2 sec.', dmg: '190', hits: 3, kws: [{ id: 'dmg-dealt-up', appliesTo: 'ranged' }] },
+          ult: { text: 'Deals 280% of ATK as DMG 3 times(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 Double Hit Rate UP buff to allies for 10 sec.', dmg: '280', hits: 3, kws: [{ id: 'double-hit-rate-up', appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
@@ -1716,7 +1728,11 @@
           crit: { text: 'Deals 230% of ATK as DMG 2 time(s) to enemies within a 4m x 7m area in front.\nUpon a successful hit, applies an ATK SPD UP 20% buff to Melee allies for 2 sec. (Stackable) Deals ADD DMG to targets under CC.', dmg: '230', hits: 2, kws: [{ id: 'atk-spd-up', appliesTo: 'melee', stackable: true }] },
           ult: { text: 'Deals 300% of ATK as DMG 3 time(s) to enemies within a 3m x 7m area in front.\nUpon a successful hit, applies [Buff] Lv. 5 Crush DMG UP to allies for 10 sec. (Stackable) Applies a DEF DOWN 20% effect to the target in under CC for 10 sec. (Stackable)', dmg: '300', hits: 3, kws: [{ id: 'crush-dmg-up', appliesTo: 'allies', stackable: true }, { id: 'def-down', appliesTo: 'enemies', stackable: true }] }
         },
-        awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'When taking fatal damages, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec).\nApplies a Crush Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)\nUpon landing a Crush hit, reduces its Exclusive Skill Cooldown by 10%. (This effect activates only once every 2 sec.)', kws: [{ id: 'endure', appliesTo: 'self'}, { id: 'crush-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }] },
+          { level: 7, text: 'Reduces its own Exclusive Skill Cooldown by 100% when casting a DEF DOWN effect on the target.\nUpon a successful hit, applies a Crush Rate UP 10% buff to itself for 5 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }, { id: 'crush-rate-up', appliesTo: 'self', stackable: true }] },
+        ],
         notes: 'A decent melee DPS unit with team support through attack speed and crush damage up buffs.\nAlso provides debuffing capabilities through defense down application.\nThe atk speed up and def down are both stackable.',
         recommendations: 'Tsuyuha can be a useful addition to melee teams needing attack speed and crush damage buffs.\nWhile not top tier, she can still perform adequately in various content.\nThe main thing holding Tsuyuha back is her lack of a7, which limits her overall damage potential compared to other melee units when fighting bosses which are immune to CC (all of them at this time).\nFull awakening is recommended for stages/rifts, otherwise she is fine at a0.',
         icons: {
@@ -1859,6 +1875,29 @@
         recommendations: 'Cassandra is a good early game character that is easy to 5 stars thanks to the various early game events, however she her awakening have very little value and she is easily replaced by better units.\nAwakening not recommended.',
         icons: {
           portrait: '/images/portraits/icon_mon_magicalarcher00_fire_v.png',
+        }
+      },
+      {
+        id: 'ophilia',
+        name: 'Ophilia',
+        title: 'Ophilia',
+        releaseDate: '',
+        class: 'tank',
+        stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '92', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
+        kit: {
+          basic: { text: 'Deals 300% of ATK as DMG to enemies within a 2.5m narrow fan-shaped area in front.', dmg: '300', hits: 1, kws: [] },
+          crit: { text: 'Deals 170% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 Graze Rate UP buff to itself for 2 sec.', dmg: '170', hits: 1, kws: [{ id: 'graze-rate-up', appliesTo: 'self' }] },
+          ult: { text: 'Deals 290% of ATK as DMG to to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 DEF UP buff to allies for 10 sec.', dmg: '290', hits: 1, kws: [{ id: 'def-up', appliesTo: 'allies' }] }
+        },
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'When taking fatal danage, applies an Endure shield effect to itself for 5 sec. (Cooldown: 30 sec)', kws: [{ id: 'endure', appliesTo: 'self' }] },
+          { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 15% for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'dmg-res-up', appliesTo: 'self', stackable: true }] },
+        ],
+        notes: 'A tank that provides team-wide DEF UP and self-sustain through defensive buffs.\n\nHer kit focuses on survivability: Graze Rate UP on crit, Endure at a5, and stackable DMG RES UP at a7. However, her slow attack speed (92) limits how often she can apply these buffs. DEF UP to allies is useful but not game-changing.',
+        recommendations: 'Ophilia is a serviceable tank for early-mid game PVE content where you need a defensive buffer.\n\nHer a5 Endure is amazing for PVP and nearly a requirement for any serious PVP-minded player - surviving a killing blow can completely turn fights around. A7 gives decent self-tankiness with stackable DMG RES UP but is less impactful.\n\nFor PVE, tanks have limited value and her slow attack speed makes buffs inconsistent. Don\'t prioritize heavy investment beyond a5 unless you\'re focused on PVP.',
+        icons: {
+          portrait: '/images/portraits/icon_mon_paladin00_fire_v.png',
         }
       },
     ];

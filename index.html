@@ -1129,7 +1129,7 @@
       },
       'crystals': {
         name: 'Crystals',
-        desc: 'Primary currency used for summoning new/returning units. Spent in bulk for higher-value pulls (e.g., 10 pulls = 3,000; 100 pulls = 30,000). Earned via daily missions, events, quests, and achievements.',
+        desc: 'Primary currency used for summoning new/returning units. Spent in bulk (e.g., 300 pulls = 30,000). Earned via daily missions, events, quests, and achievements.',
         tags: ["Resources"]
       },
       'stars': {
@@ -1271,7 +1271,7 @@
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ id: 'stacked-shield', appliesTo: 'allies' }, { id: 'dmg-res-up', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'incoming-crit-dmg-up', appliesTo: 'enemies' }] }
+          { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', appliesTo: 'enemies' }] }
         ],
         notes: 'Premier tank of the game, provides stackable shields to the team at Awakening 5, as well as CRIT DMG amplification at Awakening 7.',
         recommendations: 'Awakening A5 is a must have for both PVP and PVE content.\nAwakening A7 is recommended for PVE damage amplification.\nAwakening A3 can be ignored if kiting, but is important for PVE/Boss fights.',
@@ -1297,7 +1297,7 @@
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ id: 'stacked-shield', appliesTo: 'self' }, { id: 'crit-dmg-up', appliesTo: 'self' }, { id: 'incoming-aoe-dmg-up', appliesTo: 'enemies' }] },
-          { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', appliesTo: 'enemies' }] }
+          { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', appliesTo: 'enemies' }, { id: 'add-dmg', appliesTo: 'self' }] }
         ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crit rate increases.\n She is highly synergistic with high debuff counts.',
         recommendations: 'Excellent team buffer for melee teams and top DPS in both PVP and PVE content.\nFull Awakening recommended to maximize damage potential.',
@@ -4693,8 +4693,7 @@
         content: `
           <p>Save your <span class="kw gold" data-kw="crystals">Crystals</span> primarily for summoning.</p>
           <p><span class="kw gold" data-kw="devilmons">Devilmons</span> are the most valuable resource — obtain them from shops whenever available.</p>
-          <p><span class="kw epic" data-kw="magic-orbs">Magic Orbs</span> should be saved for gear pulls during events.</p>
-          <p>Don't waste Crystals on energy refreshes early game; natural energy regeneration is sufficient.</p>
+          <p><span class="kw epic" data-kw="magic-orbs">Magic Orbs</span> are only used for gear pull, so no need to save them — obtain them from shops whenever available.</p>
         `
       },
       {
@@ -4740,7 +4739,6 @@
             <li>Wait for rate-up banners featuring desired units</li>
             <li>Events often provide bonus <span class="kw gold" data-kw="devilmons">Devilmons</span> for bulk summoning</li>
           </ul>
-          <p>Avoid single pulls — always do 10x for guaranteed 4<span class="kw gold" data-kw="stars">★</span> or higher.</p>
         `
       },
       {

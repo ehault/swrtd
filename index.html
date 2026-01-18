@@ -136,7 +136,124 @@
   
   .deploy-direction { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; }
   .deploy-direction-icon { font-size: 32px; color: var(--accent); filter: drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
-  .deploy-direction-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: .5px; }
+  .team-effects {
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border-radius: 8px;
+  font-size: 12px;
+}
+.team-effects.empty {
+  opacity: 0.5;
+  text-align: center;
+  font-style: italic;
+}
+.effects-section {
+  margin-bottom: 10px;
+}
+.effects-section:last-child {
+  margin-bottom: 0;
+}
+.effects-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.buffs-section .effects-title { color: #4ade80; }
+.debuffs-section .effects-title { color: #f87171; }
+.effects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.effects-table th,
+.effects-table td {
+  padding: 3px 5px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.effects-table th {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 9px;
+}
+.effects-table td.effect-name {
+  text-align: left;
+  padding-right: 10px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deploy-area {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+.deploy-area .team-buffs {
+  flex: 1;
+  min-width: 0;
+}
+.deploy-area .grid-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+.deploy-area .team-debuffs {
+  flex: 1;
+  min-width: 0;
+}
+.deploy-area .debuff-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.deploy-area .debuff-list .effect-chip {
+  flex: 0 0 auto;
+}
+.effects-table .effect-val {
+  color: var(--text-secondary);
+}
+.effects-table td.effect-has-value {
+  color: #4ade80;
+  font-weight: 500;
+}
+.effects-table tr.self-only {
+  display: none;
+}
+.team-effects.has-hover .effects-table tr.self-only.self-highlight {
+  display: table-row;
+}
+.effects-table tr.self-highlight td.effect-self {
+  background: rgba(74, 222, 128, 0.2);
+  font-weight: 600;
+  color: #4ade80;
+}
+.debuff-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.debuff-list .kw {
+  margin: 0;
+  white-space: nowrap;
+}
+.effects-table .kw {
+  margin: 0;
+  white-space: nowrap;
+  padding: 1px 5px;
+  font-size: 10px;
+}
+.debuff-list .kw {
+  margin: 0;
+}
+
+.deploy-direction-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: .5px; }
   
   /* Multi-grid metadata display */
   .deploy-header .deploy-meta { font-size: 12px; color: var(--text); opacity: 0.5; margin-left: 8px; }
@@ -1277,12 +1394,12 @@
         },
         kit: {
           basic: { text: 'Deals 430% of ATK as DMG to enemies within a 2.5m narrow fan-shaped area in front.', dmg: '430', hits: 1, kws: [] },
-          crit: { text: 'Deals 670% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies 1 Stacked Shield to itself for 2 sec.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT DMG DOWN for 2 sec.', dmg: '670', hits: 1, kws: [{ id: 'crit-damage-down', value: 20, appliesTo: 'enemies' }, { id: 'stacked-shield', appliesTo: 'self' }]},
+          crit: { text: 'Deals 670% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies 1 Stacked Shield to itself for 2 sec.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT DMG DOWN for 2 sec.', dmg: '670', hits: 1, kws: [{ id: 'crit-damage-down', value: 20, appliesTo: 'enemies' }, { id: 'stacked-shield', value: 1, appliesTo: 'self' }]},
           ult: { text: 'Deals 810% of ATK as DMG to enemies within 2m of the target.\nUpon a successful hit, applies a Gigantify buff to itself for 8 sec.\nUpon a successful hit, applies [Buff] Lv. 5 CRIT RES UP to allies for 10 sec.', dmg: '810', hits: 1, kws: [{ id: 'gigantify', appliesTo: 'self' }, { id: 'crit-resistance-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ id: 'stacked-shield', appliesTo: 'allies' }, { id: 'dmg-res-up', value: 10, appliesTo: 'self' }]},
+          { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ id: 'stacked-shield', value: 3, appliesTo: 'allies', stackable: true }, { id: 'dmg-res-up', value: 10, appliesTo: 'self' }]},
           { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', value: 20, appliesTo: 'enemies' }]}
         ],
         notes: 'Premier tank of the game, provides stackable shields to the team at Awakening 5, as well as CRIT DMG amplification at Awakening 7.',
@@ -1308,7 +1425,7 @@
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ id: 'stacked-shield', appliesTo: 'self' }, { id: 'crit-dmg-up', value: 20, appliesTo: 'self' }, { id: 'incoming-aoe-dmg-up', value: 10, appliesTo: 'enemies' }]},
+          { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ id: 'stacked-shield', value: 5, stackable: true, appliesTo: 'self' }, { id: 'crit-dmg-up', value: 20, appliesTo: 'self' }, { id: 'incoming-aoe-dmg-up', value: 10, appliesTo: 'enemies' }]},
           { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', value: 10, appliesTo: 'enemies' }, { id: 'add-dmg', appliesTo: 'self' }]}
         ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crit rate increases.\n She is highly synergistic with high debuff counts.',
@@ -1334,7 +1451,7 @@
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies an Invincibility shield effect and a MOV SPD UP 200% buff to itself for 3 sec at the start of the battle.\nApplies ATK UP 10%, DEF UP 15% and DMG DOWN from Ranged Enemies 30% buffs to itself at the start of the battle', kws: [{ id: 'invincibility', appliesTo: 'self' }, { id: 'mov-spd-up', value: 200, appliesTo: 'self' }, { id: 'atk-up', value: 10, appliesTo: 'self' }, { id: 'def-up', value: 15, appliesTo: 'self' }, { id: 'dmg-down-from-ranged-enemies', appliesTo: 'self' }]},
+          { level: 5, text: 'Applies an Invincibility shield effect and a MOV SPD UP 200% buff to itself for 3 sec at the start of the battle.\nApplies ATK UP 10%, DEF UP 15% and DMG DOWN from Ranged Enemies 30% buffs to itself at the start of the battle', kws: [{ id: 'invincibility', appliesTo: 'self' }, { id: 'mov-spd-up', value: 200, appliesTo: 'self' }, { id: 'atk-up', value: 10, appliesTo: 'self' }, { id: 'def-up', value: 15, appliesTo: 'self' }, { id: 'dmg-down-from-ranged-enemies', value: 30, appliesTo: 'self' }]},
           { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 20% buff to itself for 10 sec. (Stackable)\nDeals ADD DMG based on the number of buffs it has (up to 30 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'dmg-res-up', value: 20, appliesTo: 'self', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]}
         ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crush rate increases.\n He is highly synergistic with high buff counts.\nHe is also a useful PVP unit thanks to the Invincibility shield.',
@@ -1354,12 +1471,12 @@
         kit: {
           basic: { text: 'Deals 430% of ATK as DMG to the target.', dmg: '430', hits: 1, kws: [] },
           crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Ranged allies for 2 sec.', dmg: '190', hits: 3, kws: [{ id: 'dmg-dealt-up', value: 20, appliesTo: 'ranged' }]},
-          ult: { text: 'Deals 280% of ATK as DMG 3 times(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 Double Hit Rate UP buff to allies for 10 sec.', dmg: '280', hits: 3, kws: [{ id: 'double-hit-rate-up', appliesTo: 'allies' }] }
+          ult: { text: 'Deals 280% of ATK as DMG 3 times(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 Double Hit Rate UP buff to allies for 10 sec.', dmg: '280', hits: 3, kws: [{ id: 'double-hit-rate-up', value: 20, appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Applies Range UP 3 and ATK SPD UP 15% buff to itself at the start of the battle.', kws: [{ id: 'range-up', value: 3, appliesTo: 'self' }, { id: 'atk-spd-up', value: 15, appliesTo: 'self' }]},
-          { level: 7, text: 'Upon a successful hit, applies a Triple Hit Rate UP 10% to itself for 10 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'triple-hit-rate-up', appliesTo: 'self', stackable: true }] }
+          { level: 7, text: 'Upon a successful hit, applies a Triple Hit Rate UP 10% to itself for 10 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'triple-hit-rate-up', value: 10, appliesTo: 'self', stackable: true }] }
         ],
         notes: 'An older and reliable ranged DPS unit with ok team buffs.\n\nNote that the Double Hit and Triple hit only apply to Basic Attacks and not CRIT Attack or Ultimates.',
         recommendations: 'A solid choice for a ranged DPS unit with some team utility.\nShe is on the way out compared to newer units but can still perform adequately in various content or if running a basic attack centric build.',
@@ -1395,7 +1512,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '150', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
-          crit: { text: 'Deals 250% of ATK as CRIT DMG 3 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'melee', stackable: true }, { id: 'incoming-aoe-dmg-down', appliesTo: 'self', stackable: true }]},
+          crit: { text: 'Deals 250% of ATK as CRIT DMG 3 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'melee', stackable: true }, { id: 'incoming-aoe-dmg-down', value: 30, appliesTo: 'self', stackable: true }]},
           ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a ATK SPD UP 20% buff to allies for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [
@@ -1484,7 +1601,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '123', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 320% of ATK as DMG to the target.', dmg: '320', hits: 1, kws: [] },
-          crit: { text: 'Deals 60% of ATK as CRIT DMG 5 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies an ADD ACC UP buff to Ranged allies for 2 sec.\nDeals ADD DMG to targets under Blind.', dmg: '60', hits: 5, kws: [{ id: 'acc-up', value: null, appliesTo: 'ranged' }, { id: 'add-dmg', value: null, appliesTo: 'self' }] },
+          crit: { text: 'Deals 60% of ATK as CRIT DMG 5 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies an ADD ACC UP buff to Ranged allies for 2 sec.\nDeals ADD DMG to targets under Blind.', dmg: '60', hits: 5, kws: [{ id: 'acc-up', value: 20, appliesTo: 'ranged' }, { id: 'add-dmg', value: null, appliesTo: 'self' }] },
           ult: { text: 'Deals 310% of ATK as DMG 2 time(s) to enemies within 4m of the target.\nUpon a successful hit, casts a Root effect for 3 sec.\nUpon a successful hit, casts a Blind effect for 5 sec.', dmg: '310', hits: 2, kws: [{ id: 'root', value: null, appliesTo: 'enemies' }, { id: 'blind', value: null, appliesTo: 'enemies' }] }
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
@@ -1577,7 +1694,7 @@
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and Double Hit Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Burn 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [{ id: 'double-hit-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-burn', value: 10, appliesTo: 'allies', stackable: true }]},
+          { level: 5, text: 'Applies a Range UP 3 and Double Hit Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Burn 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [{ id: 'double-hit-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-burn', value: 10, appliesTo: 'allies', stackable: true }]},
           { level: 7, text: 'Upon a successful hit, casts a Weakness: Burn 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'weakness-burn', value: 15, appliesTo: 'enemies', stackable: true}]}
         ],
         notes: 'A top tier ranged DPS unit with strong self-buffs and team support through crush damage up effects.\nAlso provides crowd control through fear and burn application.',
@@ -1619,7 +1736,7 @@
         kit: {
           basic: { text: 'Deals 390% of ATK as DMG to the target.', dmg: '390', hits: 1, kws: [] },
           crit: { text: 'Deals 140% of ATK as CRIT DMG 3 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to Ranged Allies for 2 sec. (Stackable) Deals 15% ADD DMG per enemy hit. (Stacks up to 10 enemies)', dmg: '140', hits: 3, kws: [{ id: 'crit-rate-up', value: 20, appliesTo: 'ranged', stackable: true }]},
-          ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 AoE DMG UP buff to allies for 10 sec.', dmg: '630', hits: 2, kws: [{ id: 'aoe-dmg-up', appliesTo: 'allies', stackable: true }] }
+          ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 AoE DMG UP buff to allies for 10 sec.', dmg: '630', hits: 2, kws: [{ id: 'aoe-dmg-up', value: 20, appliesTo: 'allies', stackable: true }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
@@ -1641,7 +1758,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '115', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
-          crit: { text: 'Deals 200% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT Rate DOWN. Whenever successfully landing a hit, charges a Phantom Light that is active for 10 sec. At 20 charges, consumes all Phantom Lights to use CRIT Skills 2 times.', dmg: '200', hits: 3, kws: [{ id: 'crit-rate-down', appliesTo: 'enemies', stackable: true }] },
+          crit: { text: 'Deals 200% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT Rate DOWN. Whenever successfully landing a hit, charges a Phantom Light that is active for 10 sec. At 20 charges, consumes all Phantom Lights to use CRIT Skills 2 times.', dmg: '200', hits: 3, kws: [{ id: 'crit-rate-down', value: 20, appliesTo: 'enemies', stackable: true }] },
           ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 ATK SPD UP buff to Ranged allies for 10 sec. (Stackable)', dmg: '630', hits: 2, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'ranged', stackable: true }]}
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
@@ -1702,7 +1819,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '142', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
-          crit: { text: 'Deals 140% of ATK as CRIT DMG 5 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ id: 'dampen', appliesTo: 'enemies' }] },
+          crit: { text: 'Deals 140% of ATK as CRIT DMG 5 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ id: 'dampen', value: 20, appliesTo: 'enemies' }] },
           ult: { text: 'Deals 350% of ATK as DMG 2 time(s) to enemies within a 4m x 15m area in front.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Melee allies for 10 sec.\nUpon a successful hit, applies a Stealth effect to itself for 3 sec.', dmg: '350', hits: 2, kws: [{ id: 'cdr-up', value: 20, appliesTo: 'melee' }, { id: 'stealth', appliesTo: 'self' }]}
         },
         awakening: [
@@ -1748,7 +1865,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '131', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 330% of ATK as DMG to the target.', dmg: '330', hits: 1, kws: [] },
-          crit: { text: 'Deals 540% of ATK as CRIT DMG to enemies within a 2m x 10m area in front.\nUpon a successful hit, applies a DMG UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '540', hits: 1, kws: [{ id: 'dmg-dealt-up', appliesTo: 'ranged', stackable: true }] },
+          crit: { text: 'Deals 540% of ATK as CRIT DMG to enemies within a 2m x 10m area in front.\nUpon a successful hit, applies a DMG UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '540', hits: 1, kws: [{ id: 'dmg-dealt-up', value: 20, appliesTo: 'ranged', stackable: true }] },
           ult: { text: 'Deals 960% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies 1 stack of the Crush DMG UP 10% effect to allies for 10 sec. (Stackable)', dmg: '960', hits: 1, kws: [{ id: 'crush-dmg-up', value: 10, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [
@@ -1776,7 +1893,7 @@
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a DMG DOWN from Ranged Enemies 30% and ATK SPD UP 10% buffs to itself a the start of the battle. (Irremovable, Stackable)\nPlaces a Happy Box stack that is active for 20 sec each time dealing CRIT DMG. (Cooldown: 2 sec)', kws: [{ id: 'dmg-down-from-ranged-enemies', appliesTo: 'self', stackable: true, irremovable: true}, { id: 'atk-spd-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true}]},
+          { level: 5, text: 'Applies a DMG DOWN from Ranged Enemies 30% and ATK SPD UP 10% buffs to itself a the start of the battle. (Irremovable, Stackable)\nPlaces a Happy Box stack that is active for 20 sec each time dealing CRIT DMG. (Cooldown: 2 sec)', kws: [{ id: 'dmg-down-from-ranged-enemies', value: 30, appliesTo: 'self', stackable: true, irremovable: true}, { id: 'atk-spd-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true}]},
           { level: 7, text: 'On every hit, places a Merry Box stack on itself that is active for 20 sec. At 5 stacks, consumes all Merry Box stacks on it, applying Crush Rate UP 10%, Crush DMG UP 10% and ATK UP 10% buffs to allies for 4 sec. (Stackable)\nPlaces a Merry Box stack that is active for 20 dec each time dealing CRIT DMG. (Cooldown: 2 sec)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crush-rate-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'crush-dmg-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'atk-up', value: 10, appliesTo: 'allies', stackable: true }]}
         ],
         notes: 'Astar is a little bit underwhelming as an a0 unit but her a5/a7 makes her undoubtely the best team buffer in the game, especially on melee teams where she also provide the unstackable 20% Crit Rate UP on top of her many buff and Def Down debuff.\nShe sadly is a mid tier DPS at best, which might hold her back in the future.\nAstar was given with 5* for free over the Christmas 2025 period.',
@@ -1800,7 +1917,7 @@
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Upon a successful hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [{ id: 'cdr-up', value: 20, appliesTo: 'self', stackable: true}]},
-          { level: 7, text: 'Upon a successful hit, applies CC Efficiency UP 20% and DMG UP vs. enemies under Petrify 20% buffs to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'cc-efficiency-up', appliesTo: 'self', stackable: true },{ id: 'dmg up vs. enemies under petrify', appliesTo: 'self', stackable: true } ] }
+          { level: 7, text: 'Upon a successful hit, applies CC Efficiency UP 20% and DMG UP vs. enemies under Petrify 20% buffs to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'cc-efficiency-up', value: 20, appliesTo: 'self', stackable: true },{ id: 'dmg up vs. enemies under petrify', appliesTo: 'self', stackable: true } ] }
         ],
         notes: 'Grogen is a rare Crush Rate UP buffer for ranged allies, which is quite valuable. The fact it is not stackable is not yet a problem as the only other non stackable Crush DMG up character in the game is Delphoi who has long since been powercrept.',
         recommendations: 'Grogen is fine as an a0 character boosting ranged team\'s Crush DMG up, but is easily replaceable.\nNo awakening recommended.',
@@ -1818,7 +1935,7 @@
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
           crit: { text: 'Deals 420% of ATK as CRIT DMG to enemies within a 3m of the target.\nUpon a successful hit, applies a ATK UP 20% buff to Ranged allies for 2 sec. (Stackable)\nDeals ADD DMG to a single target', dmg: '110', hits: 3, kws: [{ id: 'atk-up', value: 20, appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]},
-          ult: { text: 'Deals 640% of ATK as DMG to enemies within 4m of the target.\nUpon a successful hit, applies a Lv.5 CRIT DMG UP buff to allies for 10 sec.', dmg: '410', hits: 1, kws: [{ id: 'crit-dmg-up', appliesTo: 'allies' }] }
+          ult: { text: 'Deals 640% of ATK as DMG to enemies within 4m of the target.\nUpon a successful hit, applies a Lv.5 CRIT DMG UP buff to allies for 10 sec.', dmg: '410', hits: 1, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
@@ -1841,12 +1958,12 @@
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
           crit: { text: 'Deals 180% of ATK as CRIT DMG to enemies within a 3m of the target.\nUpon a successful hit, applies a Status Immunity effect to itself for 2 sec.', dmg: '180', hits: 1, kws: [{ id: 'status-immunity', appliesTo: 'self'}] },
-          ult: { text: 'Deals 160% of ATK as DMG to enemies within 7m of itself.\nUpon a successful hit, applies a Lv.5 ACC UP buff to allies for 10 sec.', dmg: '160', hits: 1, kws: [{ id: 'acc-up', appliesTo: 'allies' }] }
+          ult: { text: 'Deals 160% of ATK as DMG to enemies within 7m of itself.\nUpon a successful hit, applies a Lv.5 ACC UP buff to allies for 10 sec.', dmg: '160', hits: 1, kws: [{ id: 'acc-up', value: 20, appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Upon landing a Crush hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [{ id: 'cdr-up', value: 20, appliesTo: 'self', stackable: true }]},
-          { level: 7, text: 'Upon a successful hit, applies a AoE Damage Area UP 30% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'aoe-damage-area-up', appliesTo: 'self' } ] }
+          { level: 7, text: 'Upon a successful hit, applies a AoE Damage Area UP 30% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'aoe-damage-area-up', value: 30, appliesTo: 'self' } ] }
         ],
         notes: 'Celestia has seen a resurgence with the various added Rift level and Stages as ACC is becoming more and more important. She is however completely useless if not for her Exclusive Skill accuracy buff.',
         recommendations: 'Celestia is only in high stages/rift team for her accuracy buff and no other reason. Not worth awakening, but worth leveling up.',
@@ -4058,6 +4175,324 @@
       renderAllDeployments();
     }
     
+
+    // Aggregate buffs and debuffs from a team
+    function aggregateTeamEffects(gridIdx) {
+      const gridData = getDeployGridData(gridIdx);
+      const charIds = Object.values(gridData);
+      
+      const buffs = {};   // { id: { allies: {v, s}, melee: {v, s}, ranged: {v, s}, tank: {v, s}, utility: {v, s}, self: {v, s, chars: []} } }
+      const debuffs = {}; // { id: { value, stackable } }
+      const selfBuffsByChar = {}; // { charId: [{ id, value }] }
+      
+      let currentCharId = null;
+      
+      const addEffect = (kw, isAwakening) => {
+        if (!kw || !kw.id) return;
+        const lex = LEXICON[kw.id];
+        if (!lex) return;
+        
+        const isBuff = lex.tags && lex.tags.includes('Buff');
+        const isDebuff = lex.tags && lex.tags.includes('Debuff');
+        const appliesTo = kw.appliesTo || 'allies';
+        const value = kw.value || 0;
+        const stackable = kw.stackable || false;
+        
+        if (isBuff && appliesTo !== 'enemies') {
+          // Self buffs only tracked per character, not aggregated
+          if (appliesTo === 'self') {
+            if (currentCharId) {
+              if (!selfBuffsByChar[currentCharId]) selfBuffsByChar[currentCharId] = {};
+              if (!selfBuffsByChar[currentCharId][kw.id]) {
+                selfBuffsByChar[currentCharId][kw.id] = { maxNonStack: 0, sumStack: 0 };
+              }
+              const charBuff = selfBuffsByChar[currentCharId][kw.id];
+              if (stackable) {
+                charBuff.sumStack += value;
+              } else if (value > charBuff.maxNonStack) {
+                charBuff.maxNonStack = value;
+              }
+            }
+          } else {
+            // Team buffs (allies, melee, ranged, tank, utility)
+            if (!buffs[kw.id]) {
+              buffs[kw.id] = { allies: null, melee: null, ranged: null, tank: null, utility: null, self: null };
+            }
+            const target = appliesTo;
+            const curr = buffs[kw.id][target];
+            if (curr === null) {
+              buffs[kw.id][target] = { 
+                maxNonStack: stackable ? 0 : value, 
+                sumStack: stackable ? value : 0,
+                get value() { return this.maxNonStack + this.sumStack; }
+              };
+            } else {
+              if (stackable) {
+                curr.sumStack += value;
+              } else if (value > curr.maxNonStack) {
+                curr.maxNonStack = value;
+              }
+            }
+          }
+        }
+        
+        if (isDebuff && appliesTo === 'enemies') {
+          if (!debuffs[kw.id]) {
+            debuffs[kw.id] = { 
+              maxNonStack: stackable ? 0 : value, 
+              sumStack: stackable ? value : 0,
+              get value() { return this.maxNonStack + this.sumStack; }
+            };
+          } else {
+            const curr = debuffs[kw.id];
+            if (stackable) {
+              curr.sumStack += value;
+            } else if (value > curr.maxNonStack) {
+              curr.maxNonStack = value;
+            }
+          }
+        }
+      };
+      
+      charIds.forEach(charId => {
+        const char = CHARACTERS.find(c => c.id === charId);
+        if (!char) return;
+        
+        currentCharId = charId;
+        
+        // Kit (basic, crit, ult)
+        if (char.kit) {
+          ['basic', 'crit', 'ult'].forEach(k => {
+            if (char.kit[k] && char.kit[k].kws) {
+              char.kit[k].kws.forEach(kw => addEffect(kw, false));
+            }
+          });
+        }
+        
+        // Awakening
+        if (char.awakening) {
+          char.awakening.forEach(aw => {
+            if (aw.kws) aw.kws.forEach(kw => addEffect(kw, true));
+          });
+        }
+      });
+      
+      return { buffs, debuffs, selfBuffsByChar };
+    }
+    
+    // Highlight self buffs when hovering over a character
+    function highlightSelfBuffs(gridIdx, charId) {
+      const selfBuffs = window._selfBuffsByChar?.[gridIdx]?.[charId] || {};
+      const teamBuffs = window._teamBuffs?.[gridIdx] || {};
+      const char = CHARACTERS.find(c => c.id === charId);
+      const charClass = char?.class?.toLowerCase() || '';
+      const charName = char?.name || 'Selected';
+      
+      const area = document.querySelector(`.deploy-area:nth-child(${gridIdx + 1})`);
+      if (!area) return;
+      
+      const effectsDiv = area.querySelector('.team-buffs');
+      if (effectsDiv) effectsDiv.classList.add('has-hover');
+      
+      // Update column header to character name
+      const selfHeader = area.querySelector('.effects-table th.col-self');
+      if (selfHeader) selfHeader.textContent = charName;
+      
+      area.querySelectorAll('.effects-table tr[data-buff-id]').forEach(row => {
+        const buffId = row.dataset.buffId;
+        const selfCell = row.querySelector('td[data-self-buff]');
+        if (!selfCell) return;
+        
+        // Calculate total value for this character:
+        // - Their own self buff
+        // - Allies buff (everyone gets)
+        // - Class-specific buff (melee/ranged/tank/utility)
+        let totalMax = 0;
+        let totalSum = 0;
+        let hasAnyBuff = false;
+        
+        // Self buff
+        if (selfBuffs[buffId]) {
+          totalMax = Math.max(totalMax, selfBuffs[buffId].maxNonStack);
+          totalSum += selfBuffs[buffId].sumStack;
+          hasAnyBuff = true;
+        }
+        
+        // Allies buff
+        const tb = teamBuffs[buffId];
+        if (tb?.allies) {
+          totalMax = Math.max(totalMax, tb.allies.maxNonStack || 0);
+          totalSum += tb.allies.sumStack || 0;
+          hasAnyBuff = true;
+        }
+        
+        // Class-specific buff
+        if (charClass && tb?.[charClass]) {
+          totalMax = Math.max(totalMax, tb[charClass].maxNonStack || 0);
+          totalSum += tb[charClass].sumStack || 0;
+          hasAnyBuff = true;
+        }
+        
+        if (hasAnyBuff) {
+          row.classList.add('self-highlight');
+          const val = totalMax + totalSum;
+          const lex = LEXICON[buffId];
+          const isShield = lex && lex.tags && lex.tags.includes('Shield');
+          selfCell.textContent = val > 0 ? val + (isShield ? '' : '%') : '✓';
+          selfCell.classList.add('effect-has-value');
+        }
+      });
+    }
+    
+    function clearSelfBuffHighlights(gridIdx) {
+      const area = document.querySelector(`.deploy-area:nth-child(${gridIdx + 1})`);
+      if (!area) return;
+      
+      const effectsDiv = area.querySelector('.team-buffs');
+      if (effectsDiv) effectsDiv.classList.remove('has-hover');
+      
+      area.querySelectorAll('.effects-table tr.self-highlight').forEach(row => {
+        row.classList.remove('self-highlight');
+      });
+      
+      // Reset self cell values to dash
+      area.querySelectorAll('.effects-table td[data-self-buff]').forEach(cell => {
+        cell.textContent = '-';
+        cell.classList.remove('effect-has-value');
+      });
+      
+      // Reset column header
+      const selfHeader = area.querySelector('.effects-table th.col-self');
+      if (selfHeader) selfHeader.textContent = 'Selected';
+    }
+
+    // Render team effects HTML
+    function renderTeamEffectsHTML(gridIdx) {
+      const { buffs, debuffs, selfBuffsByChar } = aggregateTeamEffects(gridIdx);
+      
+      // Store selfBuffsByChar globally for hover access
+      window._selfBuffsByChar = window._selfBuffsByChar || {};
+      window._selfBuffsByChar[gridIdx] = selfBuffsByChar;
+      
+      // Store team buffs globally for hover access
+      window._teamBuffs = window._teamBuffs || {};
+      window._teamBuffs[gridIdx] = buffs;
+      
+      // Collect all unique self buff IDs
+      const allSelfBuffIds = new Set();
+      Object.values(selfBuffsByChar).forEach(charBuffs => {
+        Object.keys(charBuffs).forEach(id => allSelfBuffIds.add(id));
+      });
+      
+      const allGroups = ['utility', 'tank', 'ranged', 'melee', 'allies'];
+      const groupLabels = { allies: 'All', melee: 'Melee', ranged: 'Ranged', tank: 'Tank', utility: 'Utility', self: 'Selected' };
+      
+      // Sort buffs alphabetically by name, include self-only buffs
+      const buffIds = new Set([...Object.keys(buffs), ...allSelfBuffIds]);
+      const sortedBuffs = [...buffIds]
+        .map(id => ({ 
+          id, 
+          targets: buffs[id] || { allies: null, melee: null, ranged: null, tank: null, utility: null }, 
+          name: LEXICON[id]?.name || id,
+          hasSelf: allSelfBuffIds.has(id)
+        }))
+        .filter(b => LEXICON[b.id])
+        .sort((a, b) => a.name.localeCompare(b.name));
+      
+      // Determine which team columns have data
+      const activeGroups = allGroups.filter(g => 
+        sortedBuffs.some(b => b.targets[g] !== null)
+      );
+      
+      // Add self column if there are any self buffs
+      const hasSelfBuffs = allSelfBuffIds.size > 0;
+      if (hasSelfBuffs) activeGroups.unshift('self');
+      
+      // Build buff rows
+      let buffRows = '';
+      const nonSelfGroups = activeGroups.filter(g => g !== 'self');
+      sortedBuffs.forEach(({ id, targets, hasSelf }) => {
+        const lex = LEXICON[id];
+        // Check if this row only has self buffs (no team buffs)
+        const hasTeamBuff = nonSelfGroups.some(g => targets[g] !== null);
+        const selfOnlyClass = (!hasTeamBuff && hasSelf) ? ' self-only' : '';
+        let row = `<tr data-buff-id="${id}"${selfOnlyClass ? ` class="${selfOnlyClass.trim()}"` : ''}><td class="effect-name"><span class="kw ${id}" data-kw="${id}">${lex.name}</span></td>`;
+        activeGroups.forEach(g => {
+          const isSelf = g === 'self';
+          const selfClass = isSelf ? ' effect-self' : '';
+          const selfTitle = isSelf ? ' title="Self buff"' : '';
+          if (isSelf) {
+            // Self column shows dash by default, value appears on hover via JS
+            row += `<td class="effect-val effect-self" data-self-buff="${id}">-</td>`;
+          } else {
+            const t = targets[g];
+            if (t !== null) {
+              const lex = LEXICON[id];
+              const isShield = lex && lex.tags && lex.tags.includes('Shield');
+              if (t.value > 0) {
+                row += `<td class="effect-val effect-has-value">${t.value}${isShield ? '' : '%'}</td>`;
+              } else {
+                row += `<td class="effect-val effect-has-value">✓</td>`;
+              }
+            } else {
+              row += `<td class="effect-val">-</td>`;
+            }
+          }
+        });
+        row += '</tr>';
+        buffRows += row;
+      });
+      
+      // Sort debuffs alphabetically and build list
+      const sortedDebuffs = Object.entries(debuffs)
+        .map(([id, data]) => ({ id, data, name: LEXICON[id]?.name || id }))
+        .filter(d => LEXICON[d.id])
+        .sort((a, b) => a.name.localeCompare(b.name));
+      
+      let debuffList = '';
+      sortedDebuffs.forEach(({ id, data }) => {
+        const lex = LEXICON[id];
+        const valStr = data.value > 0 ? ` ${data.value}%` : '';
+        debuffList += `<span class="kw ${id}" data-kw="${id}">${lex.name}${valStr}</span>`;
+      });
+      
+      const headers = activeGroups.map(g => {
+        const title = g === 'allies' ? ' title="All Allies"' : (g === 'self' ? ' title="Selected unit"' : '');
+        const selfClass = g === 'self' ? ' class="col-self"' : '';
+        return `<th${selfClass}${title}>${groupLabels[g]}</th>`;
+      }).join('');
+      
+      let buffsHtml = '';
+      if (buffRows) {
+        buffsHtml = `<div class="team-effects team-buffs">
+          <div class="effects-section buffs-section">
+            <div class="effects-title">Team Buffs</div>
+            <table class="effects-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  ${headers}
+                </tr>
+              </thead>
+              <tbody>${buffRows}</tbody>
+            </table>
+          </div>
+        </div>`;
+      }
+      
+      let debuffsHtml = '';
+      if (debuffList) {
+        debuffsHtml = `<div class="team-effects team-debuffs">
+          <div class="effects-section debuffs-section">
+            <div class="effects-title">Enemy Debuffs</div>
+            <div class="debuff-list">${debuffList}</div>
+          </div>
+        </div>`;
+      }
+      
+      return { buffsHtml, debuffsHtml };
+    }
+
     function renderFullscreenDeployment(preset) {
       const container = document.getElementById('deploy-container');
       if (!container) return;
@@ -4232,6 +4667,8 @@
                     }
                     didDrag = false;
                   });
+                  chip.addEventListener('mouseenter', () => highlightSelfBuffs(gridIdx, char.id));
+                  chip.addEventListener('mouseleave', () => clearSelfBuffHighlights(gridIdx));
                   
                   cell.appendChild(chip);
                 } else {
@@ -4244,6 +4681,8 @@
                     openModal(char.id);
                     updateUrlFromUI();
                   });
+                  chip.addEventListener('mouseenter', () => highlightSelfBuffs(gridIdx, char.id));
+                  chip.addEventListener('mouseleave', () => clearSelfBuffHighlights(gridIdx));
                   cell.appendChild(chip);
                 }
               }
@@ -4345,6 +4784,20 @@
         gridContainer.appendChild(direction);
         
         area.appendChild(gridContainer);
+        
+        // Add team effects (buffs on left, debuffs on right)
+        const { buffsHtml, debuffsHtml } = renderTeamEffectsHTML(gridIdx);
+        if (buffsHtml) {
+          const buffsDiv = document.createElement('div');
+          buffsDiv.innerHTML = buffsHtml;
+          area.insertBefore(buffsDiv.firstChild, area.firstChild);
+        }
+        if (debuffsHtml) {
+          const debuffsDiv = document.createElement('div');
+          debuffsDiv.innerHTML = debuffsHtml;
+          area.appendChild(debuffsDiv.firstChild);
+        }
+        
         inner.appendChild(area);
       }
       

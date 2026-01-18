@@ -2568,19 +2568,24 @@
     // Tier list definitions - each has an id, name, and encoded data
     const TIER_LISTS = [
       {
-        id: 'general',
-        name: 'General Tier List',
-        data: 'eyJzIjpbInpldGEiLCJhc3RhciIsInRyaW5pdHkiLCJkdXNreSIsImphZ2VyIiwibWFnbyIsInNoYXphbSIsImNyYWthIl0sImEiOlsiemVyYXR1IiwiZWxlbm9hIiwic2VpbWVpIiwic2VraG1ldCIsInNvaGEiLCJsYWltYSIsInNhYnJpbmEiXSwiYiI6WyJoYXJtb25pYSIsInRzdXl1aGEiLCJhbmF2ZWwiLCJncm9nZW4iLCJicmFuZGlhIl0sImMiOlsibWVsaXNzYSIsImFydGFtaWVsIl19'
+        id: 'rifts',
+        name: 'Rifts Tier List',
+        data: 'eyJzIjpbImFzdGFyIiwiemVyYXR1IiwiamFnZXIiLCJ0cmluaXR5IiwibWFnbyIsInNoYXphbSIsImR1c2t5IiwiY3Jha2EiLCJlbGVub2EiLCJ0c3V5dWhhIiwiY2VsZXN0aWEiLCJyaW5hIl0sImEiOlsic2VpbWVpIiwic2VraG1ldCIsInNvaGEiLCJsYWltYSIsInNhYnJpbmEiXSwiYiI6WyJtZWxpc3NhIiwiYW5hdmVsIiwiYnJhbmRpYSIsImNoYXJsb3R0ZSIsImplYW5uZSIsImNhc3NhbmRyYSJdLCJjIjpbImFydGFtaWVsIiwiZ3JvZ2VuIiwiaGFybW9uaWEiLCJ6ZXRhIl19'
       },
       {
-        id: 'mommy',
-        name: 'Dommy Mommy Tier List',
-        data: 'eyJzIjpbImNyYWthIiwidHJpbml0eSIsIm1hZ28iXX0'
+        id: 'pvp',
+        name: 'PvP Tier List',
+        data: 'eyJzIjpbInNoYXphbSIsImFzdGFyIiwidHJpbml0eSIsIm1hZ28iLCJoYXJtb25pYSIsInRzdXl1aGEiLCJvcGhpbGlhIiwiamFnZXIiLCJ6ZXJhdHUiXSwiYSI6WyJzZWltZWkiLCJzZWtobWV0Iiwic29oYSIsImxhaW1hIiwiZHVza3kiLCJjcmFrYSIsImVsZW5vYSIsImplYW5uZSJdLCJiIjpbIm1lbGlzc2EiLCJicmFuZGlhIiwic2FicmluYSJdLCJjIjpbImFydGFtaWVsIiwiZ3JvZ2VuIiwiemV0YSIsImFuYXZlbCIsImNoYXJsb3R0ZSIsImNhc3NhbmRyYSIsImNlbGVzdGlhIiwicmluYSJdfQ=='
+      },
+      {
+        id: 'bosses',
+        name: 'Bosses Tier List',
+        data: 'eyJzIjpbInpldGEiLCJhc3RhciIsInplcmF0dSIsImphZ2VyIiwidHJpbml0eSIsIm1hZ28iLCJzaGF6YW0iLCJkdXNreSIsImNyYWthIiwiZWxlbm9hIl0sImEiOlsic2VpbWVpIiwic29oYSIsImxhaW1hIiwic2FicmluYSIsInRzdXl1aGEiLCJqZWFubmUiLCJtZWxpc3NhIiwiYW5hdmVsIiwiY2hhcmxvdHRlIl0sImIiOlsiYnJhbmRpYSIsImNhc3NhbmRyYSIsInNla2htZXQiXSwiYyI6WyJhcnRhbWllbCIsImdyb2dlbiIsImhhcm1vbmlhIl19'
       },
     ];
     
     // Track which tier lists are expanded (by id)
-    let expandedTierLists = new Set(['general']); // Default: general is expanded
+    let expandedTierLists = new Set(['rifts']); // Default: rifts is expanded
     
     // Current fullscreen tier list id (null if none, or 'custom' for user-created list)
     let fullscreenTierListId = null;
@@ -3175,7 +3180,7 @@
       } else if (expanded) {
         expandedTierLists = new Set(expanded.split(',').filter(id => TIER_LISTS.some(t => t.id === id)));
       } else {
-        expandedTierLists = new Set(['general']);
+        expandedTierLists = new Set(['rifts']);
       }
     }
     

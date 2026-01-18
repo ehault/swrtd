@@ -170,7 +170,7 @@
 }
 .effects-table th,
 .effects-table td {
-  padding: 3px 5px;
+  padding: 3px 6px;
   text-align: center;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
@@ -182,8 +182,8 @@
 }
 .effects-table td.effect-name {
   text-align: left;
-  padding-right: 10px;
-  width: 100%;
+  padding-right: 12px;
+  max-width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -191,22 +191,26 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 12px;
   width: 100%;
+  gap: 16px;
 }
 .deploy-area .team-buffs {
-  flex: 1;
+  flex: 1 1 40%;
   min-width: 0;
+  overflow-x: auto;
+  display: flex;
+  justify-content: flex-start;
 }
 .deploy-area .grid-container {
-  flex: 1;
-  min-width: 0;
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
 }
 .deploy-area .team-debuffs {
-  flex: 1;
+  flex: 1 1 40%;
   min-width: 0;
+  display: flex;
+  justify-content: flex-end;
 }
 .deploy-area .debuff-list {
   display: flex;
@@ -1582,7 +1586,7 @@
         kit: {
           basic: { text: 'Deals 140% of ATK as DMG 2 time(s) to enemies within a 3m narrow fan-shaped area in front.', dmg: '140', hits: 2, kws: [] },
           crit: { text: 'Deals 270% of ATK as CRIT DMG 2 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, applies a Lv.5 CRIT DMG UP buff to Melee allies for 2 sec.', dmg: '270', hits: 2, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'melee', stackable: true }] },
-          ult: { text: 'Deals 340% of ATK as DMG 2 time(s) to enemies within a 4m x 10m area in front.\nUpon a successful hit, applies a Lv.5 Amplify buff to allies for 10 sec.', dmg: '340', hits: 2, kws: [{ id: 'amplify', value: 20, appliesTo: 'allies', stackable: true }] }
+          ult: { text: 'Deals 340% of ATK as DMG 2 time(s) to enemies within a 4m x 10m area in front.\nUpon a successful hit, applies a Lv.5 Amplify buff to allies for 10 sec.', dmg: '340', hits: 2, kws: [{ id: 'amplify', value: 60, appliesTo: 'allies', stackable: true }] }
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
 
@@ -1819,7 +1823,7 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '142', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
-          crit: { text: 'Deals 140% of ATK as CRIT DMG 5 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ id: 'dampen', value: 20, appliesTo: 'enemies' }] },
+          crit: { text: 'Deals 140% of ATK as CRIT DMG 5 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ id: 'dampen', value: 60, appliesTo: 'enemies' }] },
           ult: { text: 'Deals 350% of ATK as DMG 2 time(s) to enemies within a 4m x 15m area in front.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Melee allies for 10 sec.\nUpon a successful hit, applies a Stealth effect to itself for 3 sec.', dmg: '350', hits: 2, kws: [{ id: 'cdr-up', value: 20, appliesTo: 'melee' }, { id: 'stealth', appliesTo: 'self' }]}
         },
         awakening: [
@@ -1858,8 +1862,8 @@
       },
       {
         id: 'zeta',
-        name: 'Zeta',
-        title: 'Crush Damage Stacker, Zeta',
+        name: 'Zeta-06',
+        title: 'Crush Damage Stacker, Zeta-06',
         releaseDate: '2026-01-14',
         class: 'ranged',
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '131', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
@@ -1871,7 +1875,7 @@
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'Applies a Range UP 3 and a CDR UP 15% buffs to itself at the start of the battle. (Irremovable. Stackable)', kws: [{ id: 'range-up', value: 3, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'cdr-up', value: 15, appliesTo: 'self', stackable: true, irremovable: true }]},
-          { level: 7, text: 'Additionally applies 1 stack of the Crush DMG UP 20% effect.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'self', stackable: true}]}
+          { level: 7, text: 'Additionally applies 1 stack of the Crush DMG UP 20% effect.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crush-dmg-up', value: 100, appliesTo: 'self', stackable: true}]}
         ],
         notes: 'Long-battle specialist with stackable Crush DMG UP to allies.\nDMG Dealt UP to ranged (stackable).\nStacking mechanic: 10% per ult for 10 sec, max 5 stacks (50% total, 110% with A7).\nA7 Crush DMG UP only applies to self.\nNot effective in short fights like PVP/Rifts.',
         recommendations: 'PVP:\nLevel Up: No (too slow)\nAwakening 3: No\nAwakening 5: No\nAwakening 7: No\n\nRifts:\nLevel Up: No (too slow)\nAwakening 3: No\nAwakening 5: No\nAwakening 7: No\n\nBosses:\nLevel Up: Yes (long fights)\nAwakening 3: Yes\nAwakening 5: Yes (CDR)\nAwakening 7: Yes (crush stacking)',
@@ -4035,9 +4039,10 @@
       createBtn.addEventListener('click', () => createNewDeployment());
       container.appendChild(createBtn);
       
-      DEPLOY_PRESETS.forEach(preset => {
-        renderDeploymentPreset(preset, container);
-      });
+      // Hidden for now - will come back to saved deployments later
+      // DEPLOY_PRESETS.forEach(preset => {
+      //   renderDeploymentPreset(preset, container);
+      // });
     }
     
     function renderDeploymentPreset(preset, container) {
@@ -4791,16 +4796,27 @@
         area.appendChild(gridContainer);
         
         // Add team effects (buffs on left, debuffs on right)
+        // Always add placeholders to maintain 3-column layout
         const { buffsHtml, debuffsHtml } = renderTeamEffectsHTML(gridIdx);
+        const buffsDiv = document.createElement('div');
+        buffsDiv.className = 'team-effects team-buffs';
         if (buffsHtml) {
-          const buffsDiv = document.createElement('div');
           buffsDiv.innerHTML = buffsHtml;
-          area.insertBefore(buffsDiv.firstChild, area.firstChild);
+          // Extract just the inner content since buffsHtml already has wrapper
+          const temp = document.createElement('div');
+          temp.innerHTML = buffsHtml;
+          area.insertBefore(temp.firstChild, area.firstChild);
+        } else {
+          area.insertBefore(buffsDiv, area.firstChild);
         }
+        const debuffsDiv = document.createElement('div');
+        debuffsDiv.className = 'team-effects team-debuffs';
         if (debuffsHtml) {
-          const debuffsDiv = document.createElement('div');
-          debuffsDiv.innerHTML = debuffsHtml;
-          area.appendChild(debuffsDiv.firstChild);
+          const temp = document.createElement('div');
+          temp.innerHTML = debuffsHtml;
+          area.appendChild(temp.firstChild);
+        } else {
+          area.appendChild(debuffsDiv);
         }
         
         inner.appendChild(area);

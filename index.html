@@ -4819,6 +4819,74 @@
             <li>Main hit does NOT benefit from <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span></li>
             <li><span class="kw buff" data-kw="double-hit-rate-up">Double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">Triple hits</span> from stats CAN still crit independently</li>
           </ul>
+
+          <h4>Attack Timeline Visualizer</h4>
+          <p>See how Basic Attacks, Crit Attacks, and Exclusive Skills interact over time (assuming 100+% CRIT Rate):</p>
+          <p style="font-size: 11px; color: #f90; margin-bottom: 8px;">⚠️ Note: Cast time values are estimates and have not been precisely measured in-game yet.</p>
+          
+          <div id="attack-timeline-widget" style="background: rgba(30,30,40,.6); border-radius: 8px; padding: 16px; margin: 16px 0;">
+            <!-- Controls -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 16px;">
+              <div>
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Duration: <span id="duration-val">30</span>s</label>
+                <input type="range" id="duration-slider" min="10" max="120" value="30" step="5" style="width: 100%;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Attack Speed: <span id="atk-spd-val">100</span></label>
+                <input type="range" id="atk-spd-slider" min="80" max="200" value="100" style="width: 100%;">
+                <div style="font-size: 10px; color: #888;">1 attack every <span id="atk-interval">1.00</span>s</div>
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">CDR: <span id="cdr-val">0</span>%</label>
+                <input type="range" id="cdr-slider" min="0" max="50" value="0" step="5" style="width: 100%;">
+                <div style="font-size: 10px; color: #888;">Crit CD: <span id="crit-cd-val">2.00</span>s | Ult CD: <span id="ult-cd-val">10.00</span>s</div>
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Crit Cast Time: <span id="crit-cast-val">0.3</span>s</label>
+                <input type="range" id="crit-cast-slider" min="0" max="1" value="0.3" step="0.1" style="width: 100%;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Ult Cast Time: <span id="ult-cast-val">0.5</span>s</label>
+                <input type="range" id="ult-cast-slider" min="0" max="2" value="0.5" step="0.1" style="width: 100%;">
+              </div>
+            </div>
+            
+            <!-- Timeline Legend -->
+            <div style="display: flex; gap: 16px; margin-bottom: 8px; font-size: 11px; flex-wrap: wrap;">
+              <div><span style="display: inline-block; width: 12px; height: 12px; background: #6a9eff; border-radius: 2px; margin-right: 4px;"></span>Basic Attack</div>
+              <div><span style="display: inline-block; width: 12px; height: 12px; background: #ffa500; border-radius: 2px; margin-right: 4px;"></span>Crit Attack</div>
+              <div><span style="display: inline-block; width: 12px; height: 12px; background: #ff4466; border-radius: 2px; margin-right: 4px;"></span>Exclusive Skill</div>
+              <div><span style="display: inline-block; width: 12px; height: 12px; background: rgba(255,255,255,.1); border: 1px dashed #666; border-radius: 2px; margin-right: 4px;"></span>Cast Time</div>
+            </div>
+            
+            <!-- Timeline Canvas -->
+            <div style="position: relative; overflow-x: auto;">
+              <canvas id="attack-timeline-canvas" width="1200" height="120" style="width: 100%; border-radius: 4px; background: rgba(20,20,30,.8);"></canvas>
+            </div>
+            
+            <!-- Stats -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; font-size: 11px;">
+              <div style="background: rgba(106,158,255,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                <div style="color: #6a9eff; font-weight: bold;" id="basic-count">0</div>
+                <div style="color: #888;">Basic Attacks</div>
+              </div>
+              <div style="background: rgba(255,165,0,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                <div style="color: #ffa500; font-weight: bold;" id="crit-count">0</div>
+                <div style="color: #888;">Crit Attacks</div>
+              </div>
+              <div style="background: rgba(255,68,102,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                <div style="color: #ff4466; font-weight: bold;" id="ult-count">0</div>
+                <div style="color: #888;">Exclusive Skills</div>
+              </div>
+              <div style="background: rgba(255,255,255,.08); padding: 8px; border-radius: 4px; text-align: center;">
+                <div style="font-weight: bold; font-size: 10px;" id="breakdown">
+                  <span style="color: #6a9eff;">0%</span> / <span style="color: #ffa500;">0%</span> / <span style="color: #ff4466;">0%</span>
+                </div>
+                <div style="color: #888;">Basic / Crit / Ult</div>
+              </div>
+            </div>
+          </div>
+          
         `
       },
       {
@@ -5250,6 +5318,11 @@
       modal.dataset.articleId = article.id;
       document.body.style.overflow = 'hidden';
       
+      // Initialize any widgets in the modal
+      if (typeof initAttackTimeline === 'function') {
+        setTimeout(initAttackTimeline, 50);
+      }
+      
       // Update URL with guide article
       const url = new URL(window.location);
       url.searchParams.set('guide', article.id);
@@ -5307,6 +5380,105 @@
       }
     })();
     // ==================== END USER GUIDE ====================
+
+
+  // Attack Timeline Widget initialization
+  function initAttackTimeline() {
+    const canvas = document.getElementById('attack-timeline-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    const durationSlider = document.getElementById('duration-slider');
+    const atkSpdSlider = document.getElementById('atk-spd-slider');
+    const cdrSlider = document.getElementById('cdr-slider');
+    const critCastSlider = document.getElementById('crit-cast-slider');
+    const ultCastSlider = document.getElementById('ult-cast-slider');
+    
+    if (!durationSlider || !atkSpdSlider || !cdrSlider || !critCastSlider || !ultCastSlider) return;
+    
+    function getParams() {
+      const duration = parseInt(durationSlider.value);
+      const atkSpd = parseInt(atkSpdSlider.value);
+      const cdr = parseInt(cdrSlider.value);
+      const critCast = parseFloat(critCastSlider.value);
+      const ultCast = parseFloat(ultCastSlider.value);
+      const atkInterval = 100 / atkSpd;
+      const critCD = 2 * (1 - cdr / 100);
+      const ultCD = 10 * (1 - cdr / 100);
+      return { duration, atkSpd, cdr, critCast, ultCast, atkInterval, critCD, ultCD };
+    }
+    
+    function updateLabels(p) {
+      document.getElementById('duration-val').textContent = p.duration;
+      document.getElementById('atk-spd-val').textContent = p.atkSpd;
+      document.getElementById('cdr-val').textContent = p.cdr;
+      document.getElementById('crit-cast-val').textContent = p.critCast.toFixed(1);
+      document.getElementById('ult-cast-val').textContent = p.ultCast.toFixed(1);
+      document.getElementById('atk-interval').textContent = p.atkInterval.toFixed(2);
+      document.getElementById('crit-cd-val').textContent = p.critCD.toFixed(2);
+      document.getElementById('ult-cd-val').textContent = p.ultCD.toFixed(2);
+    }
+    
+    function simulate(p) {
+      const attacks = [];
+      let t = 0, ultCDRemaining = 0, critCDRemaining = 0;
+      while (t < p.duration) {
+        let type, castTime;
+        if (ultCDRemaining <= 0) { type = 'ult'; castTime = p.ultCast; ultCDRemaining = p.ultCD; }
+        else if (critCDRemaining <= 0) { type = 'crit'; castTime = p.critCast; critCDRemaining = p.critCD; }
+        else { type = 'basic'; castTime = 0; }
+        attacks.push({ time: t, type, castTime });
+        const actionTime = p.atkInterval + castTime;
+        t += actionTime; ultCDRemaining -= actionTime; critCDRemaining -= actionTime;
+      }
+      return attacks;
+    }
+    
+    function draw(attacks, p) {
+      const W = canvas.width, H = canvas.height, padding = 40, timelineY = H / 2, barH = 24;
+      ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = 'rgba(255,255,255,.2)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(padding, timelineY); ctx.lineTo(W - padding, timelineY); ctx.stroke();
+      ctx.fillStyle = '#666'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+      const step = p.duration <= 30 ? 5 : (p.duration <= 60 ? 5 : 10);
+      for (let s = 0; s <= p.duration; s += step) {
+        const x = padding + (s / p.duration) * (W - 2 * padding);
+        ctx.beginPath(); ctx.moveTo(x, timelineY + barH/2); ctx.lineTo(x, timelineY + barH/2 + 6); ctx.stroke();
+        ctx.fillText(s + 's', x, timelineY + barH/2 + 18);
+      }
+      const colors = { basic: '#6a9eff', crit: '#ffa500', ult: '#ff4466' };
+      let basicCount = 0, critCount = 0, ultCount = 0;
+      // Cast time colors (lighter/transparent versions of attack colors)
+      const castColors = { basic: 'rgba(106,158,255,.25)', crit: 'rgba(255,165,0,.25)', ult: 'rgba(255,68,102,.25)' };
+      attacks.forEach((atk, i) => {
+        if (atk.time >= p.duration) return;
+        const x = padding + (atk.time / p.duration) * (W - 2 * padding);
+        const nextTime = attacks[i + 1] ? attacks[i + 1].time : atk.time + p.atkInterval;
+        const width = Math.max(3, ((nextTime - atk.time - atk.castTime) / p.duration) * (W - 2 * padding) - 1);
+        if (atk.castTime > 0) {
+          const castWidth = (atk.castTime / p.duration) * (W - 2 * padding);
+          ctx.fillStyle = castColors[atk.type]; ctx.strokeStyle = colors[atk.type];
+          ctx.setLineDash([3, 3]); ctx.fillRect(x, timelineY - barH/2, castWidth, barH);
+          ctx.strokeRect(x, timelineY - barH/2, castWidth, barH); ctx.setLineDash([]);
+        }
+        const markerX = x + (atk.castTime / p.duration) * (W - 2 * padding);
+        ctx.fillStyle = colors[atk.type]; ctx.fillRect(markerX, timelineY - barH/2, Math.max(width, 4), barH);
+        if (atk.type === 'basic') basicCount++; else if (atk.type === 'crit') critCount++; else if (atk.type === 'ult') ultCount++;
+      });
+      document.getElementById('basic-count').textContent = basicCount;
+      document.getElementById('crit-count').textContent = critCount;
+      document.getElementById('ult-count').textContent = ultCount;
+      const total = basicCount + critCount + ultCount;
+      const basicPct = total > 0 ? Math.round((basicCount / total) * 100) : 0;
+      const critPct = total > 0 ? Math.round((critCount / total) * 100) : 0;
+      const ultPct = total > 0 ? Math.round((ultCount / total) * 100) : 0;
+      document.getElementById('breakdown').innerHTML = '<span style="color: #6a9eff;">' + basicPct + '%</span> / <span style="color: #ffa500;">' + critPct + '%</span> / <span style="color: #ff4466;">' + ultPct + '%</span>';
+    }
+    
+    function update() { const p = getParams(); updateLabels(p); draw(simulate(p), p); }
+    [durationSlider, atkSpdSlider, cdrSlider, critCastSlider, ultCastSlider].forEach(s => s.addEventListener('input', update));
+    update();
+  }
 
   </script>
 </body>

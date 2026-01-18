@@ -1051,7 +1051,7 @@
       },
       'remove-crit-attack-cooldown': {
         name: 'Remove CRIT Attack Cooldown',
-        desc: 'Removes the 2 second cooldown on Crit Attacks, allowing them to trigger on every basic attack as long as crit rate permits.\nThis significantly increases DPS potential but reduces the effectiveness of Double/Triple Hit Rate and Amplify since more attacks become crit attacks instead of basic attacks.',
+        desc: 'Removes the 2 second cooldown on CRIT Attack, allowing them to trigger on every basic attack as long as crit rate permits.\nThis significantly increases DPS potential but reduces the effectiveness of Double/Triple Hit Rate and Amplify since more attacks become crit attacks instead of basic attacks.',
         tags: ['Buff', 'Crit', 'Cooldown']
       },
       'root': {
@@ -1277,13 +1277,13 @@
         },
         kit: {
           basic: { text: 'Deals 430% of ATK as DMG to enemies within a 2.5m narrow fan-shaped area in front.', dmg: '430', hits: 1, kws: [] },
-          crit: { text: 'Deals 670% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies 1 Stacked Shield to itself for 2 sec.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT DMG DOWN for 2 sec.', dmg: '670', hits: 1, kws: [{ id: 'crit-damage-down', appliesTo: 'enemies' }, { id: 'stacked-shield', appliesTo: 'self' }] },
-          ult: { text: 'Deals 810% of ATK as DMG to enemies within 2m of the target.\nUpon a successful hit, applies a Gigantify buff to itself for 8 sec.\nUpon a successful hit, applies [Buff] Lv. 5 CRIT RES UP to allies for 10 sec.', dmg: '810', hits: 1, kws: [{ id: 'gigantify', appliesTo: 'self' }, { id: 'crit-resistance-up', appliesTo: 'allies' }] }
+          crit: { text: 'Deals 670% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies 1 Stacked Shield to itself for 2 sec.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT DMG DOWN for 2 sec.', dmg: '670', hits: 1, kws: [{ id: 'crit-damage-down', value: 20, appliesTo: 'enemies' }, { id: 'stacked-shield', appliesTo: 'self' }]},
+          ult: { text: 'Deals 810% of ATK as DMG to enemies within 2m of the target.\nUpon a successful hit, applies a Gigantify buff to itself for 8 sec.\nUpon a successful hit, applies [Buff] Lv. 5 CRIT RES UP to allies for 10 sec.', dmg: '810', hits: 1, kws: [{ id: 'gigantify', appliesTo: 'self' }, { id: 'crit-resistance-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ id: 'stacked-shield', appliesTo: 'allies' }, { id: 'dmg-res-up', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', appliesTo: 'enemies' }] }
+          { level: 5, text: 'Applies 3 Stacked Shields to allies at the start of the battle. Applies a DMG RES UP 10% buff to itself at the start of the battle.', kws: [{ id: 'stacked-shield', appliesTo: 'allies' }, { id: 'dmg-res-up', value: 10, appliesTo: 'self' }]},
+          { level: 7, text: 'Upon a successful hit, casts Lv. 5 Incoming CRIT DMG UP debuff for 10 sec. Increases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', value: 20, appliesTo: 'enemies' }]}
         ],
         notes: 'Premier tank of the game, provides stackable shields to the team at Awakening 5, as well as CRIT DMG amplification at Awakening 7.',
         recommendations: 'Awakening A5 is a must have for both PVP and PVE content.\nAwakening A7 is recommended for PVE damage amplification.\nAwakening A3 can be ignored if kiting, but is important for PVE/Boss fights.',
@@ -1303,13 +1303,13 @@
         },
         kit: {
           basic: { text: 'Deals 290% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '290', hits: 1, kws: [] },
-          crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 3m of itself.\nUpon a successful hit, applies an ATK UP 20% buff to Melee allies for 2 sec. (Stackable) Deals ADD DMG based on the number of debuffs on a target. (up to 15 debuffs)', dmg: '190', hits: 3, kws: [{ id: 'atk-up', appliesTo: 'melee', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }] },
-          ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a CRIT Rate UP 20% buff to allies for 10 sec. (Stackable) Upon a successful hit, casts an ATK SPD DOWN 10% debuff for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'crit-rate-up', appliesTo: 'allies', stackable: true }, { id: 'atk-spd-down', appliesTo: 'enemies', stackable: true }] }
+          crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 3m of itself.\nUpon a successful hit, applies an ATK UP 20% buff to Melee allies for 2 sec. (Stackable) Deals ADD DMG based on the number of debuffs on a target. (up to 15 debuffs)', dmg: '190', hits: 3, kws: [{ id: 'atk-up', value: 20, appliesTo: 'melee', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]},
+          ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a CRIT Rate UP 20% buff to allies for 10 sec. (Stackable) Upon a successful hit, casts an ATK SPD DOWN 10% debuff for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'crit-rate-up', value: 20, appliesTo: 'allies', stackable: true }, { id: 'atk-spd-down', value: 10, appliesTo: 'enemies', stackable: true }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ id: 'stacked-shield', appliesTo: 'self' }, { id: 'crit-dmg-up', appliesTo: 'self' }, { id: 'incoming-aoe-dmg-up', appliesTo: 'enemies' }] },
-          { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', appliesTo: 'enemies' }, { id: 'add-dmg', appliesTo: 'self' }] }
+          { level: 5, text: 'Applies 5 Stacked Shields to itself at the start of the battle.\nApplies a CRIT DMG UP 20% to itself at the start of the battle.\nUpon landing a Crush hit, casts an Incoming AoE DMG UP 10% debuff for 2 sec.', kws: [{ id: 'stacked-shield', appliesTo: 'self' }, { id: 'crit-dmg-up', value: 20, appliesTo: 'self' }, { id: 'incoming-aoe-dmg-up', value: 10, appliesTo: 'enemies' }]},
+          { level: 7, text: 'Upon a successful hit, casts an CRIT DMG Taken UP 10% debuff for 10 sec.\nDeals ADD DMG based on the number of debuffs on the target (up to 15 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'crit-dmg-taken-up', value: 10, appliesTo: 'enemies' }, { id: 'add-dmg', appliesTo: 'self' }]}
         ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crit rate increases.\n She is highly synergistic with high debuff counts.',
         recommendations: 'Excellent team buffer for melee teams and top DPS in both PVP and PVE content.\nFull Awakening recommended to maximize damage potential.',
@@ -1329,13 +1329,13 @@
         },
         kit: {
           basic: { text: 'Deals 290% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '290', hits: 1, kws: [] },
-          crit: { text: 'Deals 560% of ATK as CRIT DMG to enemies within a 2m x 5m area in front.\nUpon a successful hit, applies a Crush DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Deals 5% ADD DMG based on the number of buffs it has. (up to 30 buffs)', dmg: '560', hits: 1, kws: [{ id: 'crush-dmg-up', appliesTo: 'melee', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }] },
-          ult: { text: 'Deals 770% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a Crush Rate UP 20% buff to allies for 10 sec. (Stackable)', dmg: '770', hits: 1, kws: [{ id: 'crush-rate-up', appliesTo: 'allies', stackable: true }] }
+          crit: { text: 'Deals 560% of ATK as CRIT DMG to enemies within a 2m x 5m area in front.\nUpon a successful hit, applies a Crush DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Deals 5% ADD DMG based on the number of buffs it has. (up to 30 buffs)', dmg: '560', hits: 1, kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'melee', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]},
+          ult: { text: 'Deals 770% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a Crush Rate UP 20% buff to allies for 10 sec. (Stackable)', dmg: '770', hits: 1, kws: [{ id: 'crush-rate-up', value: 20, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies an Invincibility shield effect and a MOV SPD UP 200% buff to itself for 3 sec at the start of the battle.\nApplies ATK UP 10%, DEF UP 15% and DMG DOWN from Ranged Enemies 30% buffs to itself at the start of the battle', kws: [{ id: 'invincibility', appliesTo: 'self' }, { id: 'mov-spd-up', appliesTo: 'self' }, { id: 'atk-up', appliesTo: 'self' }, { id: 'def-up', appliesTo: 'self' }, { id: 'dmg-down-from-ranged-enemies', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 20% buff to itself for 10 sec. (Stackable)\nDeals ADD DMG based on the number of buffs it has (up to 30 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'dmg-res-up', appliesTo: 'self', stackable: true },{ id: 'add-dmg', appliesTo: 'self' }] }
+          { level: 5, text: 'Applies an Invincibility shield effect and a MOV SPD UP 200% buff to itself for 3 sec at the start of the battle.\nApplies ATK UP 10%, DEF UP 15% and DMG DOWN from Ranged Enemies 30% buffs to itself at the start of the battle', kws: [{ id: 'invincibility', appliesTo: 'self' }, { id: 'mov-spd-up', value: 200, appliesTo: 'self' }, { id: 'atk-up', value: 10, appliesTo: 'self' }, { id: 'def-up', value: 15, appliesTo: 'self' }, { id: 'dmg-down-from-ranged-enemies', appliesTo: 'self' }]},
+          { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 20% buff to itself for 10 sec. (Stackable)\nDeals ADD DMG based on the number of buffs it has (up to 30 debuffs).\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'dmg-res-up', value: 20, appliesTo: 'self', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]}
         ],
         notes: 'Top DPS melee unit with strong self-buffs and team support through crush rate increases.\n He is highly synergistic with high buff counts.\nHe is also a useful PVP unit thanks to the Invincibility shield.',
         recommendations: 'Excellent team buffer for melee teams and top DPS in both PVP and PVE content.\nFull Awakening recommended to maximize damage potential.',
@@ -1353,15 +1353,15 @@
         },
         kit: {
           basic: { text: 'Deals 430% of ATK as DMG to the target.', dmg: '430', hits: 1, kws: [] },
-          crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Ranged allies for 2 sec.', dmg: '190', hits: 3, kws: [{ id: 'dmg-dealt-up', appliesTo: 'ranged' }] },
+          crit: { text: 'Deals 190% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Ranged allies for 2 sec.', dmg: '190', hits: 3, kws: [{ id: 'dmg-dealt-up', value: 20, appliesTo: 'ranged' }]},
           ult: { text: 'Deals 280% of ATK as DMG 3 times(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 Double Hit Rate UP buff to allies for 10 sec.', dmg: '280', hits: 3, kws: [{ id: 'double-hit-rate-up', appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies Range UP 3 and ATK SPD UP 15% buff to itself at the start of the battle.', kws: [{ id: 'range-up', appliesTo: 'self' }, { id: 'atk-spd-up', appliesTo: 'self' }] },
+          { level: 5, text: 'Applies Range UP 3 and ATK SPD UP 15% buff to itself at the start of the battle.', kws: [{ id: 'range-up', value: 3, appliesTo: 'self' }, { id: 'atk-spd-up', value: 15, appliesTo: 'self' }]},
           { level: 7, text: 'Upon a successful hit, applies a Triple Hit Rate UP 10% to itself for 10 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'triple-hit-rate-up', appliesTo: 'self', stackable: true }] }
         ],
-        notes: 'An older and reliable ranged DPS unit with ok team buffs.\n\nNote that the Double Hit and Triple hit only apply to Basic Attacks and not Crit Attacks or Ultimates.',
+        notes: 'An older and reliable ranged DPS unit with ok team buffs.\n\nNote that the Double Hit and Triple hit only apply to Basic Attacks and not CRIT Attack or Ultimates.',
         recommendations: 'A solid choice for a ranged DPS unit with some team utility.\nShe is on the way out compared to newer units but can still perform adequately in various content or if running a basic attack centric build.',
         icons: {
           portrait: '/images/portraits/icon_mon_boomerangwarrior00_water_v.png',
@@ -1395,12 +1395,12 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '150', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
-          crit: { text: 'Deals 250% of ATK as CRIT DMG 3 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ id: 'crit-dmg-up', appliesTo: 'melee', stackable: true }, { id: 'incoming-aoe-dmg-down', appliesTo: 'self', stackable: true }] },
-          ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a ATK SPD UP 20% buff to allies for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'atk-spd-up', appliesTo: 'allies', stackable: true }] }
+          crit: { text: 'Deals 250% of ATK as CRIT DMG 3 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Melee allies for 2 sec. (Stackable) Upon a successful hit, applies an AoE DMG Taken DOWN 30% buff to itself for 2 sec. (Stackable)', dmg: '250', hits: 3, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'melee', stackable: true }, { id: 'incoming-aoe-dmg-down', appliesTo: 'self', stackable: true }]},
+          ult: { text: 'Deals 840% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies a ATK SPD UP 20% buff to allies for 10 sec. (Stackable)', dmg: '840', hits: 1, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a CRIT Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable).\nApplies an ATK SPD UP 30% buff to itself for 15 sec at the start of the battle. (Stackable)\nWhen taking fatal damage, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec)', kws: [{ id: 'atk-spd-up', appliesTo: 'self', stackable: true }, { id: 'crit-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'endure', appliesTo: 'self' }] },
+          { level: 5, text: 'Applies a CRIT Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable).\nApplies an ATK SPD UP 30% buff to itself for 15 sec at the start of the battle. (Stackable)\nWhen taking fatal damage, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec)', kws: [{ id: 'atk-spd-up', value: 30, appliesTo: 'self', stackable: true }, { id: 'crit-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'endure', appliesTo: 'self' }]},
           { level: 7, text: 'Upon a successful hit, applies a Remove CRIT Attack Cooldown buff to itself for 4 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'remove-crit-attack-cooldown', appliesTo: 'self' }] },
         ],
         notes: 'An interesting melee DPS unit with crit damage buffs and stackable attack speed support for the team.\nAlso provides self-survivability through AoE damage taken down buffs and has an endure on a5 which is excellent for GvG gameplay.',
@@ -1418,13 +1418,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '147', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 230% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '230', hits: 1, kws: [] },
-          crit: { text: 'Deals 130% of ATK as CRIT DMG to enemies within a 5m of itself.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to to itself for 2 sec.', dmg: '130', hits: 1, kws: [{ id: 'dmg-dealt-up', appliesTo: 'self'}] },
-          ult: { text: 'Deals 330% of ATK as DMG to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK SPD UP buff to allies for 10 sec.', dmg: '330', hits: 1, kws: [{ id: 'atk-spd-up', appliesTo: 'allies' }] }
+          crit: { text: 'Deals 130% of ATK as CRIT DMG to enemies within a 5m of itself.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to to itself for 2 sec.', dmg: '130', hits: 1, kws: [{ id: 'dmg-dealt-up', value: 20, appliesTo: 'self'}]},
+          ult: { text: 'Deals 330% of ATK as DMG to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK SPD UP buff to allies for 10 sec.', dmg: '330', hits: 1, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies an Invincibility shield effect and a CRIT Rate UP 50% buff to itself for 5 sec at the start of the battle. (Stackable).', kws: [{ id: 'invincibility', appliesTo: 'self', stackable: true }, { id: 'crit-rate-up', appliesTo: 'self', stackable: true }] },
-          { level: 7, text: 'Upon a successful hit, applies a CRIT DMG UP 20% buff to itself for 2 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crit-dmg-up', appliesTo: 'self', stackable: true }] },
+          { level: 5, text: 'Applies an Invincibility shield effect and a CRIT Rate UP 50% buff to itself for 5 sec at the start of the battle. (Stackable).', kws: [{ id: 'invincibility', appliesTo: 'self', stackable: true }, { id: 'crit-rate-up', value: 50, appliesTo: 'self', stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, applies a CRIT DMG UP 20% buff to itself for 2 sec.\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'self', stackable: true }]},
         ],
         notes: 'A melee support unit valued primarily for her ATK SPD UP buff to all allies.\n\nHer damage output is notably low - 130% crit multiplier is among the weakest in the game. A5 provides a brief Invincibility shield at battle start, but 5 seconds is often not enough to matter. A7 gives self-buffs only and the +20% damage boost does little to fix her damage problem.',
         recommendations: 'Jeanne is a budget ATK SPD buffer who gets outclassed once you have better options.\n\nHer low damage means she contributes little beyond her ult buff. A7 is underwhelming since the self Crit DMG UP barely compensates for her weak base damage.\n\nUsable early game or as a placeholder, but expect to replace her with actual DPS units that also bring team utility.',
@@ -1441,13 +1441,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '114', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
-          crit: { text: 'Deals 230% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Crush Rate UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '230', hits: 3, kws: [{ id: 'crush-rate-up', appliesTo: 'ranged', stackable: true }] },
-          ult: { text: 'Deals 200% of ATK as DMG 7 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to allies for 10 sec. (Stackable) On every hit, places a Yin Energy stack on the target that is active for 20 sec. At 10 stacks, consumes all Yin Energy stacks on the target, removing their Immunity effect and casting a DMG RES DOWN 30% debuff for 4 sec.', dmg: '200', hits: 7, kws: [{ id: 'crush-dmg-up', appliesTo: 'allies', stackable: true }, { id: 'remove-immunity', appliesTo: 'enemies' }, { id: 'dmg-res-down', appliesTo: 'enemies' }] }
+          crit: { text: 'Deals 230% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Crush Rate UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '230', hits: 3, kws: [{ id: 'crush-rate-up', value: 20, appliesTo: 'ranged', stackable: true }]},
+          ult: { text: 'Deals 200% of ATK as DMG 7 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to allies for 10 sec. (Stackable) On every hit, places a Yin Energy stack on the target that is active for 20 sec. At 10 stacks, consumes all Yin Energy stacks on the target, removing their Immunity effect and casting a DMG RES DOWN 30% debuff for 4 sec.', dmg: '200', hits: 7, kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'allies', stackable: true }, { id: 'remove-immunity', appliesTo: 'enemies' }, { id: 'dmg-res-down', value: 30, appliesTo: 'enemies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and CDR UP 15% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'range-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'cdr-up', appliesTo: 'self', stackable: true, irremovable: true }] },
-          { level: 7, text: 'On every hit, places a Yang Energy stack on itself that is active for 20 sec. At 10 stacks, consumes all Yan Energy stacks on it, applying an ATK UP 100% buff for 4 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'atk-up', appliesTo: 'self' }] },
+          { level: 5, text: 'Applies a Range UP 3 and CDR UP 15% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'range-up', value: 3, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'cdr-up', value: 15, appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'On every hit, places a Yang Energy stack on itself that is active for 20 sec. At 10 stacks, consumes all Yan Energy stacks on it, applying an ATK UP 100% buff for 4 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'atk-up', value: 100, appliesTo: 'self' }]},
         ],
         notes: 'A must have unit for PVP content due to her ability to remove Immunity effects from enemies.\nAlso provides team buffs through crush rate and crush damage up effects.',
         recommendations: 'Seimei is a top tier PVP unit due to her Immunity removal ultimate.\nShe is also a solid PVE unit with good team buffs and decent damage output.\nFull awakening is recommended to maximize her utility and damage potential.',
@@ -1503,13 +1503,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '108', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
-          crit: { text: 'Deals 160% of ATK as CRIT DMG 2 time(s) to enemies within 3m of the target.\nDeals ADD DMG to targets under Frostbite.\nUpon a successful hit, casts a Lv. 5 MOV SPD DOWN for 2 sec.', dmg: '160', hits: 2, kws: [{ id: 'add-dmg', appliesTo: 'enemies' }, { id: 'mov-spd-down', appliesTo: 'enemies' }] },
-          ult: { text: 'Deals 480% of ATK as DMG 2 time(s) to enemies within 3m of the target.\nUpon a successful hit, casts a Frostbite effect for 10 sec.\nUpon a successful hit, applies a Lv. 5 MOV SPD UP to allies for 10 sec.', dmg: '480', hits: 2, kws: [{ id: 'frostbite', appliesTo: 'enemies' }, { id: 'mov-spd-up', appliesTo: 'allies' }] }
+          crit: { text: 'Deals 160% of ATK as CRIT DMG 2 time(s) to enemies within 3m of the target.\nDeals ADD DMG to targets under Frostbite.\nUpon a successful hit, casts a Lv. 5 MOV SPD DOWN for 2 sec.', dmg: '160', hits: 2, kws: [{ id: 'add-dmg', appliesTo: 'enemies' }, { id: 'mov-spd-down', value: 20, appliesTo: 'enemies' }]},
+          ult: { text: 'Deals 480% of ATK as DMG 2 time(s) to enemies within 3m of the target.\nUpon a successful hit, casts a Frostbite effect for 10 sec.\nUpon a successful hit, applies a Lv. 5 MOV SPD UP to allies for 10 sec.', dmg: '480', hits: 2, kws: [{ id: 'frostbite', appliesTo: 'enemies' }, { id: 'mov-spd-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and CRIT Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [ { id: 'crit-rate-up', appliesTo: 'self', stackable: true, irremovable: true } ] },
-          { level: 7, text: 'Upon a successful hit, applies a Target Weakness: Frostbite 10% buff to allies for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'target-weakness-frostbite', appliesTo: 'allies', stackable: true} ] }
+          { level: 5, text: 'Applies a Range UP 3 and CRIT Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'crit-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'Upon a successful hit, applies a Target Weakness: Frostbite 10% buff to allies for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'target-weakness-frostbite', value: 10, appliesTo: 'allies', stackable: true}]}
         ],
         notes: 'A decent ranged debuffer with team support through movement speed buffs and debuffs.\n\nNote that the movement speed buffs and debuffs are not stackable.\nShe can be important as the only source of Frostbite application in the game for Naraka content.',
         recommendations: 'Anavel can be a useful addition to teams needing movement speed control and Frostbite application.\nWhile not top tier, she can still perform adequately in various content if a7 is unlocked.',
@@ -1527,11 +1527,11 @@
         kit: {
           basic: { text: 'Deals 310% of ATK as DMG to the target.', dmg: '310', hits: 1, kws: [] },
           crit: { text: 'Deals 70% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nDeals ADD DMG to targets under Venom.', dmg: '70', hits: 3, kws: [ { id: 'add-dmg', appliesTo: 'self' }] },
-          ult: { text: 'Deals 320% of ATK as DMG to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Ranged allies for 10 sec.', dmg: '320', hits: 1, kws: [{ id: 'cdr-up', appliesTo: 'ranged' }] }
+          ult: { text: 'Deals 320% of ATK as DMG to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Ranged allies for 10 sec.', dmg: '320', hits: 1, kws: [{ id: 'cdr-up', value: 20, appliesTo: 'ranged' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Upon landing a Crush hit, casts a Lv. 3 Weakness: Venom debuff for 2 sec.', kws: [ { id: 'weakness-venom', appliesTo: 'enemies'} ] },
+          { level: 5, text: 'Upon landing a Crush hit, casts a Lv. 3 Weakness: Venom debuff for 2 sec.', kws: [{ id: 'weakness-venom', value: 12, appliesTo: 'enemies'}]},
           { level: 7, text: 'Upon a successful hit, casts a Venom DoT effect for 10 sec.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'venom', appliesTo: 'enemies'} ] }
         ],
         notes: 'A ranged Venom specialist who synergizes excellently with other Venom-based units.\n\nHer crit attack deals ADD DMG to Venom targets, making her damage ramp up significantly once Venom is applied. At a7, she becomes self-sufficient by applying Venom herself.\n\nHer ult provides a valuable Lv. 5 CDR UP buff to all Ranged allies, improving team cycling. A5 adds Weakness: Venom on Crush hits for additional damage amplification.\nNote that the CDR is NOT stackable.',
@@ -1549,13 +1549,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '148', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 270% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '270', hits: 1, kws: [] },
-          crit: { text: 'Deals 250% of ATK as CRIT DMG 2 time(s) to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Melee allies for 2 sec.\nDeals ADD DMG to targets under Bleed.', dmg: '250', hits: 2, kws: [{ id: 'dmg-dealt-up', appliesTo: 'melee' }, { id: 'add-dmg', appliesTo: 'self' }] },
+          crit: { text: 'Deals 250% of ATK as CRIT DMG 2 time(s) to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 DMG Dealt UP buff to Melee allies for 2 sec.\nDeals ADD DMG to targets under Bleed.', dmg: '250', hits: 2, kws: [{ id: 'dmg-dealt-up', value: 20, appliesTo: 'melee' }, { id: 'add-dmg', appliesTo: 'self' }]},
           ult: { text: 'Deals 430% of ATK as DMG 2 time(s) to enemies within 3m of the target.\nUpon a successful hit, casts a [DoT] Bleed effect for 10 sec.', dmg: '430', hits: 2, kws: [{ id: 'bleed', appliesTo: 'enemies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies an ATK UP 10% to itself at the start of the battle. (Stackable)\nApplies a DMG DOWN from Ranged Enemies 30% buff to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Bleed 10% buff to allies for 10 sec whenever casting a bleed effect. (Stackable)', kws: [ { id: 'atk-up', appliesTo: 'self', stackable: true }, { id: 'dmg-down-from-ranged', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-bleed', appliesTo: 'allies', stackable: true } ] },
-          { level: 7, text: 'Upon a successful hit, casts a Weakness: Bleed 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'weakness-bleed', appliesTo: 'enemies', stackable: true} ] }
+          { level: 5, text: 'Applies an ATK UP 10% to itself at the start of the battle. (Stackable)\nApplies a DMG DOWN from Ranged Enemies 30% buff to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Bleed 10% buff to allies for 10 sec whenever casting a bleed effect. (Stackable)', kws: [{ id: 'atk-up', value: 10, appliesTo: 'self', stackable: true }, { id: 'dmg-down-from-ranged', value: 30, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-bleed', value: 10, appliesTo: 'allies', stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, casts a Weakness: Bleed 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'weakness-bleed', value: 15, appliesTo: 'enemies', stackable: true}]}
         ],
         notes: 'A strong melee DPS unit with team support through damage dealt up buffs and bleed application.\n\nNote that the damage dealt up buff is not stackable.',
         recommendations: 'Craka is a tier 2 melee DPS unit that can fit into various team compositions.\nShe is especially effective in PVE content where bleed application and its various damage amplification can be maximized.\nFull awakening is recommended to maximize her support potential.',
@@ -1572,13 +1572,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '113', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
-          crit: { text: 'Deals 230% of ATK as CRIT DMG 2 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals ADD DMG to targets under Burn.', dmg: '230', hits: 2, kws: [{ id: 'crush-dmg-up', appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }] },
+          crit: { text: 'Deals 230% of ATK as CRIT DMG 2 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals ADD DMG to targets under Burn.', dmg: '230', hits: 2, kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]},
           ult: { text: 'Deals 910% of ATK as DMG 1 time to enemies within 3m of the target.\nUpon a successful hit, casts [CC] Fear for 2.5 sec.\nUpon a successful hit, casts a Dark Flame DoT effect for 10 sec. (Counts as Burn)', dmg: '910', hits: 1, kws: [{ id: 'fear', appliesTo: 'enemies' }, { id: 'dark-flame', appliesTo: 'enemies' }, { id: 'burn', appliesTo: 'enemies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and Double Hit Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Burn 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [ { id: 'double-hit-rate-up', appliesTo: 'self', stackable: true, irremovable: true } , { id: 'target-weakness-burn', appliesTo: 'allies', stackable: true } ] },
-          { level: 7, text: 'Upon a successful hit, casts a Weakness: Burn 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'weakness-burn', appliesTo: 'enemies', stackable: true} ] }
+          { level: 5, text: 'Applies a Range UP 3 and Double Hit Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Burn 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [{ id: 'double-hit-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-burn', value: 10, appliesTo: 'allies', stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, casts a Weakness: Burn 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'weakness-burn', value: 15, appliesTo: 'enemies', stackable: true}]}
         ],
         notes: 'A top tier ranged DPS unit with strong self-buffs and team support through crush damage up effects.\nAlso provides crowd control through fear and burn application.',
         recommendations: 'Dusky is a top tier ranged DPS as well as team damage amplification unit that excels in both PVE and PVP content.\nFull awakening is recommended to maximize her damage potential and utility.',
@@ -1595,13 +1595,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '124', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 340% of ATK as DMG to the target.', dmg: '340', hits: 1, kws: [] },
-          crit: { text: "Deals 430% of ATK as CRIT DMG to enemies within 3m of the target.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals ADD DMG to targets under Venom.", dmg: '430', hits: 1, kws: [{ id: 'crit-dmg-up', appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self'}] },
-          ult: { text: 'Deals 310% of ATK as DMG 3 time(s) to enemies within 3m of the target.\nUpon a successful hit, casts a Lovesick DoT effect for 10 sec.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Ranged allies for 10 sec.', dmg: '310', hits: 3, kws: [{ id: 'lovesick', appliesTo: 'enemies' }, { id: 'venom', appliesTo: 'enemies' }, { id: 'cdr-up', appliesTo: 'ranged' }] }
+          crit: { text: "Deals 430% of ATK as CRIT DMG to enemies within 3m of the target.\nUpon a successful hit, applies a CRIT DMG UP 20% buff to Ranged allies for 2 sec. (Stackable) Deals ADD DMG to targets under Venom.", dmg: '430', hits: 1, kws: [{ id: 'crit-dmg-up', value: 20, appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self'}]},
+          ult: { text: 'Deals 310% of ATK as DMG 3 time(s) to enemies within 3m of the target.\nUpon a successful hit, casts a Lovesick DoT effect for 10 sec.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Ranged allies for 10 sec.', dmg: '310', hits: 3, kws: [{ id: 'lovesick', appliesTo: 'enemies' }, { id: 'venom', appliesTo: 'enemies' }, { id: 'cdr-up', value: 20, appliesTo: 'ranged' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and CRIT Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Venom 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [ { id: 'crit-rate-up', appliesTo: 'self', stackable: true, irremovable: true } , { id: 'target-weakness-venom', appliesTo: 'allies', stackable: true } ] },
-          { level: 7, text: 'Upon a successful hit, casts a Weakness: Venom 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'weakness-venom', appliesTo: 'enemies', stackable: true} ] }
+          { level: 5, text: 'Applies a Range UP 3 and CRIT Rate UP 10% buffs to itself at the start of the battle. (Irremovable, Stackable)\nApplies a Target Weakness: Venom 10% buff to allies for 10 sec whenever casting a venom effect. (Stackable)', kws: [{ id: 'crit-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'target-weakness-venom', value: 10, appliesTo: 'allies', stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, casts a Weakness: Venom 15% debuff for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'weakness-venom', value: 15, appliesTo: 'enemies', stackable: true}]}
         ],
         notes: 'An interesting ranged DPS unit with team support through crit damage and cooldown reduction buffs.\nAlso provides debuffing capabilities through lovesick application.\nThe CDR is however unstackable.',
         recommendations: 'Elenoa is, like Dusky, a top tier DPS and damage amplifier\nShe can fit into various team compositions and is especially effective in PVE content where lovesick application and its various damage amplification can be maximized.\nFull awakening is recommended to maximize her support potential.',
@@ -1618,13 +1618,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '106', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 390% of ATK as DMG to the target.', dmg: '390', hits: 1, kws: [] },
-          crit: { text: 'Deals 140% of ATK as CRIT DMG 3 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to Ranged Allies for 2 sec. (Stackable) Deals 15% ADD DMG per enemy hit. (Stacks up to 10 enemies)', dmg: '140', hits: 3, kws: [{ id: 'crit-rate-up', appliesTo: 'ranged', stackable: true }] },
+          crit: { text: 'Deals 140% of ATK as CRIT DMG 3 time(s) to enemies within 3m of the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to Ranged Allies for 2 sec. (Stackable) Deals 15% ADD DMG per enemy hit. (Stacks up to 10 enemies)', dmg: '140', hits: 3, kws: [{ id: 'crit-rate-up', value: 20, appliesTo: 'ranged', stackable: true }]},
           ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 AoE DMG UP buff to allies for 10 sec.', dmg: '630', hits: 2, kws: [{ id: 'aoe-dmg-up', appliesTo: 'allies', stackable: true }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and AoE Damage Area UP 30% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'range-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'aoe-damage-area-up', appliesTo: 'self', stackable: true, irremovable: true }] },
-          { level: 7, text: 'Upon a successful hit, applies a CDR UP 15% buff to itself for 10 sec. (Stackable)\nDeals 30% ADD DMG per enemy hit. (Stacks up to 10 enemies)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'cdr-up', appliesTo: 'self' }, { id: 'add-dmg', appliesTo: 'self' }] },
+          { level: 5, text: 'Applies a Range UP 3 and AoE Damage Area UP 30% buffs to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'range-up', value: 3, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'aoe-damage-area-up', appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'Upon a successful hit, applies a CDR UP 15% buff to itself for 10 sec. (Stackable)\nDeals 30% ADD DMG per enemy hit. (Stacks up to 10 enemies)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'cdr-up', value: 15, appliesTo: 'self' }, { id: 'add-dmg', appliesTo: 'self' }]},
         ],
         notes: 'A strong ranged DPS unit with team support through crit rate and AoE damage up buffs.\n\nNote that the crit rate buff is stackable, allowing for significant boosts when combined with other buff sources.',
         recommendations: 'Sekhmet is a reliable choice for a ranged DPS unit with strong team utility.\nShe can fit into various team compositions and is especially effective in PVE content where AoE damage up buffs can be maximized.\nFull awakening is recommended to maximize her support potential.',
@@ -1642,7 +1642,7 @@
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
           crit: { text: 'Deals 200% of ATK as CRIT DMG 3 time(s) to enemies within 2m of the target.\nUpon a successful hit, casts [Debuff] Lv. 5 CRIT Rate DOWN. Whenever successfully landing a hit, charges a Phantom Light that is active for 10 sec. At 20 charges, consumes all Phantom Lights to use CRIT Skills 2 times.', dmg: '200', hits: 3, kws: [{ id: 'crit-rate-down', appliesTo: 'enemies', stackable: true }] },
-          ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 ATK SPD UP buff to Ranged allies for 10 sec. (Stackable)', dmg: '630', hits: 2, kws: [{ id: 'atk-spd-up', appliesTo: 'ranged', stackable: true }] }
+          ult: { text: 'Deals 630% of ATK as DMG 2 time(s) to enemies within 2m of the target.\nUpon a successful hit, applies a Lv. 5 ATK SPD UP buff to Ranged allies for 10 sec. (Stackable)', dmg: '630', hits: 2, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'ranged', stackable: true }]}
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
         notes: 'A solid ranged DPS unit with team support through attack speed buffs and crit rate debuffs.\n\nNote that the attack speed buff is stackable, allowing for significant boosts when combined with other buff sources.',
@@ -1661,7 +1661,7 @@
         kit: {
           basic: { text: 'Deals 480% of ATK as DMG to the target.', dmg: '480', hits: 1, kws: [] },
           crit: { text: 'Deals 580% of ATK as CRIT DMG to enemies within 3m of the target.\nUpon a successful hit, removes Buff effects.', dmg: '580', hits: 1, kws: [{ id: 'remove-buffs', appliesTo: 'enemies' }] },
-          ult: { text: 'Deals 390% of ATK as DMG 2 time(s) to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK UP buff to allies for 10 sec. (Stackable)', dmg: '390', hits: 2, kws: [{ id: 'atk-up', appliesTo: 'allies', stackable: true }] }
+          ult: { text: 'Deals 390% of ATK as DMG 2 time(s) to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK UP buff to allies for 10 sec. (Stackable)', dmg: '390', hits: 2, kws: [{ id: 'atk-up', value: 20, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [ { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] } ],
         notes: 'A utility unit focused on buff removal and team attack buffs.\n\nNote that the attack buff is stackable, allowing for significant boosts when combined with other buff sources.',
@@ -1680,12 +1680,12 @@
         kit: {
           basic: { text: 'Deals 400% of ATK as DMG to the target.', dmg: '400', hits: 1, kws: [] },
           crit: { text: 'Deals 150% of ATK as CRIT DMG to enemies within 5m of itself.\nUpon a successful hit, removes Shield effects.', dmg: '150', hits: 1, kws: [{ id: 'remove-shields', appliesTo: 'enemies' }] },
-          ult: { text: 'Deals 150% of ATK as DMG 2 time(s) to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK UP buff to Ranged allies for 10 sec.', dmg: '150', hits: 2, kws: [{ id: 'atk-up', appliesTo: 'allies' }] }
+          ult: { text: 'Deals 150% of ATK as DMG 2 time(s) to enemies within 5m of itself.\nUpon a successful hit, applies a Lv. 5 ATK UP buff to Ranged allies for 10 sec.', dmg: '150', hits: 2, kws: [{ id: 'atk-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Upon landing a Crush Hit, applies a CRIT Rate UP 10% buff to itslef for 2 sec. (Stackable)', kws: [{ id: 'crit-rate-up', appliesTo: 'self', stackable: true }] },
-          { level: 7, text: 'Upon a successful hit, applies a Crush Rate UP 10% and ATK UP 20% buffs to itself for 10 sec. (Stackable)', kws: [{ id: 'crush-rate-up', appliesTo: 'self', stackable: true }, { id: 'atk-up', appliesTo: 'self', stackable: true }] }
+          { level: 5, text: 'Upon landing a Crush Hit, applies a CRIT Rate UP 10% buff to itslef for 2 sec. (Stackable)', kws: [{ id: 'crit-rate-up', value: 10, appliesTo: 'self', stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, applies a Crush Rate UP 10% and ATK UP 20% buffs to itself for 10 sec. (Stackable)', kws: [{ id: 'crush-rate-up', value: 10, appliesTo: 'self', stackable: true }, { id: 'atk-up', value: 20, appliesTo: 'self', stackable: true }]}
         ],
         notes: 'A utility unit specialized in shield removal and ranged team support.\nHer crit attack removes shields from enemies, making her valuable against shield-heavy compositions.\nThe ultimate provides ATK UP to ranged allies, though it is not stackable.',
         recommendations: 'Rina is a niche utility pick, primarily useful in PVP against shield-reliant teams and some specific Rifts bosses.\nHer slow attack speed (79) limits her DPS potential, but her shield removal on crit is unique and valuable.\nConsider her when facing stacked shield compositions or when needing ATK UP support for ranged teams.',
@@ -1703,12 +1703,12 @@
         kit: {
           basic: { text: 'Deals 280% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '280', hits: 1, kws: [] },
           crit: { text: 'Deals 140% of ATK as CRIT DMG 5 time(s) to enemies within a 3m fan-shaped area in front.\nUpon a successful hit, casts a Lv. 5 Dampen debuff for 2 sec.', dmg: '140', hits: 5, kws: [{ id: 'dampen', appliesTo: 'enemies' }] },
-          ult: { text: 'Deals 350% of ATK as DMG 2 time(s) to enemies within a 4m x 15m area in front.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Melee allies for 10 sec.\nUpon a successful hit, applies a Stealth effect to itself for 3 sec.', dmg: '350', hits: 2, kws: [{ id: 'cdr-up', appliesTo: 'melee' }, { id: 'stealth', appliesTo: 'self' }] }
+          ult: { text: 'Deals 350% of ATK as DMG 2 time(s) to enemies within a 4m x 15m area in front.\nUpon a successful hit, applies a Lv. 5 CDR UP buff to Melee allies for 10 sec.\nUpon a successful hit, applies a Stealth effect to itself for 3 sec.', dmg: '350', hits: 2, kws: [{ id: 'cdr-up', value: 20, appliesTo: 'melee' }, { id: 'stealth', appliesTo: 'self' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Perfect EVA effect to itself at the start of the battle.\nApplies an ATK SPD UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)\nUpon receiving a Stealth Effect, applies a Crush Rate UP 10% buff to itself for 3 sec. (Irremovable, Stackable)', kws: [{ id: 'perfect-eva', appliesTo: 'self'}, { id: 'atk-spd-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-rate-up', appliesTo: 'self', stackable: true, irremovable: true }] },
-          { level: 7, text: 'Upon a receiving a Stealth Effect, applies a DMG Dealt UP 150% buff to itself for 3 sec. (Irremovable, Stackable)\nUpon a successful hit, applies a Crush DMG UP 20% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'dmg-dealt-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-dmg-up', appliesTo: 'self', stackable: true }] },
+          { level: 5, text: 'Applies a Perfect EVA effect to itself at the start of the battle.\nApplies an ATK SPD UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)\nUpon receiving a Stealth Effect, applies a Crush Rate UP 10% buff to itself for 3 sec. (Irremovable, Stackable)', kws: [{ id: 'perfect-eva', appliesTo: 'self'}, { id: 'atk-spd-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'Upon a receiving a Stealth Effect, applies a DMG Dealt UP 150% buff to itself for 3 sec. (Irremovable, Stackable)\nUpon a successful hit, applies a Crush DMG UP 20% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'dmg-dealt-up', value: 150, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-dmg-up', value: 20, appliesTo: 'self', stackable: true }]},
         ],
         notes: 'A top tier melee DPS unit with strong self-buffs and team support through cooldown reduction buffs.\nAlso provides debuffing capabilities through Dampen application.\nShe is also the only unit giving melee allies CDR up, making her very valuable in melee compositions.',
         recommendations: 'Mago is a the undisputed number one DPS in the game, she excels in both PVE and PVP content.\nFull awakening is recommended to maximize his damage potential.',
@@ -1725,13 +1725,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '138', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 290% of ATK as DMG to enemies within a 3m narrow fan-shaped area in front.', dmg: '290', hits: 1, kws: [] },
-          crit: { text: 'Deals 230% of ATK as DMG 2 time(s) to enemies within a 4m x 7m area in front.\nUpon a successful hit, applies an ATK SPD UP 20% buff to Melee allies for 2 sec. (Stackable) Deals ADD DMG to targets under CC.', dmg: '230', hits: 2, kws: [{ id: 'atk-spd-up', appliesTo: 'melee', stackable: true }] },
-          ult: { text: 'Deals 300% of ATK as DMG 3 time(s) to enemies within a 3m x 7m area in front.\nUpon a successful hit, applies [Buff] Lv. 5 Crush DMG UP to allies for 10 sec. (Stackable) Applies a DEF DOWN 20% effect to the target in under CC for 10 sec. (Stackable)', dmg: '300', hits: 3, kws: [{ id: 'crush-dmg-up', appliesTo: 'allies', stackable: true }, { id: 'def-down', appliesTo: 'enemies', stackable: true }] }
+          crit: { text: 'Deals 230% of ATK as DMG 2 time(s) to enemies within a 4m x 7m area in front.\nUpon a successful hit, applies an ATK SPD UP 20% buff to Melee allies for 2 sec. (Stackable) Deals ADD DMG to targets under CC.', dmg: '230', hits: 2, kws: [{ id: 'atk-spd-up', value: 20, appliesTo: 'melee', stackable: true }]},
+          ult: { text: 'Deals 300% of ATK as DMG 3 time(s) to enemies within a 3m x 7m area in front.\nUpon a successful hit, applies [Buff] Lv. 5 Crush DMG UP to allies for 10 sec. (Stackable) Applies a DEF DOWN 20% effect to the target in under CC for 10 sec. (Stackable)', dmg: '300', hits: 3, kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'allies', stackable: true }, { id: 'def-down', value: 20, appliesTo: 'enemies', stackable: true }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'When taking fatal damages, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec).\nApplies a Crush Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)\nUpon landing a Crush hit, reduces its Exclusive Skill Cooldown by 10%. (This effect activates only once every 2 sec.)', kws: [{ id: 'endure', appliesTo: 'self'}, { id: 'crush-rate-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }] },
-          { level: 7, text: 'Reduces its own Exclusive Skill Cooldown by 100% when casting a DEF DOWN effect on the target.\nUpon a successful hit, applies a Crush Rate UP 10% buff to itself for 5 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }, { id: 'crush-rate-up', appliesTo: 'self', stackable: true }] },
+          { level: 5, text: 'When taking fatal damages, applies an Endure shield effect to itself for 3 sec. (Cooldown: 30 sec).\nApplies a Crush Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)\nUpon landing a Crush hit, reduces its Exclusive Skill Cooldown by 10%. (This effect activates only once every 2 sec.)', kws: [{ id: 'endure', appliesTo: 'self'}, { id: 'crush-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }]},
+          { level: 7, text: 'Reduces its own Exclusive Skill Cooldown by 100% when casting a DEF DOWN effect on the target.\nUpon a successful hit, applies a Crush Rate UP 10% buff to itself for 5 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'reduce-exclusive-skill-cooldown', appliesTo: 'self' }, { id: 'crush-rate-up', value: 10, appliesTo: 'self', stackable: true }]},
         ],
         notes: 'A decent melee DPS unit with team support through attack speed and crush damage up buffs.\nAlso provides debuffing capabilities through defense down application.\nThe atk speed up and def down are both stackable.',
         recommendations: 'Tsuyuha can be a useful addition to melee teams needing attack speed and crush damage buffs.\nWhile not top tier, she can still perform adequately in various content.\nThe main thing holding Tsuyuha back is her lack of a7, which limits her overall damage potential compared to other melee units when fighting bosses which are immune to CC (all of them at this time).\nFull awakening is recommended for stages/rifts, otherwise she is fine at a0.',
@@ -1749,12 +1749,12 @@
         kit: {
           basic: { text: 'Deals 330% of ATK as DMG to the target.', dmg: '330', hits: 1, kws: [] },
           crit: { text: 'Deals 540% of ATK as CRIT DMG to enemies within a 2m x 10m area in front.\nUpon a successful hit, applies a DMG UP 20% buff to Ranged allies for 2 sec. (Stackable)', dmg: '540', hits: 1, kws: [{ id: 'dmg-dealt-up', appliesTo: 'ranged', stackable: true }] },
-          ult: { text: 'Deals 960% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies 1 stack of the Crush DMG UP 10% effect to allies for 10 sec. (Stackable)', dmg: '960', hits: 1, kws: [{ id: 'crush-dmg-up', appliesTo: 'allies', stackable: true }] }
+          ult: { text: 'Deals 960% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, applies 1 stack of the Crush DMG UP 10% effect to allies for 10 sec. (Stackable)', dmg: '960', hits: 1, kws: [{ id: 'crush-dmg-up', value: 10, appliesTo: 'allies', stackable: true }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a Range UP 3 and a CDR UP 15% buffs to itself at the start of the battle. (Irremovable. Stackable)', kws: [ { id: 'range-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'cdr-up', appliesTo: 'self', stackable: true, irremovable: true } ] },
-          { level: 7, text: 'Additionally applies 1 stack of the Crush DMG UP 20% effect.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'crush-dmg-up', appliesTo: 'self', stackable: true} ] }
+          { level: 5, text: 'Applies a Range UP 3 and a CDR UP 15% buffs to itself at the start of the battle. (Irremovable. Stackable)', kws: [{ id: 'range-up', value: 3, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'cdr-up', value: 15, appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'Additionally applies 1 stack of the Crush DMG UP 20% effect.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crush-dmg-up', value: 20, appliesTo: 'self', stackable: true}]}
         ],
         notes: 'Zeta is mostly geared toward long battles where she can build up Crush DMG UP stacks over time. Her kit allows her to apply buffs to allies and deal significant damage to enemies.\nHer crush damage stacking mechanic gives 10% per ult (+20% with 7A) for 10 seconds, stacking up to 5 times for a total of 50% (+100% with 7A) crush damage increase. Note that the ult version has a 10 second expiry, meaning by the time you ult again, the previous stack will either be gone or nearly so. She realistically maxes at 110% crush damage increase in long fights with perfect timing.\nNote that her a7 only stacks Crush DMG UP for helself',
         recommendations: 'Zeta is only needed for long battles, in stages/rifts and PVP she will not have time to stack significantly. If you do need her, 7A is mandatory to maximize her Crush DMG UP stacking potential.',
@@ -1771,13 +1771,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '135', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 150% of ATK as DMG 2 times(s) to enemies within a 3m narrow fan-shaped area in front.', dmg: '150', hits: 2, kws: [] },
-          crit: { text: 'Deals 390% of ATK as CRIT DMG to enemies within a within a 3m narrow fan-shaped area in front.\nUpon a successful hit, applies a LV. 5 CRIT Rate UP buff to Melee allies for 2 sec.', dmg: '390', hits: 1, kws: [{ id: 'crit-rate-up', appliesTo: 'melee' }] },
-          ult: { text: 'Deals 390% of ATK as DMG 3 times(s) to enemies withing 2m of the target.\nUpon a successful hit, casts a LV. 5 DEF DOWN debuff for 10 sec.\nOn every hit, places a Happy Box stack on itself that is active for 20 sec. At 5 stacks consumes all Happy Box stacks on it, applying CRIT Rate UP 10%, CRIT DMG UP 10%, and ACC UP 10% buffs to allies for 4 sec. (Stackable)', dmg: '390', hits: 3, kws: [{ id: 'crit-rate-up', appliesTo: 'allies', stackable: true },{ id: 'crit-dmg-up', appliesTo: 'allies', stackable: true },{ id: 'acc-up', appliesTo: 'allies', stackable: true },{ id: 'def-down', appliesTo: 'enemies' }] }
+          crit: { text: 'Deals 390% of ATK as CRIT DMG to enemies within a within a 3m narrow fan-shaped area in front.\nUpon a successful hit, applies a LV. 5 CRIT Rate UP buff to Melee allies for 2 sec.', dmg: '390', hits: 1, kws: [{ id: 'crit-rate-up', value: 20, appliesTo: 'melee' }]},
+          ult: { text: 'Deals 390% of ATK as DMG 3 times(s) to enemies withing 2m of the target.\nUpon a successful hit, casts a LV. 5 DEF DOWN debuff for 10 sec.\nOn every hit, places a Happy Box stack on itself that is active for 20 sec. At 5 stacks consumes all Happy Box stacks on it, applying CRIT Rate UP 10%, CRIT DMG UP 10%, and ACC UP 10% buffs to allies for 4 sec. (Stackable)', dmg: '390', hits: 3, kws: [{ id: 'crit-rate-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'crit-dmg-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'acc-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'def-down', value: 20, appliesTo: 'enemies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies a DMG DOWN from Ranged Enemies 30% and ATK SPD UP 10% buffs to itself a the start of the battle. (Irremovable, Stackable)\nPlaces a Happy Box stack that is active for 20 sec each time dealing CRIT DMG. (Cooldown: 2 sec)', kws: [ { id: 'dmg-down-from-ranged-enemies', appliesTo: 'self', stackable: true, irremovable: true}, { id: 'atk-spd-up', appliesTo: 'self', stackable: true, irremovable: true} ] },
-          { level: 7, text: 'On every hit, places a Merry Box stack on itself that is active for 20 sec. At 5 stacks, consumes all Merry Box stacks on it, applying Crush Rate UP 10%, Crush DMG UP 10% and ATK UP 10% buffs to allies for 4 sec. (Stackable)\nPlaces a Merry Box stack that is active for 20 dec each time dealing CRIT DMG. (Cooldown: 2 sec)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'crush-rate-up', appliesTo: 'allies', stackable: true },{ id: 'crush-dmg-up', appliesTo: 'allies', stackable: true },{ id: 'atk-up', appliesTo: 'allies', stackable: true } ] }
+          { level: 5, text: 'Applies a DMG DOWN from Ranged Enemies 30% and ATK SPD UP 10% buffs to itself a the start of the battle. (Irremovable, Stackable)\nPlaces a Happy Box stack that is active for 20 sec each time dealing CRIT DMG. (Cooldown: 2 sec)', kws: [{ id: 'dmg-down-from-ranged-enemies', appliesTo: 'self', stackable: true, irremovable: true}, { id: 'atk-spd-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true}]},
+          { level: 7, text: 'On every hit, places a Merry Box stack on itself that is active for 20 sec. At 5 stacks, consumes all Merry Box stacks on it, applying Crush Rate UP 10%, Crush DMG UP 10% and ATK UP 10% buffs to allies for 4 sec. (Stackable)\nPlaces a Merry Box stack that is active for 20 dec each time dealing CRIT DMG. (Cooldown: 2 sec)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'crush-rate-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'crush-dmg-up', value: 10, appliesTo: 'allies', stackable: true }, { id: 'atk-up', value: 10, appliesTo: 'allies', stackable: true }]}
         ],
         notes: 'Astar is a little bit underwhelming as an a0 unit but her a5/a7 makes her undoubtely the best team buffer in the game, especially on melee teams where she also provide the unstackable 20% Crit Rate UP on top of her many buff and Def Down debuff.\nShe sadly is a mid tier DPS at best, which might hold her back in the future.\nAstar was given with 5* for free over the Christmas 2025 period.',
         recommendations: 'Astar is currently the best buffer in the game, having a high uptime on both Crit Rate UP and Crush Rate UP. She also provides ACC, ATK UP, Crit DMG UP and Crush DMG UP, all of those being extremely important and stackable.\nFull awakening recommended as her a5 provide Crit buffs uptime, and her a7 provides the Crush buffs.',
@@ -1794,12 +1794,12 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '107', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 360% of ATK as DMG to the target.', dmg: '360', hits: 1, kws: [] },
-          crit: { text: 'Deals 110% of ATK as CRIT DMG 3 time(s) to enemies within a 2m x 7m area in front.\nUpon a successful hit, applies a Lv. 5 Crush Rate UP buff to Ranged allies for 2 sec.', dmg: '110', hits: 3, kws: [{ id: 'crush-rate-up', appliesTo: 'ranged' }] },
+          crit: { text: 'Deals 110% of ATK as CRIT DMG 3 time(s) to enemies within a 2m x 7m area in front.\nUpon a successful hit, applies a Lv. 5 Crush Rate UP buff to Ranged allies for 2 sec.', dmg: '110', hits: 3, kws: [{ id: 'crush-rate-up', value: 20, appliesTo: 'ranged' }]},
           ult: { text: 'Deals 410% of ATK as DMG to enemies within 3m of the target.\nUpon a successful hit, casts a Petrify CC effect for 2.5 sec.', dmg: '410', hits: 1, kws: [{ id: 'petrify', appliesTo: 'enemies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Upon a successful hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [ { id: 'cdr-up', appliesTo: 'self', stackable: true}] },
+          { level: 5, text: 'Upon a successful hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [{ id: 'cdr-up', value: 20, appliesTo: 'self', stackable: true}]},
           { level: 7, text: 'Upon a successful hit, applies CC Efficiency UP 20% and DMG UP vs. enemies under Petrify 20% buffs to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'cc-efficiency-up', appliesTo: 'self', stackable: true },{ id: 'dmg up vs. enemies under petrify', appliesTo: 'self', stackable: true } ] }
         ],
         notes: 'Grogen is a rare Crush Rate UP buffer for ranged allies, which is quite valuable. The fact it is not stackable is not yet a problem as the only other non stackable Crush DMG up character in the game is Delphoi who has long since been powercrept.',
@@ -1817,13 +1817,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '110', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 370% of ATK as DMG to the target.', dmg: '370', hits: 1, kws: [] },
-          crit: { text: 'Deals 420% of ATK as CRIT DMG to enemies within a 3m of the target.\nUpon a successful hit, applies a ATK UP 20% buff to Ranged allies for 2 sec. (Stackable)\nDeals ADD DMG to a single target', dmg: '110', hits: 3, kws: [{ id: 'atk-up', appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }] },
+          crit: { text: 'Deals 420% of ATK as CRIT DMG to enemies within a 3m of the target.\nUpon a successful hit, applies a ATK UP 20% buff to Ranged allies for 2 sec. (Stackable)\nDeals ADD DMG to a single target', dmg: '110', hits: 3, kws: [{ id: 'atk-up', value: 20, appliesTo: 'ranged', stackable: true }, { id: 'add-dmg', appliesTo: 'self' }]},
           ult: { text: 'Deals 640% of ATK as DMG to enemies within 4m of the target.\nUpon a successful hit, applies a Lv.5 CRIT DMG UP buff to allies for 10 sec.', dmg: '410', hits: 1, kws: [{ id: 'crit-dmg-up', appliesTo: 'allies' }] }
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies Range UP 3 and Crush Rate UP 10% to itself at the start of the battle. (Irremovable, Stackable)', kws: [ { id: 'range-up', appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-rate-up', appliesTo: 'self', stackable: true, irremovable: true } ] },
-          { level: 7, text: 'Deals ADD DMG to a single target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to itself for 10 sec.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'add-dmg', appliesTo: 'self' },{ id: 'crush-dmg-up', appliesTo: 'self' } ] }
+          { level: 5, text: 'Applies Range UP 3 and Crush Rate UP 10% to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'range-up', value: 3, appliesTo: 'self', stackable: true, irremovable: true }, { id: 'crush-rate-up', value: 10, appliesTo: 'self', stackable: true, irremovable: true }]},
+          { level: 7, text: 'Deals ADD DMG to a single target.\nUpon a successful hit, applies a Crush DMG UP 20% buff to itself for 10 sec.\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'add-dmg', appliesTo: 'self' }, { id: 'crush-dmg-up', value: 20, appliesTo: 'self' }]}
         ],
         notes: 'Brandia is an older ranged DPS but still an excellent one. She is held back by her lack of team buff and non stackable self Crush RATE UP buff.',
         recommendations: 'There are better units to invest in at the apex of DPS, but Brandia is still perfectly servicable.\nIf looking for an extra Ranged DPS, her a7 help her get very high on boss battle DPS charts.',
@@ -1845,7 +1845,7 @@
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Upon landing a Crush hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [ { id: 'cdr-up', appliesTo: 'self', stackable: true } ] },
+          { level: 5, text: 'Upon landing a Crush hit, applies a CDR UP 20% buff to itself for 2 sec. (Stackable)', kws: [{ id: 'cdr-up', value: 20, appliesTo: 'self', stackable: true }]},
           { level: 7, text: 'Upon a successful hit, applies a AoE Damage Area UP 30% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [ { id: 'aoe-damage-area-up', appliesTo: 'self' } ] }
         ],
         notes: 'Celestia has seen a resurgence with the various added Rift level and Stages as ACC is becoming more and more important. She is however completely useless if not for her Exclusive Skill accuracy buff.',
@@ -1864,12 +1864,12 @@
         kit: {
           basic: { text: 'Deals 250% of ATK as DMG to the target.', dmg: '250', hits: 1, kws: [] },
           crit: { text: 'Deals 130% of ATK as CRIT DMG 3 times to the target.\nDeals ADD DMG to targets under Stun', dmg: '130', hits: 3, kws: [{ id: 'add-dmg', appliesTo: 'self' }] },
-          ult: { text: 'Deals 1140% of ATK as DMG to the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to allies for 10 sec.', dmg: '1140', hits: 1, kws: [{ id: 'crit-rate-up', appliesTo: 'allies' }] }
+          ult: { text: 'Deals 1140% of ATK as DMG to the target.\nUpon a successful hit, applies a Lv. 5 CRIT Rate UP buff to allies for 10 sec.', dmg: '1140', hits: 1, kws: [{ id: 'crit-rate-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
-          { level: 5, text: 'Applies Range UP 5 buff to itself at the start of the battle.', kws: [{ id: 'range-up', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, applies an ATK SPD UP 15% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'atk-spd-up', appliesTo: 'self', stackable: true }] },
+          { level: 5, text: 'Applies Range UP 5 buff to itself at the start of the battle.', kws: [{ id: 'range-up', value: 5, appliesTo: 'self' }]},
+          { level: 7, text: 'Upon a successful hit, applies an ATK SPD UP 15% buff to itself for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'atk-spd-up', value: 15, appliesTo: 'self', stackable: true }]},
         ],
         notes: 'Good easy team wide CRIT Rate UP buff to the entire team, but as a single target character she is not topping any DPS chart.\nNote that the CRIT Rate UP buff is NOT stackable.',
         recommendations: 'Cassandra is a good early game character that is easy to 5 stars thanks to the various early game events, however she her awakening have very little value and she is easily replaced by better units.\nAwakening not recommended.',
@@ -1886,13 +1886,13 @@
         stats85: { atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: 'TBD', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD', def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '92', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD' },
         kit: {
           basic: { text: 'Deals 300% of ATK as DMG to enemies within a 2.5m narrow fan-shaped area in front.', dmg: '300', hits: 1, kws: [] },
-          crit: { text: 'Deals 170% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 Graze Rate UP buff to itself for 2 sec.', dmg: '170', hits: 1, kws: [{ id: 'graze-rate-up', appliesTo: 'self' }] },
-          ult: { text: 'Deals 290% of ATK as DMG to to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 DEF UP buff to allies for 10 sec.', dmg: '290', hits: 1, kws: [{ id: 'def-up', appliesTo: 'allies' }] }
+          crit: { text: 'Deals 170% of ATK as CRIT DMG to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 Graze Rate UP buff to itself for 2 sec.', dmg: '170', hits: 1, kws: [{ id: 'graze-rate-up', value: 20, appliesTo: 'self' }]},
+          ult: { text: 'Deals 290% of ATK as DMG to to enemies within 4m of itself.\nUpon a successful hit, applies a Lv. 5 DEF UP buff to allies for 10 sec.', dmg: '290', hits: 1, kws: [{ id: 'def-up', value: 20, appliesTo: 'allies' }]}
         },
         awakening: [
           { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
           { level: 5, text: 'When taking fatal danage, applies an Endure shield effect to itself for 5 sec. (Cooldown: 30 sec)', kws: [{ id: 'endure', appliesTo: 'self' }] },
-          { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 15% for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'dmg-res-up', appliesTo: 'self', stackable: true }] },
+          { level: 7, text: 'Upon a successful hit, applies a DMG RES UP 15% for 10 sec. (Stackable)\nIncreases the Monster\'s damage dealt by 20%. (Irremovable, Stackable)', kws: [{ id: 'dmg-res-up', value: 15, appliesTo: 'self', stackable: true }]},
         ],
         notes: 'A tank that provides team-wide DEF UP and self-sustain through defensive buffs.\n\nHer kit focuses on survivability: Graze Rate UP on crit, Endure at a5, and stackable DMG RES UP at a7. However, her slow attack speed (92) limits how often she can apply these buffs. DEF UP to allies is useful but not game-changing.',
         recommendations: 'Ophilia is a serviceable tank for early-mid game PVE content where you need a defensive buffer.\n\nHer a5 Endure is amazing for PVP and nearly a requirement for any serious PVP-minded player - surviving a killing blow can completely turn fights around. A7 gives decent self-tankiness with stackable DMG RES UP but is less impactful.\n\nFor PVE, tanks have limited value and her slow attack speed makes buffs inconsistent. Don\'t prioritize heavy investment beyond a5 unless you\'re focused on PVP.',
@@ -4798,7 +4798,7 @@
       {
         id: 'offensive-actions',
         title: 'The 3 Offensive Actions',
-        preview: 'Understanding the Exclusive Skill, Crit Attack, and Basic Attack mechanics.',
+        preview: 'Understanding the Exclusive Skill, CRIT Attack, and Basic Attack mechanics.',
         content: `
           <p>Every unit has <strong>3 types of offensive actions</strong>:</p>
           <h4>1. <span class="kw" data-kw="exclusive-skill">Exclusive Skill</span></h4>
@@ -4807,7 +4807,7 @@
             <li>Will use your <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> multiplier if it crits</li>
             <li>Units <strong>prioritize</strong> using their exclusive skill over other actions when not on CD</li>
           </ul>
-          <h4>2. <span class="kw" data-kw="crit-attack">Crit Attack</span></h4>
+          <h4>2. <span class="kw" data-kw="crit-attack">CRIT Attack</span></h4>
           <ul>
             <li>Has a <strong>2s cooldown</strong></li>
             <li>Always uses your <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span> multiplier</li>
@@ -4821,7 +4821,7 @@
           </ul>
 
           <h4>Attack Timeline Visualizer</h4>
-          <p>See how Basic Attacks, Crit Attacks, and Exclusive Skills interact over time (assuming 100+% CRIT Rate):</p>
+          <p>See how Basic Attacks, CRIT Attack, and Exclusive Skills interact over time (assuming 100+% CRIT Rate):</p>
           <p style="font-size: 11px; color: #f90; margin-bottom: 8px;">⚠️ Note: Cast time values are estimates and have not been precisely measured in-game yet.</p>
           
           <div id="attack-timeline-widget" style="background: rgba(30,30,40,.6); border-radius: 8px; padding: 16px; margin: 16px 0;">
@@ -4854,7 +4854,7 @@
             <!-- Timeline Legend -->
             <div style="display: flex; gap: 16px; margin-bottom: 8px; font-size: 11px; flex-wrap: wrap;">
               <div><span style="display: inline-block; width: 12px; height: 12px; background: #6a9eff; border-radius: 2px; margin-right: 4px;"></span>Basic Attack</div>
-              <div><span style="display: inline-block; width: 12px; height: 12px; background: #ffa500; border-radius: 2px; margin-right: 4px;"></span>Crit Attack</div>
+              <div><span style="display: inline-block; width: 12px; height: 12px; background: #ffa500; border-radius: 2px; margin-right: 4px;"></span>CRIT Attack</div>
               <div><span style="display: inline-block; width: 12px; height: 12px; background: #ff4466; border-radius: 2px; margin-right: 4px;"></span>Exclusive Skill</div>
               <div><span style="display: inline-block; width: 12px; height: 12px; background: rgba(255,255,255,.1); border: 1px dashed #666; border-radius: 2px; margin-right: 4px;"></span>Cast Time</div>
             </div>
@@ -4872,7 +4872,7 @@
               </div>
               <div style="background: rgba(255,165,0,.15); padding: 8px; border-radius: 4px; text-align: center;">
                 <div style="color: #ffa500; font-weight: bold;" id="crit-count">0</div>
-                <div style="color: #888;">Crit Attacks</div>
+                <div style="color: #888;">CRIT Attack</div>
               </div>
               <div style="background: rgba(255,68,102,.15); padding: 8px; border-radius: 4px; text-align: center;">
                 <div style="color: #ff4466; font-weight: bold;" id="ult-count">0</div>
@@ -4882,7 +4882,7 @@
                 <div style="font-weight: bold; font-size: 10px;" id="breakdown">
                   <span style="color: #6a9eff;">0%</span> / <span style="color: #ffa500;">0%</span> / <span style="color: #ff4466;">0%</span>
                 </div>
-                <div style="color: #888;">Basic / Crit / Ult</div>
+                <div style="color: #888;">Basic / CRIT / Exclusive</div>
               </div>
             </div>
           </div>
@@ -4895,7 +4895,7 @@
         preview: 'Why 100% crit rate isn\'t actually 100%, and how ATK SPD affects your crits.',
         content: `
           <h4>100% Crit Rate Isn't Really 100%</h4>
-          <p>Even with 100% <span class="kw buff" data-kw="crit-rate-up">Crit Rate</span>, you can only trigger a <span class="kw" data-kw="crit-attack">Crit Attack</span> once every <strong>2 seconds</strong> due to the crit attack cooldown.</p>
+          <p>Even with 100% <span class="kw buff" data-kw="crit-rate-up">Crit Rate</span>, you can only trigger a <span class="kw" data-kw="crit-attack">CRIT Attack</span> once every <strong>2 seconds</strong> due to the crit attack cooldown.</p>
           <p>Your <span class="kw" data-kw="exclusive-skill">Exclusive Skill</span> and <span class="kw buff" data-kw="double-hit-rate-up">double</span>/<span class="kw buff" data-kw="triple-hit-rate-up">triple hits</span> can crit independently of this cooldown.</p>
           
           <h4>ATK SPD Can Steal Your Crits</h4>
@@ -4920,7 +4920,7 @@
           <p>Cooldown Reduction reduces BOTH:</p>
           <ul>
             <li><span class="kw" data-kw="exclusive-skill">Exclusive Skill</span> cooldown (10s → 8s at 20% CDR)</li>
-            <li><span class="kw" data-kw="crit-attack">Crit Attack</span> cooldown (2s → 1.6s at 20% CDR)</li>
+            <li><span class="kw" data-kw="crit-attack">CRIT Attack</span> cooldown (2s → 1.6s at 20% CDR)</li>
           </ul>
           
           <h4>Benefits</h4>
@@ -4957,7 +4957,7 @@
               <td style="text-align:center;">✗</td>
             </tr>
             <tr style="border-bottom:1px solid rgba(255,255,255,.05);">
-              <td style="padding:8px;"><span class="kw" data-kw="crit-attack">Crit Attack</span></td>
+              <td style="padding:8px;"><span class="kw" data-kw="crit-attack">CRIT Attack</span></td>
               <td style="text-align:center;">✓ (always)</td>
               <td style="text-align:center;">✓</td>
               <td style="text-align:center;">✗</td>
@@ -4998,7 +4998,7 @@
           <p>When crit attack is off CD:</p>
           <ol>
             <li><span class="kw buff" data-kw="crit-rate-up">Crit</span> is rolled first</li>
-            <li>If crit succeeds → <span class="kw" data-kw="crit-attack">Crit Attack</span> (no double/triple)</li>
+            <li>If crit succeeds → <span class="kw" data-kw="crit-attack">CRIT Attack</span> (no double/triple)</li>
             <li>If crit fails → <span class="kw" data-kw="basic-attack">Basic Attack</span>, then roll for <span class="kw buff" data-kw="triple-hit-rate-up">Triple</span></li>
             <li>If triple fails → roll for <span class="kw buff" data-kw="double-hit-rate-up">Double</span></li>
           </ol>
@@ -5454,15 +5454,17 @@
         if (atk.time >= p.duration) return;
         const x = padding + (atk.time / p.duration) * (W - 2 * padding);
         const nextTime = attacks[i + 1] ? attacks[i + 1].time : atk.time + p.atkInterval;
-        const width = Math.max(3, ((nextTime - atk.time - atk.castTime) / p.duration) * (W - 2 * padding) - 1);
+        const attackWidth = Math.max(3, ((nextTime - atk.time - atk.castTime) / p.duration) * (W - 2 * padding) - 1);
+        // Draw attack first (solid bar)
+        ctx.fillStyle = colors[atk.type]; ctx.fillRect(x, timelineY - barH/2, Math.max(attackWidth, 4), barH);
+        // Draw cast/recovery time after the attack (dashed bar)
         if (atk.castTime > 0) {
+          const castX = x + attackWidth;
           const castWidth = (atk.castTime / p.duration) * (W - 2 * padding);
           ctx.fillStyle = castColors[atk.type]; ctx.strokeStyle = colors[atk.type];
-          ctx.setLineDash([3, 3]); ctx.fillRect(x, timelineY - barH/2, castWidth, barH);
-          ctx.strokeRect(x, timelineY - barH/2, castWidth, barH); ctx.setLineDash([]);
+          ctx.setLineDash([3, 3]); ctx.fillRect(castX, timelineY - barH/2, castWidth, barH);
+          ctx.strokeRect(castX, timelineY - barH/2, castWidth, barH); ctx.setLineDash([]);
         }
-        const markerX = x + (atk.castTime / p.duration) * (W - 2 * padding);
-        ctx.fillStyle = colors[atk.type]; ctx.fillRect(markerX, timelineY - barH/2, Math.max(width, 4), barH);
         if (atk.type === 'basic') basicCount++; else if (atk.type === 'crit') critCount++; else if (atk.type === 'ult') ultCount++;
       });
       document.getElementById('basic-count').textContent = basicCount;

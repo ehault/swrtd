@@ -1349,6 +1349,51 @@
         desc: 'Increases the area of effect for AoE attacks.',
         tags: ['Buff']
       },
+      'splendor': {
+        name: 'Splendor',
+        desc: 'A class-specific resource mined in Land of Conquest. Used to upgrade character stats through the Splendor system, providing significant stat boosts specific to each unit class.',
+        tags: ['Resources', 'Stats']
+      },
+      'elixir': {
+        name: 'Elixir',
+        desc: 'A resource available in free shops that can be used to enhance character stats. Provides a universal stat boost applicable to all characters.',
+        tags: ['Resources', 'Stats']
+      },
+      'trait': {
+        name: 'Trait',
+        desc: 'Character stat bonuses where you choose the stat type, then roll dice for the amount. Dice are earned in Land of Conquest and free shops. Best choice: CRIT Rate for all units, ACC for pure supports.',
+        tags: ['Resources', 'Stats']
+      },
+      'trait-dice': {
+        name: 'Trait Dice',
+        desc: 'Used to roll the amount of a chosen trait stat. Obtained from Land of Conquest and free shops. You select the stat type first, then dice determine how much you receive.',
+        tags: ['Resources', 'Stats']
+      },
+      'accessory': {
+        name: 'Accessory',
+        desc: 'Equipment piece providing ACC, EVA, CRIT DMG, and CRIT RES stats. Upgraded using Gems from Land of Conquest. Stats are unlocked progressively based on the character\'s star level.',
+        tags: ['Resources', 'Stats', 'Gear']
+      },
+      'gems': {
+        name: 'Gems',
+        desc: 'Resource used to roll accessories for characters. Obtained from Land of Conquest. Higher tier gems yield better accessory options.',
+        tags: ['Resources']
+      },
+      'land-of-conquest': {
+        name: 'Land of Conquest',
+        desc: 'A game mode where you mine resources like Splendor, Gems, and Trait Dice. Essential for character progression beyond basic leveling and starring.',
+        tags: ['Game Mode', 'Resources']
+      },
+      'level': {
+        name: 'Level',
+        desc: 'Character level determines base stats. Higher levels provide linear stat increases. Level cap can be raised using Breakthrough Stones.',
+        tags: ['Stats', 'Mechanics']
+      },
+      'base-stats': {
+        name: 'Base Stats',
+        desc: 'The fundamental stats of a character (ATK, DEF, HP, etc.) determined by their level, stars, and other progression systems like Splendor, Traits, Accessories, and Elixir.',
+        tags: ['Stats', 'Mechanics']
+      },
     };
 
     // Helper to render keyword chips consistently
@@ -5603,6 +5648,80 @@
             </ul>
             
             <p>This creates a meaningful advantage for higher power teams while still allowing skillful team composition to overcome power gaps.</p>
+        `
+      },
+      {
+        id: 'base-stats',
+        title: 'Character Base Stats',
+        preview: 'Understanding how Level, Stars, Accessories, Splendor, Traits, and Elixir affect your character stats.',
+        content: `
+          <p>A character's combat power comes from multiple stat sources. Understanding each system helps you prioritize upgrades efficiently.</p>
+          
+          <h4>1. <span class="kw" data-kw="level">Level</span></h4>
+          <p>The most basic stat source. Each level provides linear stat increases to ATK, DEF, HP, etc.</p>
+          <ul>
+            <li>Level cap starts at 50 and increases with <span class="kw rare" data-kw="breakthrough-stones">Breakthrough Stones</span></li>
+            <li>Easy to max out — just requires XP and Breakthrough Stones</li>
+            <li>Priority: <strong>Always max level first</strong></li>
+          </ul>
+          
+          <h4>2. <span class="kw gold" data-kw="stars">Stars</span> (★)</h4>
+          <p>Star rank provides massive stat multipliers and unlocks <span class="kw gold" data-kw="awakening">Awakening</span> bonuses.</p>
+          <ul>
+            <li>Stats scale exponentially with stars — a 7★ unit is dramatically stronger than a 5★</li>
+            <li>Key thresholds: 3★, 5★, 7★ unlock awakening abilities</li>
+            <li>Requires duplicates or universal materials to upgrade</li>
+            <li>Priority: <strong>Core progression system — aim for 7★ on main units</strong></li>
+          </ul>
+          
+          <h4>3. <span class="kw epic" data-kw="accessory">Accessory</span></h4>
+          <p>Equipment piece providing specific combat stats. Upgraded using <span class="kw" data-kw="gems">Gems</span>.</p>
+          <ul>
+            <li>Gems are obtained from <span class="kw" data-kw="land-of-conquest">Land of Conquest</span></li>
+            <li>Provides only 4 stats: <span class="kw buff" data-kw="acc-up">ACC</span>, EVA, <span class="kw buff" data-kw="crit-dmg-up">CRIT DMG</span>, and <span class="kw buff" data-kw="crit-resistance-up">CRIT RES</span></li>
+            <li>Stats are <strong>not random</strong> — they unlock progressively based on <span class="kw gold" data-kw="stars">star level</span></li>
+            <li>Priority: <strong>Medium — steady progression tied to star upgrades</strong></li>
+          </ul>
+          
+          <h4>4. <span class="kw rare" data-kw="splendor">Splendor</span></h4>
+          <p>Class-specific resource that provides targeted stat bonuses unique to each unit type.</p>
+          <ul>
+            <li>Mined in <span class="kw" data-kw="land-of-conquest">Land of Conquest</span></li>
+            <li>Each class (Tank, Melee, Ranged, Utility) uses different Splendor types</li>
+            <li>Provides significant stat increases when fully invested</li>
+            <li>Priority: <strong>Medium-High — focus on your main team's classes</strong></li>
+          </ul>
+          
+          <h4>5. <span class="kw buff" data-kw="trait">Traits</span></h4>
+          <p>Stat bonuses where you <strong>choose the stat type</strong>, then roll <span class="kw" data-kw="trait-dice">Trait Dice</span> for the amount.</p>
+          <ul>
+            <li>Dice earned from <span class="kw" data-kw="land-of-conquest">Land of Conquest</span> and free shops</li>
+            <li>You select which stat to enhance, dice determine how much you get</li>
+            <li>Best choice: <span class="kw buff" data-kw="crit-rate-up">CRIT Rate</span> for almost all units</li>
+            <li>For pure supports: <span class="kw buff" data-kw="acc-up">ACC</span> is the better choice</li>
+            <li>Priority: <strong>Medium — straightforward gains, just roll for your chosen stat</strong></li>
+          </ul>
+          
+          <h4>6. <span class="kw" data-kw="elixir">Elixir</span></h4>
+          <p>Universal stat enhancement available from free shops.</p>
+          <ul>
+            <li>Available in the free Arena/Colosseum shops</li>
+            <li>Provides flat stat bonuses to any character</li>
+            <li>Easy to acquire but limited quantities</li>
+            <li>Priority: <strong>Low — buy when available, small impact</strong></li>
+          </ul>
+          
+          <h4>Upgrade Priority Summary</h4>
+          <ol>
+            <li><strong>Level</strong> — Always max first (cheap and easy)</li>
+            <li><strong>Stars</strong> — Core power progression, aim for 7★</li>
+            <li><strong>Splendor</strong> — Significant gains, class-focused farming</li>
+            <li><strong>Accessory</strong> — Good rolls can be impactful</li>
+            <li><strong>Traits</strong> — Optimize over time with re-rolls</li>
+            <li><strong>Elixir</strong> — Buy opportunistically</li>
+          </ol>
+          
+          <p><em>Note: Most of these systems are gated by <span class="kw" data-kw="land-of-conquest">Land of Conquest</span> farming for Gems, Splendor, and Trait Dice. Prioritize LoC progression for long-term power growth.</em></p>
         `
       }
     ];

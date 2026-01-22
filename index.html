@@ -5361,12 +5361,12 @@
                 <div style="font-size: 10px; color: #888;">Crit CD: <span id="crit-cd-val">2.00</span>s | Ult CD: <span id="ult-cd-val">10.00</span>s</div>
               </div>
               <div>
-                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Crit Cast Time: <span id="crit-cast-val">0.3</span>s</label>
-                <input type="range" id="crit-cast-slider" min="0" max="1" value="0.3" step="0.1" style="width: 100%;">
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Crit Cast Time: <span id="crit-cast-val">0.0</span>s</label>
+                <input type="range" id="crit-cast-slider" min="0" max="1" value="0" step="0.1" style="width: 100%;">
               </div>
               <div>
-                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Ult Cast Time: <span id="ult-cast-val">0.5</span>s</label>
-                <input type="range" id="ult-cast-slider" min="0" max="2" value="0.5" step="0.1" style="width: 100%;">
+                <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Ult Cast Time: <span id="ult-cast-val">1.0</span>s</label>
+                <input type="range" id="ult-cast-slider" min="0" max="2" value="1.0" step="0.1" style="width: 100%;">
               </div>
             </div>
             
@@ -5607,7 +5607,7 @@
         preview: 'How hit chance is calculated between attacker and defender.',
         content: `
           <h4>Hit Chance Formula</h4>
-          <p><strong>Miss Chance</strong> = (Attacker's <span class="kw buff" data-kw="acc-up">ACC</span> ÷ Target's EVA) × 100</p>
+          <p><strong>Hit Chance</strong> = (Attacker's <span class="kw buff" data-kw="acc-up">ACC</span> ÷ Target's EVA) × 100</p>
           <p>For multihits and AoE, each hit rolls <strong>independently</strong>.</p>
           
           <h4>Key Stats Glossary</h4>
@@ -5722,6 +5722,155 @@
           </ol>
           
           <p><em>Note: Most of these systems are gated by <span class="kw" data-kw="land-of-conquest">Land of Conquest</span> farming for Gems, Splendor, and Trait Dice. Prioritize LoC progression for long-term power growth.</em></p>
+        `
+      },
+      {
+        id: 'dps-calculation',
+        title: 'DPS Calculator',
+        preview: 'Calculate your unit\'s DPS based on stats, skills, and attack rotation.',
+        content: `
+          <h4>DPS Calculator</h4>
+          <p>Enter your unit's stats to calculate expected DPS. Defaults to Trinity's base stats.</p>
+          
+          <div id="dps-calculator-widget" style="background: rgba(30,30,40,.6); border-radius: 8px; padding: 16px; margin: 16px 0;">
+            <!-- Duration Slider -->
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-size: 12px; color: #aaa; margin-bottom: 4px;">Duration: <span id="dps-duration-val">30</span>s</label>
+              <input type="range" id="dps-duration-slider" min="10" max="120" value="30" step="5" style="width: 100%;">
+            </div>
+            
+            <!-- Stats Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px;">
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">ATK (base, no buff)</label>
+                <input type="number" id="dps-atk" value="861100" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">ATK Speed</label>
+                <input type="number" id="dps-atkspd" value="144" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">CDR %</label>
+                <input type="number" id="dps-cdr" value="0" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">CRIT Rate %</label>
+                <input type="number" id="dps-critrate" value="54" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">CRIT DMG %</label>
+                <input type="number" id="dps-critdmg" value="355" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">Crush Rate %</label>
+                <input type="number" id="dps-crushrate" value="12" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">Crush DMG %</label>
+                <input type="number" id="dps-crushdmg" value="150" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">Double Hit %</label>
+                <input type="number" id="dps-doublehit" value="0" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+              <div>
+                <label style="display: block; font-size: 11px; color: #aaa; margin-bottom: 2px;">Triple Hit %</label>
+                <input type="number" id="dps-triplehit" value="0" style="width: 100%; padding: 6px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 4px; color: #fff;">
+              </div>
+            </div>
+            
+            <!-- Skill Stats -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+              <div style="background: rgba(106,158,255,.1); padding: 10px; border-radius: 6px; border: 1px solid rgba(106,158,255,.3);">
+                <div style="font-size: 11px; color: #6a9eff; font-weight: bold; margin-bottom: 8px;">Basic Attack</div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">DMG %</label>
+                    <input type="number" id="dps-basic-dmg" value="290" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">Hits</label>
+                    <input type="number" id="dps-basic-hits" value="1" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                </div>
+              </div>
+              <div style="background: rgba(255,165,0,.1); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,165,0,.3);">
+                <div style="font-size: 11px; color: #ffa500; font-weight: bold; margin-bottom: 8px;">CRIT Attack</div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">DMG %</label>
+                    <input type="number" id="dps-crit-dmg" value="190" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">Hits</label>
+                    <input type="number" id="dps-crit-hits" value="3" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                </div>
+              </div>
+              <div style="background: rgba(255,68,102,.1); padding: 10px; border-radius: 6px; border: 1px solid rgba(255,68,102,.3);">
+                <div style="font-size: 11px; color: #ff4466; font-weight: bold; margin-bottom: 8px;">Exclusive Skill</div>
+                <div style="display: flex; gap: 8px;">
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">DMG %</label>
+                    <input type="number" id="dps-ult-dmg" value="840" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                  <div style="flex: 1;">
+                    <label style="display: block; font-size: 10px; color: #888;">Hits</label>
+                    <input type="number" id="dps-ult-hits" value="1" style="width: 100%; padding: 4px; background: rgba(0,0,0,.3); border: 1px solid #444; border-radius: 3px; color: #fff; font-size: 12px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Results -->
+            <div style="background: rgba(0,0,0,.3); border-radius: 8px; padding: 16px;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                <div style="text-align: center;">
+                  <div style="font-size: 10px; color: #888; margin-bottom: 4px;">Attack Count</div>
+                  <div style="font-size: 11px;"><span style="color: #6a9eff;" id="dps-basic-count">0</span> basic / <span style="color: #ffa500;" id="dps-crit-count">0</span> crit / <span style="color: #ff4466;" id="dps-ult-count">0</span> ult</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 10px; color: #888; margin-bottom: 4px;">Total Damage</div>
+                  <div style="font-size: 18px; font-weight: bold; color: #4ade80;" id="dps-total-dmg">0</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 10px; color: #888; margin-bottom: 4px;">DPS</div>
+                  <div style="font-size: 24px; font-weight: bold; color: #fbbf24;" id="dps-result">0</div>
+                </div>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: 11px;">
+                <div style="background: rgba(106,158,255,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                  <div style="color: #888;">Basic DMG</div>
+                  <div style="color: #6a9eff; font-weight: bold;" id="dps-basic-total">0</div>
+                </div>
+                <div style="background: rgba(255,165,0,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                  <div style="color: #888;">Crit DMG</div>
+                  <div style="color: #ffa500; font-weight: bold;" id="dps-crit-total">0</div>
+                </div>
+                <div style="background: rgba(255,68,102,.15); padding: 8px; border-radius: 4px; text-align: center;">
+                  <div style="color: #888;">Ult DMG</div>
+                  <div style="color: #ff4466; font-weight: bold;" id="dps-ult-total">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h4>How It Works</h4>
+          <ul>
+            <li><strong>Attack rotation:</strong> Ult (10s CD) > Crit Attack (2s CD) > Basic (filler)</li>
+            <li><strong>Basic attacks:</strong> Can Crush but CANNOT Crit. Can Double/Triple Hit.</li>
+            <li><strong>Crit/Ult attacks:</strong> Can both Crit and Crush (multiply together). No Double/Triple Hit.</li>
+            <li><strong>Double/Triple Hit:</strong> Adds extra hits to basic attacks only (1 + D% + 2×T%)</li>
+          </ul>
+          
+          <h4>Key Insights</h4>
+          <ul>
+            <li><strong>Hit count is huge</strong> — a 3-hit skill does 3× damage per use</li>
+            <li><strong>CDR increases skill frequency</strong> — more ults and crit attacks</li>
+            <li><strong>ATK Speed increases basics</strong> — more filler attacks</li>
+            <li><strong>100%+ CRIT Rate</strong> enables Over CRIT bonus rolls</li>
+          </ul>
         `
       }
     ];
@@ -6074,6 +6223,159 @@
     [durationSlider, atkSpdSlider, cdrSlider, critCastSlider, ultCastSlider].forEach(s => s.addEventListener('input', update));
     update();
   }
+
+  // DPS Calculator
+  function initDpsCalculator() {
+    const widget = document.getElementById('dps-calculator-widget');
+    if (!widget) return;
+    
+    const inputs = {
+      duration: document.getElementById('dps-duration-slider'),
+      atk: document.getElementById('dps-atk'),
+      atkSpd: document.getElementById('dps-atkspd'),
+      cdr: document.getElementById('dps-cdr'),
+      critRate: document.getElementById('dps-critrate'),
+      critDmg: document.getElementById('dps-critdmg'),
+      crushRate: document.getElementById('dps-crushrate'),
+      crushDmg: document.getElementById('dps-crushdmg'),
+      doubleHit: document.getElementById('dps-doublehit'),
+      tripleHit: document.getElementById('dps-triplehit'),
+      basicDmg: document.getElementById('dps-basic-dmg'),
+      basicHits: document.getElementById('dps-basic-hits'),
+      critSkillDmg: document.getElementById('dps-crit-dmg'),
+      critSkillHits: document.getElementById('dps-crit-hits'),
+      ultDmg: document.getElementById('dps-ult-dmg'),
+      ultHits: document.getElementById('dps-ult-hits'),
+    };
+    
+    if (!inputs.duration || !inputs.atk) return;
+    
+    function formatNumber(n) {
+      if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+      if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+      if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+      return n.toFixed(0);
+    }
+    
+    function simulate() {
+      const duration = parseFloat(inputs.duration.value) || 30;
+      const atkSpd = parseFloat(inputs.atkSpd.value) || 100;
+      const cdr = parseFloat(inputs.cdr.value) || 0;
+      const critRate = Math.min(parseFloat(inputs.critRate.value) || 0, 100) / 100;
+      
+      const atkInterval = 100 / atkSpd;
+      const ultCd = 10 * (1 - cdr / 100);
+      const critCd = 2 * (1 - cdr / 100);
+      const ultCast = 1.5; // Ult has cast time that delays next attack
+      
+      // Simulate attack sequence on attack speed tempo
+      // All attacks happen on the atkInterval beat, but ult cast time delays next beat
+      let time = 0;
+      let ultCdRemaining = 0;  // Time until ult is ready
+      let critCdRemaining = 0; // Time until crit is ready
+      let basicCount = 0, critCount = 0, ultCount = 0;
+      
+      while (time < duration) {
+        // Determine which attack to use (priority: Ult > Crit > Basic)
+        let actionTime = atkInterval;
+        
+        if (ultCdRemaining <= 0) {
+          // Use Ult
+          ultCount++;
+          ultCdRemaining = ultCd;
+          // Ult cast time adds to the time before next attack
+          actionTime = atkInterval + ultCast;
+        } else if (critCdRemaining <= 0 && critRate > 0) {
+          // Use Crit Attack
+          critCount++;
+          critCdRemaining = critCd;
+        } else {
+          // Use Basic Attack
+          basicCount++;
+        }
+        
+        // Advance time
+        time += actionTime;
+        // Reduce cooldowns by action time
+        ultCdRemaining -= actionTime;
+        critCdRemaining -= actionTime;
+      }
+      
+      return { basicCount, critCount, ultCount };
+    }
+    
+    function calculate() {
+      const atk = parseFloat(inputs.atk.value) || 0;
+      const critRate = Math.min(parseFloat(inputs.critRate.value) || 0, 100) / 100;
+      const critDmgMult = (parseFloat(inputs.critDmg.value) || 0) / 100;
+      const crushRate = Math.min(parseFloat(inputs.crushRate.value) || 0, 100) / 100;
+      const crushDmgMult = (parseFloat(inputs.crushDmg.value) || 0) / 100;
+      const doubleHitRate = Math.min(parseFloat(inputs.doubleHit.value) || 0, 100) / 100;
+      const tripleHitRate = Math.min(parseFloat(inputs.tripleHit.value) || 0, 100) / 100;
+      const duration = parseFloat(inputs.duration.value) || 30;
+      
+      const basicDmgPct = (parseFloat(inputs.basicDmg.value) || 0) / 100;
+      const basicHits = parseInt(inputs.basicHits.value) || 1;
+      const critSkillDmgPct = (parseFloat(inputs.critSkillDmg.value) || 0) / 100;
+      const critSkillHits = parseInt(inputs.critSkillHits.value) || 1;
+      const ultDmgPct = (parseFloat(inputs.ultDmg.value) || 0) / 100;
+      const ultHits = parseInt(inputs.ultHits.value) || 1;
+      
+      // Basic attacks: NO CRIT, only crush + double/triple hit
+      // Expected extra hits from double/triple: 1 + doubleHitRate + 2*tripleHitRate
+      const basicExtraHits = 1 + doubleHitRate + (2 * tripleHitRate);
+      const basicMult = 1 + (crushRate * crushDmgMult);
+      
+      // Crit/Ult attacks: crit + crush (no double/triple hit)
+      const skillMult = 1 + (critRate * critDmgMult) + (crushRate * crushDmgMult) + (critRate * crushRate * critDmgMult * crushDmgMult);
+      
+      const counts = simulate();
+      
+      // Damage per attack type
+      // Basic: no crit, can crush, can double/triple hit
+      const basicDmgPerUse = atk * basicDmgPct * basicHits * basicMult * basicExtraHits;
+      // Crit attack and Ult: can crit and crush
+      const critDmgPerUse = atk * critSkillDmgPct * critSkillHits * skillMult;
+      const ultDmgPerUse = atk * ultDmgPct * ultHits * skillMult;
+      
+      const totalBasicDmg = basicDmgPerUse * counts.basicCount;
+      const totalCritDmg = critDmgPerUse * counts.critCount;
+      const totalUltDmg = ultDmgPerUse * counts.ultCount;
+      const totalDmg = totalBasicDmg + totalCritDmg + totalUltDmg;
+      const dps = totalDmg / duration;
+      
+      // Update display
+      document.getElementById('dps-duration-val').textContent = duration;
+      document.getElementById('dps-basic-count').textContent = counts.basicCount;
+      document.getElementById('dps-crit-count').textContent = counts.critCount;
+      document.getElementById('dps-ult-count').textContent = counts.ultCount;
+      document.getElementById('dps-basic-total').textContent = formatNumber(totalBasicDmg);
+      document.getElementById('dps-crit-total').textContent = formatNumber(totalCritDmg);
+      document.getElementById('dps-ult-total').textContent = formatNumber(totalUltDmg);
+      document.getElementById('dps-total-dmg').textContent = formatNumber(totalDmg);
+      document.getElementById('dps-result').textContent = formatNumber(dps) + '/s';
+    }
+    
+    // Add event listeners to all inputs
+    Object.values(inputs).forEach(input => {
+      if (input) input.addEventListener('input', calculate);
+    });
+    
+    // Initial calculation
+    calculate();
+  }
+  
+  // Initialize DPS calculator when guide content changes
+  let dpsCalcInitialized = false;
+  setInterval(() => {
+    const widget = document.getElementById('dps-calculator-widget');
+    if (widget && !dpsCalcInitialized) {
+      dpsCalcInitialized = true;
+      initDpsCalculator();
+    } else if (!widget) {
+      dpsCalcInitialized = false;
+    }
+  }, 500);
 
   </script>
 </body>

@@ -1482,6 +1482,32 @@
         }
       },
       {
+        id: 'barbara',
+        name: 'Barbara',
+        title: 'Shield Crusher, Barbara',
+        releaseDate: '2026-01-28',
+        class: 'melee',
+        stats85: {
+          atk: 'TBD', hp: 'TBD', acc: 'TBD', crit_rate: 'TBD', mov_spd: '5', crush_rate: 'TBD', graze_rate: 'TBD', double_hit_rate: 'TBD',
+          def: 'TBD', hp_rec: 'TBD', eva: 'TBD', crit_dmg: 'TBD', atk_speed: '145', crush_dmg: 'TBD', crit_res: 'TBD', triple_hit_rate: 'TBD'
+        },
+        kit: {
+          basic: { text: 'Deals 140% of ATK as DMG 2 times(s) to enemies within a 3m narrow fan-shaped area in front.', dmg: '140', hits: 2, kws: [] },
+          crit: { text: 'Deals 320% of ATK as CRIT DMG 2 time(s) to enemies within a 2m x 5m area in front.\nUpon a successful hit, applies a Crush Rate UP 20% buff to Melee allies for 2 sec. (Stackable)', dmg: '320', hits: 2, kws: [{ id: 'crush-rate-up', value: 20, appliesTo: 'melee', stackable: true }]},
+          ult: { text: 'Deals 460% of ATK as DMG 2 time(s) to enemies within a 2m x 10x area in front.\nUpon a successful hit, applies a ACC UP 20% buff and Triple Hit UP 10% buffs to allies for 10 sec. (Stackable)', dmg: '460', hits: 2, kws: [{ id: 'acc-up', value: 20, appliesTo: 'allies', stackable: true }, { id: 'triple-hit-rate-up', value: 10, appliesTo: 'allies', stackable: true }]}
+        },
+        awakening: [
+          { level: 3, text: 'Decreases its own Skill Cooldown by 100% at the start of the battle.', kws: [] },
+          { level: 5, text: 'Applies Perfect EVA and Spurt to itself for 3 sec at the start of the battle.\nApplies a CRIT Rate UP 10% buff to itself at the start of the battle. (Irremovable, Stackable)', kws: [{ id: 'perfect-eva', appliesTo: 'self' }, { id: 'crit-rate-up', value: 10, appliesTo: 'self', irremovable: true, stackable: true }]},
+          { level: 7, text: 'Upon a successful hit, removes Shield effects.\nUpon a successful hit, applies an ATK SPD UP 40% to itself for 1 sec. (Stackable)\nIncreases the Monster\'s dmg dealt by 20%.', kws: [{ id: 'remove-shields', appliesTo: 'enemies' }, { id: 'atk-spd-up', value: 40, appliesTo: 'self', stackable: true }]}
+        ],
+        notes: 'Melee DPS with strong utility: provides stackable Crush Rate UP and Triple Hit Rate UP to allies, and ACC UP for reliability. Triple Hit and ACC are extremely valuable. A7 enables shield removal, making her a top pick versus shielded or invincible enemies. A5 grants Perfect EVA for self-survival. Excels in content requiring frequent hits or shield breaking.',
+        recommendations: 'PVP:\nLevel Up: Yes\nAwakening 3: Yes\nAwakening 5: Yes (Perfect EVA, CRIT Rate UP)\nAwakening 7: Yes (shield removal, ATK SPD UP)\n\nRifts:\nLevel Up: Yes\nAwakening 3: Yes\nAwakening 5: No\nAwakening 7: Yes (utility, shield removal)\n\nBosses:\nLevel Up: No\nAwakening 3: Yes\nAwakening 5: Yes\nAwakening 7: Yes (triple hit rate)',
+        icons: {
+          portrait: '/images/portraits/comingsoon.png',
+        }
+      },
+      {
         id: 'jager',
         name: 'Jager',
         title: 'Spell Sovereign, Jager',
